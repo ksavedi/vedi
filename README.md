@@ -19,7 +19,8 @@ push 하기 전에 pull 먼저\
 
 세미콜론 안 씀\
 var 지양\
-built-in 쓸 때 window.func() 처럼 window 붙이기
+built-in 쓸 때 window.func() 처럼 window 붙이기\
+npm 사용
 
 ```js
 alert('DO NOT USE LIKE THIS')
