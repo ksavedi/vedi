@@ -5,20 +5,20 @@ very efficient develop implement.
 
 ## common rules
 
-push 하기 전에 pull 먼저
+push 하기 전에 pull 먼저\
 자기가 바꾼거 있으면 commit msg에 적고, 카톡방에도 올리기
 
 ## coding style
 
-4칸 space indent
-줄바꿈 CRLF
-변수이름 알아볼 수 있게 짓기
+4칸 space indent\
+줄바꿈 CRLF\
+변수이름 알아볼 수 있게 짓기\
 네이밍과 코딩스타일 일관적으로
 
 ## js/ts
 
-세미콜론 안 씀
-var 지양
+세미콜론 안 씀\
+var 지양\
 built-in 쓸 때 window.func() 처럼 window 붙이기
 
 ```js
@@ -26,7 +26,7 @@ alert('DO NOT USE LIKE THIS')
 window.alert('USE LIKE THIS') //use global instead of window at node.js
 ```
 
-[standardjs] (https://standardjs.com/rules-kokr.html)
+https://standardjs.com/rules-kokr.html
 
 ## html
 
