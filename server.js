@@ -19,6 +19,9 @@ app.listen(80, () => {
     console.log('server started!')
 })
 
+//class
+import { Project } from './class/project.js'
+
 //웹소켓 통신
 import { WebSocketServer } from 'ws'
 

@@ -21,6 +21,7 @@ export class Project {
         'utf-8'
     ))
 
+    /** @param {string} message */
     static log(message) {
         const now = new Date()
         fs.appendFileSync(
@@ -33,7 +34,7 @@ export class Project {
     static save() {
         fs.writeFileSync(
             __dirname + '/../data/projectList.json',
-            JSON.stringify(Project.list),
+            JSON.stringify(Project.list, null, 4),
             'utf-8'
         )
     }
