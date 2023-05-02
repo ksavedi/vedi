@@ -8,7 +8,6 @@ import express from 'express'
 const app = express()
 app.use(express.static(__dirname))
 app.use(express.static(__dirname + '/client'))
-app.use(express.static(__dirname + '/data'))
 app.get('/', (request, response) => {
     response.sendFile(__dirname + '/client/main/index.html');
 })
