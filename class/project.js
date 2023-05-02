@@ -63,8 +63,11 @@ export class Project {
      * @param {boolean} isPublic 
      */
     constructor(name, owner, description, members = [], isPublic = false) {
-        [ this.name, this.owner, this.description, this.members, this.isPublic ]
-        = [ name, owner, description, members, isPublic ];
+        this.name = name
+        this.owner = owner
+        this.description = description
+        this.members = members
+        this.isPublic = isPublic
 
         Project.push(this)
     }
