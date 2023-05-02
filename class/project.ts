@@ -25,7 +25,7 @@ export class Project {
         Project.push(this)
     }
 
-    static list = JSON.parse(fs.readFileSync(
+    static list: any[] = JSON.parse(fs.readFileSync(
         __dirname + '/../data/projectList.json',
         'utf-8'
     ))
@@ -56,7 +56,7 @@ export class Project {
     static pop(project: Project) {
         const index = Project.list.indexOf(project)
         if (index == -1) throw new Error('project does not exist')
-        Project.list.pop(Project.list.indexOf(project))
+        Project.list.splice(index, 1)
         Project.save()
         Project.log(`delete ${project.name} by ${project.owner}`)
     }

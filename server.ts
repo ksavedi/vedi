@@ -19,7 +19,7 @@ import { Project } from './class/project.js'
 import { WebSocket } from 'ws'
 
 const server = new WebSocket.Server({ port: 3000 })
-server.on('connection', (socket: WebSocket) => {
+server.on('connection', (socket) => {
     socket.on('message', (data) => {
         const msg = JSON.parse(data.toString('utf-8'))
     })
