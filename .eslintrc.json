@@ -10,7 +10,8 @@
         "plugin:react/recommended"
     ],
     "ignorePatterns": [
-        "./eslintrc.js"
+        "./eslintrc.js",
+        "build"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {

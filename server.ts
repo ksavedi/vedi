@@ -18,14 +18,14 @@ app.listen(80, () => {
 //웹소켓 통신
 import { WebSocket } from 'ws'
 import { randomInt } from 'crypto'
-import type { Auth, ClientMsg, Msg } from './interface'
+import type { Auth, ClientMsg, ServerMsg } from './interface'
 
 const generateToken = () => randomInt(1000000000000).toString()
 
 //가온누리 api로 check
 const checkValid = () => true
 
-const login = (user: Auth, auth: Auth): Msg => {
+const login = (user: Auth, auth: Auth): ServerMsg => {
     if (checkValid()) {
         user.token = generateToken()
         user.id = auth.id
@@ -58,7 +58,7 @@ const isAuthorized = (user: Auth, auth: Auth) => {
 
 const server = new WebSocket.Server({ port: 3000 })
 server.on('connection', (socket) => {
-    const send = (content: Msg | string) => {
+    const send = (content: ServerMsg | string) => {
         if (typeof content === 'string') socket.send(content)
         else socket.send(JSON.stringify(content))
     }
@@ -68,9 +68,10 @@ server.on('connection', (socket) => {
     socket.on('message', (data: string) => {
         const clientMsg = JSON.parse(data.toString()) as ClientMsg
         const { type, content, auth } = clientMsg
+        console.log(content)
         if (type === 'login') {
-            const res = login(user, auth)
-            send(res)
+            console.log(clientMsg)
+            send(login(user, auth))
             return
         }
         if (!isAuthorized(user, auth)) {

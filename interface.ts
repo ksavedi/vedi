@@ -8,7 +8,7 @@ interface Auth {
     pw?: string;
 }
 
-type Msg = {
+type ServerMsg = {
     type: 'error';
     content: {
         'message': string;
@@ -26,4 +26,4 @@ interface ClientMsg {
     auth: Auth;
 }
 
-export type { Id, Auth, Msg, ClientMsg }
+export type { Id, Auth, ServerMsg, ClientMsg }

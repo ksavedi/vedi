@@ -1,4 +1,4 @@
-import type { Auth } from '../../interface'
+import type { Auth, ClientMsg } from '../../interface'
 const socket = new WebSocket('ws://localhost:3000')
 
 const auth: Auth = {
@@ -7,12 +7,8 @@ const auth: Auth = {
     pw: window.localStorage['pw']
 }
 
-function send(type: string, content: object) {
-    socket.send(JSON.stringify({
-        type,
-        content,
-        auth
-    }))
+function send(clientMsg: ClientMsg) {
+    socket.send(JSON.stringify(clientMsg))
 }
 
 export { auth, send }
