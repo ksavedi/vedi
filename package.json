@@ -31,6 +31,7 @@
     "scripts": {
         "set": "npm i && cd client && npm i && cd ..",
         "build": "cd client && npm run build && cd ..",
-        "dev": "cd client && npm run build && cd .. && nodemon --exec ts-node ./server.ts"
+        "start": "nodemon --exec ts-node class client ./server.ts",
+        "dev": "npm run build && npm run start"
     }
 }
