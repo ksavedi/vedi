@@ -63,9 +63,7 @@ server.on('connection', (socket) => {
         else socket.send(JSON.stringify(content))
     }
 
-    const user: Auth = {
-        token: null
-    }
+    const user: Auth = {}
 
     socket.on('message', (data: string) => {
         const clientMsg = JSON.parse(data.toString()) as ClientMsg
@@ -75,13 +73,14 @@ server.on('connection', (socket) => {
             send(res)
             return
         }
-        else if (!isAuthorized(user, auth)) {
+        if (!isAuthorized(user, auth)) {
             send({
                 type: 'error',
                 content: {
                     message: 'invalid user'
                 }
             })
+            return
         }
     })
 })

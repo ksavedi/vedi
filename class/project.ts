@@ -1,22 +1,16 @@
-type Batch = 19 | 20 | 21 | 22 | 23 | 24
-type Digit = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
-type Id = `${Batch}-${Digit}${Digit}${Digit}`
+import type {Id} from './../interface'
 
 import fs from 'fs'
 import { resolve } from 'path'
 
-const printError = (message: string) => {
-    if (message) console.error(message)
-}
-
 export class Project {
-    name: string
-    owner: Id
-    description: string
-    members: Id[]
-    isPublic: boolean
+    public name: string
+    public owner: Id
+    public description: string
+    public members: Id[]
+    public isPublic: boolean
 
-    constructor(name: string, owner: Id, description: string, members: Id[] = [], isPublic = false) {
+    public constructor(name: string, owner: Id, description: string, members: Id[] = [], isPublic = false) {
         this.name = name
         this.owner = owner
         this.description = description
@@ -26,14 +20,14 @@ export class Project {
         Project.push(this)
     }
 
-    static list: any[] = JSON.parse(
+    private static readonly list: Project[] = JSON.parse(
         fs.readFileSync(
             resolve(__dirname, '/../data/projectList.json'),
             'utf-8'
         )
     )
 
-    static log(message: string) {
+    private static log(message: string) {
         const now = new Date()
         fs.appendFileSync(
             resolve(__dirname, '/../log/project.log'),
@@ -42,7 +36,7 @@ export class Project {
         )
     }
 
-    static save() {
+    public static save() {
         fs.writeFileSync(
             resolve(__dirname, '/../data/projectList.json'),
             JSON.stringify(Project.list, null, 4),
@@ -50,15 +44,15 @@ export class Project {
         )
     }
 
-    static push(project: Project) {
+    public static push(project: Project) {
         Project.list.push(project)
         Project.save()
         Project.log(`generate ${project.name} by ${project.owner}`)
     }
 
-    static pop(project: Project) {
+    public static pop(project: Project) {
         const index = Project.list.indexOf(project)
-        if (index == -1) throw new Error('project does not exist')
+        if (index === -1) throw new Error('project does not exist')
         Project.list.splice(index, 1)
         Project.save()
         Project.log(`delete ${project.name} by ${project.owner}`)
