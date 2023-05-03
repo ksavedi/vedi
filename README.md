@@ -81,18 +81,15 @@ css 파일보다는 @emotion/react module 이용하기를 권장함
 /*example*/
 import { css } from '@emotion/react';
 
-const Page = () => {
-    return (
-        <div css={css`
-            display: flex;
-            flex-direction: column;
-        `}>
-            <p>로그인</p>
-            <label>ID: <input /></label>
-            <label>PW: <input type="password"/></label>
-        </div>
-    )
-}
+const Page = () => 
+    <div css={css`
+        display: flex;
+        flex-direction: column;
+    `}>
+        <p>로그인</p>
+        <label>ID: <input /></label>
+        <label>PW: <input type="password"/></label>
+    </div>
 
 export default Page;
 ```
