@@ -18,27 +18,18 @@ import { Project } from './class/project'
 //웹소켓 통신
 import { WebSocket } from 'ws'
 import { randomInt } from 'crypto'
+import { Auth, ClientMsg, Id, Msg } from "./interface"
 
 const server = new WebSocket.Server({ port: 3000 })
 server.on('connection', (socket) => {
-    interface auth { token: null | string, id: string, pw: string }
-    interface msg {
-        type: string,
-        content: object,
-    }
-    interface clientMsg extends msg {
-        auth: auth
-    }
 
-    const user: auth = {
-        token: null,
-        id: '',
-        pw: ''
+    const user: Auth = {
+        token: null
     }
-    let clientMsg: clientMsg
-    let type: string, content: object, auth: auth
+    let clientMsg: ClientMsg
+    let type: string, content: object, auth: Auth
 
-    function sendMsg(msg: msg) {
+    function sendMsg(msg: Msg) {
         socket.send(JSON.stringify( msg ))
     }
 
@@ -49,7 +40,7 @@ server.on('connection', (socket) => {
         })
     }
 
-    function login(): msg {
+    function login(): Msg {
         function generateToken() {
             return String(randomInt(1000000000000))
         }
