@@ -3,18 +3,27 @@ type Digit = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 type Id = `${Batch}-${0 | 1 | 2}${Digit}${Digit}`
 
 interface Auth {
-    token: null | string;
+    token?: string;
     id?: Id;
     pw?: string;
 }
 
-interface Msg {
+type Msg = {
+    type: 'error';
+    content: {
+        'message': string;
+    };
+} | {
+    type: 'token';
+    content: {
+        'token': string;
+    };
+}
+
+interface ClientMsg {
     type: string;
     content: object;
+    auth: Auth;
 }
 
-interface ClientMsg extends Msg {
-    auth: Auth
-}
-
-export { Id, Auth, Msg, ClientMsg }
+export type { Id, Auth, Msg, ClientMsg }
