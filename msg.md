@@ -6,7 +6,10 @@ auth는 생략
 
 ```ts
 type: 'login';
-content: {}
+content: {
+    id: Id;
+    pw: string;
+}
 ```
 
 -> [token]

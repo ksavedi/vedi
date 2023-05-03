@@ -22,10 +22,13 @@ type ServerMsg = {
 
 type ClientMsg = {
     type: 'login';
-    content: object;
+    content: {
+        id: Id;
+        pw: string; 
+    };
     auth: Auth;
 } | {
-    type: 'getMyProject';
+    type: 'viewProject';
     content: object;
     auth: Auth;
 }
