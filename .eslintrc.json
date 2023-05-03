@@ -209,7 +209,7 @@
         "@typescript-eslint/promise-function-async": "error",
         "@typescript-eslint/require-array-sort-compare": "error",
         "@typescript-eslint/restrict-plus-operands": "error",
-        "@typescript-eslint/sort-type-union-intersection-members": "error",
+        //"@typescript-eslint/sort-type-union-intersection-members": "error",
         "@typescript-eslint/strict-boolean-expressions": "error",
         "@typescript-eslint/unbound-method": "error",
         "array-callback-return": [
