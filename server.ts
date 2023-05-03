@@ -4,17 +4,16 @@ import { resolve } from 'path'
 import express from 'express'
 
 const app = express()
-app.use(express.static(__dirname))
-app.use(express.static(resolve(__dirname, '/client')))
+app.use(express.static(resolve(__dirname, 'client/build')))
 app.get('/', (request, response) => {
-    response.sendFile(resolve(__dirname, '/client/main/index.html'));
-})
-app.listen(80, () => {
-    console.log('server started!')
+    response.sendFile(resolve(__dirname, 'client/build/index.html'));
+})  
+app.listen(8000, () => {
+    console.log('The server started!')
 })
 
 //class
-import { Project } from './class/project.js'
+import { Project } from './class/project'
 
 //웹소켓 통신
 import { WebSocket } from 'ws'
