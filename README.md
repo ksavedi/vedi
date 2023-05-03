@@ -40,6 +40,7 @@ push 하기 전에 pull 먼저\
 ## js/ts
 
 세미콜론 안 씀\
+문자열 쓸 때 single quote\
 var 지양\
 built-in 쓸 때 window.func() 처럼 window 붙이기\
 npm 사용
@@ -73,5 +74,27 @@ client 폴더에만 생성
 ```
 
 ## css
+
+css 파일보다는 @emotion/react module 이용하기를 권장함
+
+```tsx
+/*example*/
+import { css } from '@emotion/react';
+
+const Page = () => {
+    return (
+        <div css={css`
+            display: flex;
+            flex-direction: column;
+        `}>
+            <p>로그인</p>
+            <label>ID: <input /></label>
+            <label>PW: <input type="password"/></label>
+        </div>
+    )
+}
+
+export default Page;
+```
 
 한 번 사용하는 element는 무조건 id 쓰기
