@@ -31,7 +31,7 @@ const login = (user: Auth, auth: Auth): ServerMsg => {
         user.id = auth.id
         user.pw = auth.pw
         return {
-            type: 'token',
+            query: 'token',
             content: {
                 token: user.token
             }
@@ -39,7 +39,7 @@ const login = (user: Auth, auth: Auth): ServerMsg => {
     }
     else {
         return {
-            type: 'error',
+            query: 'error',
             content: {
                 message: '아이디나 비밀번호가 틀립니다.'
             }
@@ -66,16 +66,16 @@ server.on('connection', (socket) => {
 
     socket.on('message', (data: string) => {
         const clientMsg = JSON.parse(data.toString()) as ClientMsg
-        const { type, content, auth } = clientMsg
+        const { query, content, auth } = clientMsg
         console.log(content)
-        if (type === 'login') {
+        if (query === 'login') {
             console.log(clientMsg)
             send(login(user, auth))
             return
         }
         if (!isAuthorized(user, auth)) {
             send({
-                type: 'error',
+                query: 'error',
                 content: {
                     message: 'invalid user'
                 }

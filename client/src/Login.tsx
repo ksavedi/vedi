@@ -5,7 +5,7 @@ import { Id } from '../../interface'
 
 const requestLogin = (id: Id, pw: string) => {
     send({
-        type: 'login',
+        query: 'login',
         content: { id, pw },
         auth
     })

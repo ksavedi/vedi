@@ -9,26 +9,26 @@ interface Auth {
 }
 
 type ServerMsg = {
-    type: 'error';
+    query: 'error';
     content: {
         'message': string;
     };
 } | {
-    type: 'token';
+    query: 'token';
     content: {
         'token': string;
     };
 }
 
 type ClientMsg = {
-    type: 'login';
+    query: 'login';
     content: {
         id: Id;
         pw: string; 
     };
     auth: Auth;
 } | {
-    type: 'viewProject';
+    query: 'viewProject';
     content: object;
     auth: Auth;
 }
