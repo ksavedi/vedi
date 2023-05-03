@@ -3,6 +3,7 @@ type Digit = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 type Id = `${Batch}-${Digit}${Digit}${Digit}`
 
 import fs from 'fs'
+import { resolve } from 'path'
 
 const printError = (message: string) => {
     if (message) console.error(message)
@@ -25,15 +26,17 @@ export class Project {
         Project.push(this)
     }
 
-    static list: any[] = JSON.parse(fs.readFileSync(
-        __dirname + '/../data/projectList.json',
-        'utf-8'
-    ))
+    static list: any[] = JSON.parse(
+        fs.readFileSync(
+            resolve(__dirname, '/../data/projectList.json'),
+            'utf-8'
+        )
+    )
 
     static log(message: string) {
         const now = new Date()
         fs.appendFileSync(
-            __dirname + '/../log/project.log',
+            resolve(__dirname, '/../log/project.log'),
             `${now.getMonth() + 1}/${now.getDate()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()} ${message}`,
             'utf-8'
         )
@@ -41,7 +44,7 @@ export class Project {
 
     static save() {
         fs.writeFileSync(
-            __dirname + '/../data/projectList.json',
+            resolve(__dirname, '/../data/projectList.json'),
             JSON.stringify(Project.list, null, 4),
             'utf-8'
         )

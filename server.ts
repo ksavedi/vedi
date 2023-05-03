@@ -1,12 +1,13 @@
-
 //서버 열기
+import { resolve } from 'path'
+
 import express from 'express'
 
 const app = express()
 app.use(express.static(__dirname))
-app.use(express.static(__dirname + '/client'))
+app.use(express.static(resolve(__dirname, '/client')))
 app.get('/', (request, response) => {
-    response.sendFile(__dirname + '/client/main/index.html');
+    response.sendFile(resolve(__dirname, '/client/main/index.html'));
 })
 app.listen(80, () => {
     console.log('server started!')
