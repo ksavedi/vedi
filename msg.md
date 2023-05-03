@@ -6,9 +6,7 @@ auth는 생략
 
 ```ts
 type: 'login';
-content: {
-    auth: Auth
-}
+content: {}
 ```
 
 -> [token]
@@ -32,6 +30,9 @@ content: {
     token: string;
 }
 ```
+
+-> client auth에 token 저장
+
 <!--ClientMsg-->
 [login]: #login
 
