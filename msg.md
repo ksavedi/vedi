@@ -1,4 +1,4 @@
-# client -> server
+# ClientMsg client -> server
 
 auth는 생략
 
@@ -7,17 +7,13 @@ auth는 생략
 ```ts
 type: 'login';
 content: {
-    auth: {
-        token: string;
-        id: Id;
-        pw: string;
-    }
+    auth: Auth
 }
 ```
 
--> [token](#token)
+-> [token]
 
-# server -> client
+# ServerMsg server -> client
 
 ## error
 
@@ -36,3 +32,9 @@ content: {
     token: string;
 }
 ```
+<!--ClientMsg-->
+[login]: #login
+
+<!--ServerMsg-->
+[error]: #error
+[token]: #token
