@@ -15,9 +15,7 @@ content: {
 }
 ```
 
--> [token] (## token)
-[token] (## token)
-[google] (https://www.google.com)
+-> [token](## token)
 
 # server -> client
 
