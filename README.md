@@ -2,6 +2,27 @@
 very efficient develop implement.
 for IDEV.
 
+# first thing you should do
+
+## node_modules 다운로드
+
+```sh
+npm run set
+```
+
+터미널에 위와 같이 입력하면 알아서 다운로드 해줌
+
+## 없는 파일 생성
+
+- .env: api key 있는 파일
+- log/project.log: 로그 관리 파일
+
+생성하기
+
+## 규칙 읽어보기
+
+아래 규칙을 읽어보세요.
+
 # rules
 
 ## common rules
