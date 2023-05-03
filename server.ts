@@ -67,9 +67,10 @@ server.on('connection', (socket) => {
     socket.on('message', (data: string) => {
         const clientMsg = JSON.parse(data.toString()) as ClientMsg
         const { type, content, auth } = clientMsg
+        console.log(content)
         if (type === 'login') {
-            const res = login(user, auth)
-            send(res)
+            console.log(clientMsg)
+            send(login(user, auth))
             return
         }
         if (!isAuthorized(user, auth)) {
