@@ -8,7 +8,7 @@ app.use(express.static(resolve(__dirname, 'client/build')))
 app.get('/', (request, response) => {
     response.sendFile(resolve(__dirname, 'client/build/index.html'));
 })  
-app.listen(8000, () => {
+app.listen(80, () => {
     console.log('The server started!')
 })
 
