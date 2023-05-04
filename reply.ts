@@ -1,5 +1,6 @@
 import { Project, type ProjectInfo } from './class/project'
 import type { ClientMsg } from './interface/clientMsg'
+import type { Auth } from './interface/msg'
 import type { ServerMsg } from './interface/serverMsg'
 
 const getProjectInfoError = (info: ProjectInfo): ServerMsg => {
@@ -35,9 +36,13 @@ const getProjectInfoError = (info: ProjectInfo): ServerMsg => {
     }
 }
 
-const hasProjectInfoError = (info: ProjectInfo): boolean => {
+const hasProjectInfoError = (info: ProjectInfo) => {
     if (getProjectInfoError(info).query !== 'alert') return false
     return true
+}
+
+const isOwner = (user: Auth, info: ProjectInfo) => {
+    return user.id !== null && info.owner === user.id
 }
 
 const reply = (clientMsg: ClientMsg): ServerMsg => {
@@ -63,31 +68,22 @@ const reply = (clientMsg: ClientMsg): ServerMsg => {
     if (query === 'createProject') {
         const name = content.projectName
         const info = content.projectInfo
-        if (hasProjectInfoError(info)) {
-            return getProjectInfoError(info)
-        }
-        //사실 user.id가 null 인 경우는 없지만 ts error 땜에 넣은 조건문
-        if (user.id === null) {
-            return {
-                query: 'error',
-                content: {
-                    message: 'login plz'
-                }
-            }
-        }
-        if (info.owner !== user.id) {
-            return {
-                query: 'error',
-                content: {
-                    message: `The project '${name}' 's owner is not you`
-                }
-            }
-        }
         if (Project.has(name)) {
             return {
                 query: 'error',
                 content: {
                     message: 'The project already exist'
+                }
+            }
+        }
+        if (hasProjectInfoError(info)) {
+            return getProjectInfoError(info)
+        }
+        if (!isOwner(user, info)) {
+            return {
+                query: 'error',
+                content: {
+                    message: 'You are not the owner'
                 }
             }
         }
@@ -125,20 +121,11 @@ const reply = (clientMsg: ClientMsg): ServerMsg => {
         if (hasProjectInfoError(info)) {
             return getProjectInfoError(info)
         }
-        //사실 user.id가 null 인 경우는 없지만 ts error 땜에 넣은 조건문
-        if (user.id === null) {
+        if (!isOwner(user, info)) {
             return {
                 query: 'error',
                 content: {
-                    message: 'login plz'
-                }
-            }
-        }
-        if (info.owner !== user.id) {
-            return {
-                query: 'error',
-                content: {
-                    message: `The project '${name}' 's owner is not you`
+                    message: 'You are not the owner'
                 }
             }
         }
@@ -148,7 +135,7 @@ const reply = (clientMsg: ClientMsg): ServerMsg => {
 
     if (query === 'openProject') {
         const name = content.projectName
-        if (! Project.has(name)) {
+        if (!Project.has(name)) {
             return {
                 query: 'error',
                 content: {
@@ -158,11 +145,11 @@ const reply = (clientMsg: ClientMsg): ServerMsg => {
         }
 
         const project = Project.get(name)
-        if (project.hasMember(user.id)) {
+        if (!project.hasMember(user.id)) {
             return {
                 query: 'error',
                 content: {
-                    message: `The project '${name}' does not exist or you do not have permission to open it.`
+                    message: 'you do not have permission to open it.'
                 }
             }
         }
@@ -173,6 +160,34 @@ const reply = (clientMsg: ClientMsg): ServerMsg => {
                 project: Project.get(name)
             }
         }
+    }
+
+    if (query === 'saveProjectInfo') {
+        const name = content.projectName
+        const info = content.projectInfo
+        if (! Project.has(name)) {
+            return {
+                query: 'error',
+                content: {
+                    message: 'project does not exist'
+                }
+            }
+        }
+        if (hasProjectInfoError(info)) {
+            return getProjectInfoError(info)
+        }
+
+        const project = Project.get(name)
+        if (!isOwner(user, info) || !isOwner(user, project.info)) {
+            return {
+                query: 'error',
+                content: {
+                    message: 'You are not the owner'
+                }
+            }
+        }
+
+        project.info = info
     }
 
     return {

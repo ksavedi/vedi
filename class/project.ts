@@ -107,6 +107,14 @@ class Project {
             isPublic: this.isPublic
         }
     }
+
+    public set info(newInfo: ProjectInfo) {
+        this.owner = newInfo.owner
+        this.description = newInfo.description
+        this.members = newInfo.members
+        this.requests = newInfo.requests
+        this.isPublic = newInfo.isPublic
+    }
 }
 
 export { type ProjectInfo, Project }
