@@ -14,7 +14,7 @@ content: {
 };
 ```
 
--> [token]
+-> [loginResult]
 
 # 프로젝트 목록
 
@@ -70,10 +70,7 @@ content: {
 query: 'saveProjectInfo';
 content: {
     projectName: string;
-    description: string;
-    members: Id[];
-    requests: Id[];
-    isPublic: boolean;
+    projectInfo: ProjectInfo;
 };
 ```
 
@@ -126,16 +123,7 @@ content: {
 
 # 로그인
 
-## token
-
-```ts
-query: 'token';
-content: {
-    token: string;
-};
-```
-
--> client auth에 token 저장
+없음
 
 # 프로젝트 목록
 
@@ -167,6 +155,6 @@ content: {
 
 <!--ServerMsg-->
 [error]: #error
-[token]: #token
+[loginResult]: #loginResult
 [projectList]: #projectlist
 [project]: #project

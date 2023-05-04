@@ -83,11 +83,82 @@ const reply = (clientMsg: ClientMsg): ServerMsg => {
                 }
             }
         }
+        if (Project.has(name)) {
+            return {
+                query: 'error',
+                content: {
+                    message: 'The project already exist'
+                }
+            }
+        }
+
+        const project = new Project(
+            name,
+            info.owner,
+            info.description,
+            info.members,
+            info.requests,
+            info.isPublic
+        )
+
+        return {
+            query: 'project',
+            content: {
+                project
+            }
+        }
+    }
+
+    if (query === 'deleteProject') {
+        const name = content.projectName
+        if (! Project.has(name)) {
+            return {
+                query: 'error',
+                content: {
+                    message: 'project does not exist'
+                }
+            }
+        }
+
+        const project = Project.get(name)
+        const {info} = project
+        if (hasProjectInfoError(info)) {
+            return getProjectInfoError(info)
+        }
+        //사실 user.id가 null 인 경우는 없지만 ts error 땜에 넣은 조건문
+        if (user.id === null) {
+            return {
+                query: 'error',
+                content: {
+                    message: 'login plz'
+                }
+            }
+        }
+        if (info.owner !== user.id) {
+            return {
+                query: 'error',
+                content: {
+                    message: `The project '${name}' 's owner is not you`
+                }
+            }
+        }
+
+        Project.pop(project)
     }
 
     if (query === 'openProject') {
         const name = content.projectName
-        if (!Project.has(name) || !Project.get(name).hasMember(user.id)) {
+        if (! Project.has(name)) {
+            return {
+                query: 'error',
+                content: {
+                    message: 'project does not exist'
+                }
+            }
+        }
+
+        const project = Project.get(name)
+        if (project.hasMember(user.id)) {
             return {
                 query: 'error',
                 content: {
