@@ -3,7 +3,13 @@
         "name": "vedi",
         "owner": "23-031",
         "description": "very efficient develop implement.",
-        "members": [],
+        "members": [
+            "23-031",
+            "22-041",
+            "22-061",
+            "23-029",
+            "23-046"
+        ],
         "isPublic": true
     }
 ]

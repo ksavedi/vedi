@@ -14,12 +14,12 @@ type ClientMsg = {
     query: 'login';
     content: {
         id: Id;
-        pw: string; 
+        pw: string;
     };
     auth: Auth;
 } | {
     query: 'getProjectList';
-    content: object;
+    content: null;
     auth: Auth;
 } | {
     query: 'createProject';
