@@ -1,7 +1,7 @@
 import type { Auth, ClientMsg } from '../../interface'
 import { ServerMsg } from "../../interface"
 
-const socket = new WebSocket('wss://localhost:3000')
+const socket = new WebSocket('ws://localhost:3000')
 
 const auth: Auth = {
     token: window.localStorage['token'],

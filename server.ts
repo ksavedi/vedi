@@ -48,14 +48,14 @@ const login = (user: Auth, auth: Auth): ServerMsg => {
     }
 }
 
-const isAuthorized = (user: Auth, auth: Auth) => {
-    if (user.token === null || user.token === undefined) return false
-    return (
-        user.token === auth.token
-        && user.id === auth.id
-        && user.pw === auth.pw
-    )
-}
+// const isAuthorized = (user: Auth, auth: Auth) => {
+//     if (user.token === null || user.token === undefined) return false
+//     return (
+//         user.token === auth.token
+//         && user.id === auth.id
+//         && user.pw === auth.pw
+//     )
+// }
 
 const server = new WebSocket.Server({ port: 3000 })
 server.on('connection', (socket) => {
@@ -76,14 +76,15 @@ server.on('connection', (socket) => {
             console.log(clientMsg)
             return send(login(user, auth))
         }
-        if (!isAuthorized(user, auth)) {
-            return send({
-                query: 'error',
-                content: {
-                    message: 'invalid user'
-                }
-            })
-        }
+        // use after complete login feature
+        // if (!isAuthorized(user, auth)) {
+        //     return send({
+        //         query: 'error',
+        //         content: {
+        //             message: 'Invalid user.'
+        //         }
+        //     })
+        // }
 
         send(reply(clientMsg))
     })
