@@ -35,10 +35,7 @@ content: null;
 query: 'createProject';
 content: {
     projectName: string;
-    description: string;
-    members: Id[];
-    requests: Id[];
-    isPublic: boolean;
+    projectInfo: ProjectInfo;
 };
 ```
 
