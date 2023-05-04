@@ -10,7 +10,7 @@ const requestLogin = (id: string, pw: string) => {
         return
     }
     send({
-        type: 'login',
+        query: 'login',
         content: { id: id as Id, pw },
         auth
     })
