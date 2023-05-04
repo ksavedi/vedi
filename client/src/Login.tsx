@@ -24,19 +24,24 @@ const Login = () => {
         <div css={css`
             display: flex;
             flex-direction: column;
-            width: 500px;
-            border-radius: 10px;
-            border: 2px solid black;
+            width: 300px;
+            border: 1px solid rgb(238, 238, 238);
+            background: 1px solid rgb(254, 254, 254);
             padding: 20px;
             gap: 20px;
         `}>
             <div css={css`
                 display: flex;
                 justify-content: center;
+                font-weight: 400;
+                font-size: 30px;
+                color: rgb(88, 95, 105);
+                border-bottom: 1px solid rgb(238, 238, 238);
+                padding-bottom: 20px;
             `}>로그인</div>
             <div css={css`
                 display: grid;
-                grid-template-columns: 1fr 9fr;
+                grid-template-columns: 1fr 11fr;
                 grid-template-rows: 1fr 1fr;
                 gap: 10px;
             `}>
@@ -44,7 +49,6 @@ const Login = () => {
                 <div css={css`
                     display: flex;
                     align-items: center;
-                    justify-content: center;
                     grid-column: 1 / 2;
                     grid-row: 1 / 2;
                 `}>
@@ -55,16 +59,21 @@ const Login = () => {
                         grid-column: 2 / 3;
                         grid-row: 1 / 2;
                         height: 30px;
+                        border: 1px solid rgb(204, 204, 204);
+                        font-size: 15px;
+                        padding-left: 7px;
+                        display: flex;
+                        align-items: center;
                     `}
+                    placeholder='아이디'
                     defaultValue=''
                     onChange={
                         (e) => setId(e.target.value || '')
                     }
                 />
                 <div css={css`
-                    display: flex;
+                    display: flex;  
                     align-items: center;
-                    justify-content: center;
                     grid-column: 1 / 2;
                     grid-row: 2 / 3;
                 `}>
@@ -75,8 +84,14 @@ const Login = () => {
                         grid-column: 2 / 3;
                         grid-row: 2 / 3;
                         height: 30px;
+                        border: 1px solid rgb(204, 204, 204);
+                        font-size: 15px;
+                        padding-left: 7px;
+                        display: flex;
+                        align-items: center;
                     `}
                     type='password'
+                    placeholder='비밀번호'
                     defaultValue=''
                     onChange={
                         (e) => setPw(e.target.value || '')
@@ -86,12 +101,14 @@ const Login = () => {
             <button
                 css={css`
                     height: 40px;
-                    font-size: 25px;
+                    font-size: 20px;
+                    color: white;
+                    background: rgb(0, 118, 192);
+                    border: none;
                 `}
                 onClick={() => requestLogin(id, pw)}>Login</button>
         </div>
     )
 }
-//TODO: Use the API of Gaonnuri
 
 export default Login;
