@@ -20,7 +20,7 @@ export class Project {
         Project.push(this)
     }
 
-    private static readonly list: Project[] = JSON.parse(
+    public static readonly list: Project[] = JSON.parse(
         fs.readFileSync(
             resolve(__dirname, '/../data/projectList.json'),
             'utf-8'
@@ -44,17 +44,46 @@ export class Project {
         )
     }
 
+    public static indexOf(name: string) {
+        for (let i = 0; i < Project.list.length; i++) {
+            if (Project.list[i].name === name) {
+                return i
+            }
+        }
+        return -1
+    }
+
+    public static has(name: string) {
+        return Project.indexOf(name) !== -1
+    }
+
+    public static get(name: string) {
+        if (!Project.has(name)) throw new Error('project does not exist')
+        return Project.list[ Project.indexOf(name) ]
+    }
+
     public static push(project: Project) {
+        if (Project.indexOf(project.name)) throw new Error('project already exists')
         Project.list.push(project)
         Project.save()
         Project.log(`generate ${project.name} by ${project.owner}`)
     }
 
     public static pop(project: Project) {
-        const index = Project.list.indexOf(project)
-        if (index === -1) throw new Error('project does not exist')
+        if (!Project.has(project.name)) throw new Error('project does not exist')
+        const index = Project.indexOf(project.name)
         Project.list.splice(index, 1)
         Project.save()
         Project.log(`delete ${project.name} by ${project.owner}`)
+    }
+
+    public hasMember(id: Id) {
+        return (
+            id === this.owner
+            || (
+                id !== null
+                && id in this.members
+            )
+        )
     }
 }

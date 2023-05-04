@@ -19,6 +19,7 @@ app.listen(80, () => {
 import { WebSocket } from 'ws'
 import { randomInt } from 'crypto'
 import type { Auth, ClientMsg, ServerMsg } from './interface'
+import { Project } from './class/project'
 
 const generateToken = () => randomInt(1000000000000).toString()
 
@@ -48,7 +49,7 @@ const login = (user: Auth, auth: Auth): ServerMsg => {
 }
 
 const isAuthorized = (user: Auth, auth: Auth) => {
-    if (user.token === null) return false
+    if (user.token === null || user.token === undefined) return false
     return (
         user.token === auth.token
         && user.id === auth.id
@@ -60,9 +61,13 @@ const server = new WebSocket.Server({ port: 3000 })
 server.on('connection', (socket) => {
     const send = (serverMsg: ServerMsg) => {
         socket.send(JSON.stringify(serverMsg))
+        return true
     }
 
-    const user: Auth = {}
+    const user: Auth = {
+        id: null,
+        pw: null
+    }
 
     socket.on('message', (data: string) => {
         const clientMsg = JSON.parse(data.toString()) as ClientMsg
@@ -70,18 +75,52 @@ server.on('connection', (socket) => {
         console.log(content)
         if (query === 'login') {
             console.log(clientMsg)
-            send(login(user, auth))
-            return
+            return send(login(user, auth))
         }
         if (!isAuthorized(user, auth)) {
-            send({
+            return send({
                 query: 'error',
                 content: {
                     message: 'invalid user'
                 }
             })
-            return
         }
-        console.log(content)
+        
+        if (query === 'getProjectList') {
+            const resProjectList = []
+
+            for (const project of Project.list) {
+                if (project.isPublic || project.hasMember(user.id)) {
+                    resProjectList.push(project)
+                }
+            }
+
+            return send({
+                query: 'projectList',
+                content: {
+                    projectList: resProjectList
+                }
+            })
+        }
+
+        if (query === 'openProject') {
+            const name = content.projectName
+            if (!Project.has(name) || !Project.get(name).hasMember(user.id)) {
+                return send({
+                    query: 'error',
+                    content: {
+                        message: 'project does not exist or you do not have authority'
+                    }
+                })
+            }
+
+            return send({
+                query: 'project',
+                content: {
+                    project: Project.get(name)
+                }
+            })
+        }
+
     })
 })
