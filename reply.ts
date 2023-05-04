@@ -27,7 +27,7 @@ const reply = (clientMsg: ClientMsg): ServerMsg => {
             return {
                 query: 'error',
                 content: {
-                    message: 'project does not exist or you do not have authority'
+                    message: `The project '${name}' does not exist or you do not have permission to open it.`
                 }
             }
         }
@@ -43,7 +43,7 @@ const reply = (clientMsg: ClientMsg): ServerMsg => {
     return {
         query: 'error',
         content: {
-            message: 'query does not exist'
+            message: `The query '${query}' does not exist.`
         }
     }
 

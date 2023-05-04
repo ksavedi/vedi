@@ -71,8 +71,7 @@ server.on('connection', (socket) => {
 
     socket.on('message', (data: string) => {
         const clientMsg = JSON.parse(data.toString()) as ClientMsg
-        const { query, content, auth } = clientMsg
-        console.log(content)
+        const { query, /* content, */ auth } = clientMsg
         if (query === 'login') {
             console.log(clientMsg)
             return send(login(user, auth))
@@ -85,8 +84,7 @@ server.on('connection', (socket) => {
                 }
             })
         }
-        
-        send(reply(clientMsg))
 
+        send(reply(clientMsg))
     })
 })
