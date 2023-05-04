@@ -107,7 +107,7 @@ const reply = (clientMsg: ClientMsg): ServerMsg => {
 
     if (query === 'deleteProject') {
         const name = content.projectName
-        if (! Project.has(name)) {
+        if (!Project.has(name)) {
             return {
                 query: 'error',
                 content: {
@@ -165,7 +165,7 @@ const reply = (clientMsg: ClientMsg): ServerMsg => {
     if (query === 'saveProjectInfo') {
         const name = content.projectName
         const info = content.projectInfo
-        if (! Project.has(name)) {
+        if (!Project.has(name)) {
             return {
                 query: 'error',
                 content: {
