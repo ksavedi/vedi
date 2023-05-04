@@ -22,7 +22,7 @@ content: {
 
 ```ts
 query: 'getProjectList';
-content: {};
+content: null;
 ```
 
 -> [projectList]

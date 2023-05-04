@@ -18,6 +18,14 @@ const getProjectInfoError = (info: ProjectInfo): ServerMsg => {
             }
         }
     }
+    if (!info.isPublic && info.requests.length !== 0) {
+        return {
+            query: 'error',
+            content: {
+                message: 'private project does not get requests'
+            }
+        }
+    }
     return {
         query: 'alert',
         content: {
@@ -54,10 +62,10 @@ const reply = (clientMsg: ClientMsg): ServerMsg => {
     if (query === 'createProject') {
         const name = content.projectName
         const info = content.projectInfo
-        //사실 user.id가 null 인 경우는 없지만 ts error 땜에 넣은 조건문
         if (hasProjectInfoError(info)) {
             return getProjectInfoError(info)
         }
+        //사실 user.id가 null 인 경우는 없지만 ts error 땜에 넣은 조건문
         if (user.id === null) {
             return {
                 query: 'error',
