@@ -1,4 +1,4 @@
-import type {Id} from './../interface'
+import type { Id } from './../interface'
 
 import fs from 'fs'
 import { resolve } from 'path'
@@ -22,7 +22,7 @@ export class Project {
 
     public static readonly list: Project[] = JSON.parse(
         fs.readFileSync(
-            resolve(__dirname, '/../data/projectList.json'),
+            resolve(__dirname, '../data/projectList.json'),
             'utf-8'
         )
     )
@@ -30,7 +30,7 @@ export class Project {
     private static log(message: string) {
         const now = new Date()
         fs.appendFileSync(
-            resolve(__dirname, '/../log/project.log'),
+            resolve(__dirname, '../log/project.log'),
             `${now.getMonth() + 1}/${now.getDate()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()} ${message}`,
             'utf-8'
         )
@@ -38,7 +38,7 @@ export class Project {
 
     public static save() {
         fs.writeFileSync(
-            resolve(__dirname, '/../data/projectList.json'),
+            resolve(__dirname, '../data/projectList.json'),
             JSON.stringify(Project.list, null, 4),
             'utf-8'
         )
@@ -59,7 +59,7 @@ export class Project {
 
     public static get(name: string) {
         if (!Project.has(name)) throw new Error('project does not exist')
-        return Project.list[ Project.indexOf(name) ]
+        return Project.list[Project.indexOf(name)]
     }
 
     public static push(project: Project) {

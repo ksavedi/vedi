@@ -5,6 +5,7 @@ import { auth, send } from './socket'
 import { Id } from '../../interface'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons'
+import "./Login.css"
 
 const requestLogin = (id: string, pw: string) => {
     if (!/^(19|20|21|22|23|24)-\d{3}$/.test(id)) {
@@ -23,89 +24,29 @@ const Login = () => {
     const [pw, setPw] = useState<string>('')
 
     return (
-        <div css={css`
-            display: flex;
-            flex-direction: column;
-            width: 300px;
-            border: 1px solid rgb(238, 238, 238);
-            background: 1px solid rgb(254, 254, 254);
-            padding: 30px;
-            box-shadow: rgb(238, 238, 238) 0px 0px 3px 0px;
-        `}>
-            <div css={css`
-                display: flex;
-                justify-content: center;
-                font-weight: 400;
-                font-size: 25px;
-                color: rgb(88, 95, 105);
-                border-bottom: 1px solid rgb(238, 238, 238);
-                padding-bottom: 15px;
-            `}>로그인</div>
-            <div css={css`
-                display: flex;
-                flex-direction: column;
-            `}>
-                <div css={css`
-                    display: flex;
-                    padding-top: 30px;
-                    height: 35px;
-                `}>
-                    <div css={css`
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        border: 1px solid rgb(204, 204, 204);
-                        box-sizing: border-box;
-                        width: 35px;
-                        padding: 5px;
-                    `}>
-                        <FontAwesomeIcon icon={faUser} style={{ color: "#b3b3b3", }} />
+        <div id="login-container">
+            <div id="login-header">로그인</div>
+            <div id="login-content">
+                <div className="info-container" id="id-container">
+                    <div className="icon-container">
+                        <FontAwesomeIcon icon={faUser} style={{ color: "#b3b3b3" }} />
                     </div>
                     <input
-                        css={css`
-                            height: 35px;
-                            border: 1px solid rgb(204, 204, 204);
-                            border-left: none;
-                            font-size: 14px;
-                            padding: 6px 12px;
-                            flex-grow: 1;
-                            line-height: 35px;
-                            box-sizing: border-box;
-                        `}
-                        placeholder='아이디'
-                        defaultValue=''
+                        className="info-input"
+                        placeholder="아이디"
+                        defaultValue=""
                         onChange={
                             (e) => setId(e.target.value || '')
                         }
+                        autoFocus={true}
                     />
                 </div>
-                <div css={css`
-                    display: flex;
-                    padding-top: 20px;
-                `}>
-                    <div css={css`
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        border: 1px solid rgb(204, 204, 204);
-                        box-sizing: border-box;
-                        height: 100%;
-                        width: 35px;
-                        padding: 5px;
-                    `}>
-                        <FontAwesomeIcon icon={faLock} style={{ color: "#b3b3b3", }} />
+                <div className="info-container" id="pw-container">
+                    <div className="icon-container">
+                        <FontAwesomeIcon icon={faLock} style={{ color: "#b3b3b3" }} />
                     </div>
                     <input
-                        css={css`
-                            height: 35px;
-                            border: 1px solid rgb(204, 204, 204);
-                            border-left: none;
-                            font-size: 14px;
-                            padding: 6px 12px;
-                            flex-grow: 1;
-                            line-height: 35px;
-                            box-sizing: border-box;
-                        `}
+                        className="info-input"
                         type='password'
                         placeholder='비밀번호'
                         defaultValue=''
@@ -115,19 +56,15 @@ const Login = () => {
                     />
                 </div>
             </div>
-            <button
-                css={css`
-                    height: 35px;
-                    font-size: 20px;
-                    color: white;
-                    background: rgb(0, 118, 192);
-                    border: none;
-                    margin-top: 30px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                `}
-                onClick={() => requestLogin(id, pw)}>Login</button>
+            <div id="login-checkbox-container">
+                <input id="login-checkbox" type="checkbox" />
+                로그인 상태 유지
+            </div>
+            <div id="login-button-container">
+                <button id="login-button" onClick={() => requestLogin(id, pw)}>
+                    로그인
+                </button>
+            </div>
         </div>
     )
 }
