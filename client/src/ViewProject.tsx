@@ -1,19 +1,15 @@
-import { useEffect, useState } from "react"
-import { Project } from "../../class/project"
-import { socket } from "./socket"
-import { ServerMsg } from "../../interface"
+import { useEffect, useState } from 'react'
+import { Project } from '../../class/project'
+import { bindQuery} from './socket'
+import { ServerMsgProjectList } from '../../interface/serverMsg'
 
 const ViewProject = () => {
     const [projectList, setProjectList] = useState<Project[]>([])
 
     useEffect(() => {
-        socket.addEventListener("message", (event: MessageEvent<string>) => {
-            const serverMsg = JSON.parse(event.data) as ServerMsg
-            const { query, content } = serverMsg
-            if (query === "projectList") {
-                setProjectList(content.projectList)
-            }
-        })
+        bindQuery.projectList = (content: ServerMsgProjectList['content']) => {
+            setProjectList(content.projectList)
+        }
     })
 
     return (

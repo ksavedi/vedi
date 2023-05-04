@@ -1,5 +1,6 @@
-import type { ClientMsg, ServerMsg } from './interface'
 import { Project, type ProjectInfo } from './class/project'
+import type { ClientMsg } from './interface/clientMsg'
+import type { ServerMsg } from './interface/serverMsg'
 
 const getProjectInfoError = (info: ProjectInfo): ServerMsg => {
     if (info.owner === null) {
