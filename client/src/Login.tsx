@@ -7,7 +7,7 @@ import "./Login.css"
 
 const requestLogin = (id: string, pw: string) => {
     if (!/^(19|20|21|22|23|24)-\d{3}$/.test(id)) {
-        window.alert("형식에 맞지 않는 아이디입니다.")
+        window.alert('형식에 맞지 않는 학번입니다.')
         return
     }
     send({
@@ -31,7 +31,7 @@ const Login = () => {
                     </div>
                     <input
                         className="info-input"
-                        placeholder="아이디"
+                        placeholder="학번"
                         defaultValue=""
                         onChange={
                             (e) => setId(e.target.value || '')
@@ -45,9 +45,9 @@ const Login = () => {
                     </div>
                     <input
                         className="info-input"
-                        type='password'
-                        placeholder='비밀번호'
-                        defaultValue=''
+                        type="password"
+                        placeholder="가온누리 비밀번호"
+                        defaultValue=""
                         onChange={
                             (e) => setPw(e.target.value || '')
                         }
