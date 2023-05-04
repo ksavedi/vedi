@@ -1,4 +1,4 @@
-import type { Project } from './class/project';
+import type { Project, ProjectInfo } from './class/project';
 
 type Batch = 19 | 20 | 21 | 22 | 23 | 24
 type Digit = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
@@ -22,17 +22,35 @@ type ClientMsg = {
     content: object;
     auth: Auth;
 } | {
-    query: 'openProject';
+    query: 'createProject';
     content: {
         projectName: string;
-        //or projectId: ;
+        projectInfo: ProjectInfo;
     };
     auth: Auth;
 } | {
-    query: 'saveProject';
+    query: 'deleteProject';
     content: {
         projectName: string;
-        //or projectId: ;
+    };
+    auth: Auth;
+} | {
+    query: 'openProject';
+    content: {
+        projectName: string;
+    };
+    auth: Auth;
+} | {
+    query: 'saveProjectInfo';
+    content: {
+        projectName: string;
+        projectInfo: ProjectInfo;
+    };
+    auth: Auth;
+} | {
+    query: 'saveProjectFiles';
+    content: {
+        projectName: string;
         changedFiles: object;
     };
     auth: Auth;

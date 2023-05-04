@@ -29,25 +29,62 @@ content: {};
 
 # 프로젝트 관리
 
+## createProject
+
+```ts
+query: 'createProject';
+content: {
+    projectName: string;
+    description: string;
+    members: Id[];
+    requests: Id[];
+    isPublic: boolean;
+};
+```
+
+-> [project]
+
+## deleteProject
+
+```ts
+query: 'deleteProject';
+content: {
+    projectName: string;
+};
+```
+
 ## openProject
 
 ```ts
 query: 'openProject';
 content: {
     projectName: string;
-    //or projectId: ;
 };
 ```
 
 -> [project]
 
-## saveProject
+## saveProjectInfo
 
 ```ts
-query: 'saveProject';
+query: 'saveProjectInfo';
 content: {
     projectName: string;
-    //or projectId: ;
+    description: string;
+    members: Id[];
+    requests: Id[];
+    isPublic: boolean;
+};
+```
+
+-> [project]
+
+## saveProjectFiles
+
+```ts
+query: 'saveProjectFiles';
+content: {
+    projectName: string;
     changedFiles: {
         [file: Path]: string;
     };
@@ -116,12 +153,6 @@ content: {
 -> client 프로젝트 관리 페이지 업데이트
 
 # 설정
-
-<!--ClientMsg-->
-[login]: #login
-[getProjectList]: #getprojectList
-[openProject]: #openproject
-[saveProject]: #saveproject
 
 <!--ServerMsg-->
 [error]: #error

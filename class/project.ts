@@ -3,18 +3,28 @@ import type { Id } from './../interface'
 import fs from 'fs'
 import { resolve } from 'path'
 
-export class Project {
+interface ProjectInfo {
+    owner: Id;
+    description: string;
+    members: Id[];
+    requests: Id[];
+    isPublic: boolean;
+}
+
+class Project {
     public name: string
     public owner: Id
     public description: string
     public members: Id[]
+    public requests: Id[]
     public isPublic: boolean
 
-    public constructor(name: string, owner: Id, description: string, members: Id[] = [], isPublic = false) {
+    public constructor(name: string, owner: Id, description: string, members: Id[] = [], requests: Id[] = [], isPublic = false) {
         this.name = name
         this.owner = owner
         this.description = description
         this.members = members
+        this.requests = requests
         this.isPublic = isPublic
 
         Project.push(this)
@@ -87,3 +97,5 @@ export class Project {
         )
     }
 }
+
+export { type ProjectInfo, Project }
