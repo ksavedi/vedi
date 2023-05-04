@@ -15,9 +15,8 @@ app.listen(80, () => {
 import { WebSocket } from 'ws'
 import { reply } from './reply'
 import type { Auth } from './interface/msg'
-import type { ServerMsg, ServerMsgProjectList } from './interface/serverMsg'
+import type { ServerMsg } from './interface/serverMsg'
 import type { ClientMsg } from './interface/clientMsg'
-import { Project } from './class/project'
 
 //가온누리 api로 check
 const checkValid = (user: Auth) => {
@@ -25,28 +24,15 @@ const checkValid = (user: Auth) => {
     return true
 }
 
-const getProjectList = (user: Auth): ServerMsgProjectList => {
-    const resProjectList = []
-
-    for (const project of Project.list) {
-        if (project.isPublic || project.hasMember(user.id)) {
-            resProjectList.push(project)
-        }
-    }
-
-    return {
-        query: 'projectList',
-        content: {
-            projectList: resProjectList
-        }
-    }
-}
-
 const login = (user: Auth, auth: Auth): ServerMsg => {
     if (checkValid(auth)) {
         user.id = auth.id
         user.pw = auth.pw
-        return getProjectList(user)
+        return reply({
+            query: 'getProjectList',
+            content: null,
+            auth: user
+        })
     }
     else {
         return {
