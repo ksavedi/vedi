@@ -77,6 +77,10 @@
     margin: 0 5px 0 0;
 }
 
+#login-checkbox-label {
+    cursor: pointer;
+}
+
 #login-button-container {
     display: flex;
     justify-content: flex-end;
@@ -86,9 +90,10 @@
     font-family: 'Noto Sans KR', sans-serif;
     padding: 6px 13px;
     font-size: 14px;
-    color: white;
-    background: rgb(0, 118, 192);
+    color: rgb(21, 21, 21);
+    background: rgb(255, 196, 0);
     border: none;
     margin-top: 30px;
     display: flex;
+    cursor: pointer;
 }

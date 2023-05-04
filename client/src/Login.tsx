@@ -56,7 +56,9 @@ const Login = () => {
             </div>
             <div id="login-checkbox-container">
                 <input id="login-checkbox" type="checkbox" />
-                로그인 상태 유지
+                <label id="login-checkbox-label" htmlFor="login-checkbox">
+                    로그인 상태 유지
+                </label>
             </div>
             <div id="login-button-container">
                 <button id="login-button" onClick={() => requestLogin(id, pw)}>
