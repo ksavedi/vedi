@@ -19,7 +19,7 @@ app.listen(80, () => {
 import { WebSocket } from 'ws'
 import { randomInt } from 'crypto'
 import type { Auth, ClientMsg, ServerMsg } from './interface'
-import { Project } from './class/project'
+import { reply } from './reply'
 
 const generateToken = () => randomInt(1000000000000).toString()
 
@@ -86,41 +86,7 @@ server.on('connection', (socket) => {
             })
         }
         
-        if (query === 'getProjectList') {
-            const resProjectList = []
-
-            for (const project of Project.list) {
-                if (project.isPublic || project.hasMember(user.id)) {
-                    resProjectList.push(project)
-                }
-            }
-
-            return send({
-                query: 'projectList',
-                content: {
-                    projectList: resProjectList
-                }
-            })
-        }
-
-        if (query === 'openProject') {
-            const name = content.projectName
-            if (!Project.has(name) || !Project.get(name).hasMember(user.id)) {
-                return send({
-                    query: 'error',
-                    content: {
-                        message: 'project does not exist or you do not have authority'
-                    }
-                })
-            }
-
-            return send({
-                query: 'project',
-                content: {
-                    project: Project.get(name)
-                }
-            })
-        }
+        send(reply(clientMsg))
 
     })
 })
