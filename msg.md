@@ -14,7 +14,7 @@ content: {
 };
 ```
 
--> [loginResult]
+-> [projectList] //만약 성공 시 getProjectList 쿼리를 보낸 것과 동일
 
 # 프로젝트 목록
 
@@ -155,6 +155,6 @@ content: {
 
 <!--ServerMsg-->
 [error]: #error
-[loginResult]: #loginResult
+[alert]: #alert
 [projectList]: #projectlist
 [project]: #project
