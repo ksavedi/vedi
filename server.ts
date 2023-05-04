@@ -18,8 +18,10 @@ app.listen(80, () => {
 //웹소켓 통신
 import { WebSocket } from 'ws'
 import { randomInt } from 'crypto'
-import type { Auth, ClientMsg, ServerMsg } from './interface'
 import { reply } from './reply'
+import type { Auth } from './interface/msg'
+import type { ServerMsg } from './interface/serverMsg'
+import type { ClientMsg } from './interface/clientMsg'
 
 const generateToken = () => randomInt(1000000000000).toString()
 
