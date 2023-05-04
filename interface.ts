@@ -62,6 +62,11 @@ type ServerMsg = {
         'message': string;
     };
 } | {
+    query: 'alert';
+    content: {
+        'message': string;
+    };
+} | {
     query: 'token';
     content: {
         'token': string;

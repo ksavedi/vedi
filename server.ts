@@ -76,7 +76,7 @@ server.on('connection', (socket) => {
             console.log(clientMsg)
             return send(login(user, auth))
         }
-        if (!isAuthorized(user, auth)) {
+        if (user.id === null || !isAuthorized(user, auth)) {
             return send({
                 query: 'error',
                 content: {

@@ -113,6 +113,17 @@ content: {
 
 -> client alert message
 
+## alert
+
+```ts
+query: 'alert';
+content: {
+    message: string;
+};
+```
+
+-> client alert message
+
 # 로그인
 
 ## token
