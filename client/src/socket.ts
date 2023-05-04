@@ -13,22 +13,12 @@ function send(clientMsg: ClientMsg) {
     socket.send(JSON.stringify(clientMsg))
 }
 
-socket.onmessage = (event: MessageEvent<string>) => {
+socket.addEventListener("message", (event: MessageEvent<string>) => {
     const serverMsg = JSON.parse(event.data) as ServerMsg
     const { query, content } = serverMsg
     if (query === "error") {
         window.alert(content.message)
-        return
     }
-    if (query === "token") {
-        return
-    }
-    if (query === "projectList") {
-        return
-    }
-    if (query === "project") {
-        return
-    }
-}
+})
 
 export { socket, auth, send }

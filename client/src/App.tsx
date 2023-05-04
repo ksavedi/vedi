@@ -1,10 +1,10 @@
 import Login from './Login';
-import Project from './Project';
+import ViewProject from './ViewProject';
 
 const App = () =>
     <>
         <Login />
-        <Project />
+        <ViewProject />
     </>
 
 export default App;
