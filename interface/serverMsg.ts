@@ -12,7 +12,7 @@ interface ServerMsgAlert {
     content: {
         'message': string;
     };
-} 
+}
 
 interface ServerMsgToken {
     query: 'token';

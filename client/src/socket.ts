@@ -1,6 +1,6 @@
 import type { Auth } from '../../interface/msg'
 import type { ClientMsg } from '../../interface/clientMsg'
-import type { ServerMsg, ServerMsgProjectList, ServerMsgToken } from '../../interface/serverMsg'
+import type { ServerMsg, ServerMsgAlert, ServerMsgError, ServerMsgProject, ServerMsgProjectList, ServerMsgToken } from '../../interface/serverMsg'
 
 const socket = new WebSocket('ws://localhost:3000')
 
@@ -14,14 +14,14 @@ function send(clientMsg: ClientMsg) {
     socket.send(JSON.stringify(clientMsg))
 }
 
-type BindQuery = Record<
-    ServerMsg['query'],
-    (content: ServerMsg['content']) => {}
->
+type BindQuery = {
+    [T in Exclude<ServerMsg, ServerMsgError | ServerMsgAlert> as T['query']]: (content: T['content']) => void;
+}
+
 const bindQuery: BindQuery = {
-    token: (content: ServerMsgToken['content']) => {},
-    projectList: (content: ServerMsgProjectList) => {},
-    project: (content) => {}
+    token: (content: ServerMsgToken["content"]) => { },
+    projectList: (content: ServerMsgProjectList["content"]) => { },
+    project: (content: ServerMsgProject["content"]) => { }
 }
 
 socket.onmessage = (event: MessageEvent<string>) => {
@@ -29,13 +29,14 @@ socket.onmessage = (event: MessageEvent<string>) => {
     const { query, content } = serverMsg
     if (query === "error") {
         window.alert(`Error: ${content.message}`)
+        return
     }
-    else if (query === 'alert') {
+    if (query === 'alert') {
         window.alert(content.message)
+        return
     }
-    else {
-        bindQuery[query](content)
-    }
+    // @ts-ignore
+    bindQuery[query](content)
 }
 
 export { socket, auth, send, bindQuery }

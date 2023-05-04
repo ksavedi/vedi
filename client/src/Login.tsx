@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { auth, send } from './socket'
-import { Id } from '../../interface'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons'
 import "./Login.css"
+import { Id } from '../../interface/msg'
 
 const requestLogin = (id: string, pw: string) => {
     if (!/^(19|20|21|22|23|24)-\d{3}$/.test(id)) {

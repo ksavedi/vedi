@@ -1,62 +1,61 @@
 import type { ProjectInfo } from '../class/project';
 import type { Auth, Id } from './msg'
 
-interface ClientMsgLogin {
+interface Msg {
+    query: string;
+    content: object | null;
+    auth: Auth;
+}
+
+interface ClientMsgLogin extends Msg {
     query: 'login';
     content: {
         id: Id;
         pw: string;
     };
-    auth: Auth;
 }
 
-interface ClientMsgGetProjectList {
+interface ClientMsgGetProjectList extends Msg {
     query: 'getProjectList';
     content: null;
-    auth: Auth;
 }
 
-interface ClientMsgCreateProject {
+interface ClientMsgCreateProject extends Msg {
     query: 'createProject';
     content: {
         projectName: string;
         projectInfo: ProjectInfo;
     };
-    auth: Auth;
 }
 
-interface ClientMsgDeleteProject {
+interface ClientMsgDeleteProject extends Msg {
     query: 'deleteProject';
     content: {
         projectName: string;
     };
-    auth: Auth;
 }
 
-interface ClientMsgOpenProject {
+interface ClientMsgOpenProject extends Msg {
     query: 'openProject';
     content: {
         projectName: string;
     };
-    auth: Auth;
 }
 
-interface ClientMsgSaveProjectInfo {
+interface ClientMsgSaveProjectInfo extends Msg {
     query: 'saveProjectInfo';
     content: {
         projectName: string;
         projectInfo: ProjectInfo;
     };
-    auth: Auth;
 }
 
-interface ClientMsgSaveProjectFiles {
+interface ClientMsgSaveProjectFiles extends Msg {
     query: 'saveProjectFiles';
     content: {
         projectName: string;
         changedFiles: object;
     };
-    auth: Auth;
 }
 
 type ClientMsg = ClientMsgLogin
@@ -68,12 +67,12 @@ type ClientMsg = ClientMsgLogin
     | ClientMsgSaveProjectFiles
 
 export type {
-    ClientMsgLogin, 
-    ClientMsgGetProjectList, 
-    ClientMsgCreateProject, 
-    ClientMsgDeleteProject, 
-    ClientMsgOpenProject, 
-    ClientMsgSaveProjectInfo, 
+    ClientMsgLogin,
+    ClientMsgGetProjectList,
+    ClientMsgCreateProject,
+    ClientMsgDeleteProject,
+    ClientMsgOpenProject,
+    ClientMsgSaveProjectInfo,
     ClientMsgSaveProjectFiles,
 
     ClientMsg
