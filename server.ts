@@ -4,7 +4,7 @@ import express from 'express'
 
 const app = express()
 app.use(express.static(resolve(__dirname, 'client/build')))
-app.get('/', (request, response) => {
+app.get('*', (request, response) => {
     response.sendFile(resolve(__dirname, 'client/build/index.html'));
 })
 app.listen(80, () => {
@@ -26,7 +26,7 @@ const checkValid = (user: Auth) => {
 
 const isAuthorized = (user: Auth, auth: Auth) => {
     console.log(user, auth)
-    return false
+    return true
     // if (user.id === null) return false
     // return user.id === auth.id && user.pw === auth.pw
 }
@@ -47,11 +47,12 @@ server.on('connection', (socket) => {
         if (checkValid(auth)) {
             user.id = auth.id
             user.pw = auth.pw
-            return reply({
-                query: 'getProjectList',
-                content: null,
-                auth
-            })
+            return {
+                query: 'loginResult',
+                content: {
+                    result: true
+                }
+            }
         }
         else {
             return {

@@ -1,9 +1,11 @@
 import { useState } from 'react'
-import { auth, send } from './socket'
+import { auth, bindQuery, send } from './socket'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons'
 import "./Login.css"
 import { Id } from '../../interface/msg'
+import { ServerMsgLoginResult } from '../../interface/serverMsg'
+import { useNavigate } from 'react-router-dom';
 
 const requestLogin = (id: string, pw: string) => {
     if (!/^(19|20|21|22|23|24|25)-\d{3}$/.test(id)) {
@@ -20,6 +22,12 @@ const requestLogin = (id: string, pw: string) => {
 const Login = () => {
     const [id, setId] = useState<string>('')
     const [pw, setPw] = useState<string>('')
+
+    const navigate = useNavigate()
+
+    bindQuery.loginResult = (content: ServerMsgLoginResult['content']) => {
+        if (content.result) navigate('/project', { replace: true })
+    }
 
     return (
         <div id="login-container">
