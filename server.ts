@@ -73,7 +73,7 @@ server.on('connection', (socket) => {
             return send({
                 query: 'error',
                 content: {
-                    message: 'Invalid user.'
+                    message: '아이디나 비밀번호가 틀립니다.'
                 }
             })
         }
