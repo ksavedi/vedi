@@ -45,8 +45,10 @@ const login = (user: Auth, auth: Auth): ServerMsg => {
 }
 
 const isAuthorized = (user: Auth, auth: Auth) => {
-    if (user.id === null) return false
-    return user.id === auth.id && user.pw === auth.pw
+    console.log(user, auth)
+    return true
+    // if (user.id === null) return false
+    // return user.id === auth.id && user.pw === auth.pw
 }
 
 const server = new WebSocket.Server({ port: 3000 })
@@ -66,6 +68,14 @@ server.on('connection', (socket) => {
         const { query, /* content, */ auth } = clientMsg
         if (query === 'login') {
             return send(login(user, auth))
+        }
+        if (query === 'getAuthorized') {
+            return send({
+                query: 'authorized',
+                content: {
+                    authorized: isAuthorized(user, auth)
+                }
+            })
         }
         if (!isAuthorized(user, auth)) {
             return send({

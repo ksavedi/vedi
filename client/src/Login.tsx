@@ -1,10 +1,9 @@
-import { useState, useEffect } from 'react'
-import { auth, bindQuery, send } from './socket'
+import { useState } from 'react'
+import { auth, send } from './socket'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons'
 import "./Login.css"
 import { Id } from '../../interface/msg'
-import { ServerMsgToken } from '../../interface/serverMsg'
 
 const requestLogin = (id: string, pw: string) => {
     if (!/^(19|20|21|22|23|24|25)-\d{3}$/.test(id)) {
@@ -21,13 +20,6 @@ const requestLogin = (id: string, pw: string) => {
 const Login = () => {
     const [id, setId] = useState<string>('')
     const [pw, setPw] = useState<string>('')
-    const [token, setToken] = useState<string>('')
-
-    useEffect(() => {
-        bindQuery.token = (content: ServerMsgToken['content']) => {
-            setToken(content.token)
-        }
-    })
 
     return (
         <div id="login-container">

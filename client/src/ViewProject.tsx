@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Project } from '../../class/project'
-import { bindQuery } from './socket'
+import { auth, bindQuery, send } from './socket'
 import { ServerMsgProjectList } from '../../interface/serverMsg'
 
 const ViewProject = () => {
@@ -10,6 +10,12 @@ const ViewProject = () => {
         bindQuery.projectList = (content: ServerMsgProjectList['content']) => {
             setProjectList(content.projectList)
         }
+    })
+
+    send({
+        query: 'getProjectList',
+        content: null,
+        auth
     })
 
     return (

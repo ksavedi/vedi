@@ -1,11 +1,10 @@
 import type { Auth } from '../../interface/msg'
 import type { ClientMsg } from '../../interface/clientMsg'
-import type { ServerMsg, ServerMsgAlert, ServerMsgError, ServerMsgProject, ServerMsgProjectList, ServerMsgToken } from '../../interface/serverMsg'
+import type { ServerMsg, ServerMsgAlert, ServerMsgAuthorized, ServerMsgError, ServerMsgLoginResult, ServerMsgProject, ServerMsgProjectList } from '../../interface/serverMsg'
 
 const socket = new WebSocket('ws://localhost:3000')
 
 const auth: Auth = {
-    token: window.localStorage['token'],
     id: window.localStorage['id'],
     pw: window.localStorage['pw']
 }
@@ -19,7 +18,8 @@ type BindQuery = {
 }
 
 const bindQuery: BindQuery = {
-    token: (content: ServerMsgToken["content"]) => { },
+    authorized: (content: ServerMsgAuthorized["content"]) => { },
+    loginResult: (content: ServerMsgLoginResult["content"]) => { },
     projectList: (content: ServerMsgProjectList["content"]) => { },
     project: (content: ServerMsgProject["content"]) => { }
 }

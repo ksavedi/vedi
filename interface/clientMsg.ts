@@ -15,6 +15,11 @@ interface ClientMsgLogin extends Msg {
     };
 }
 
+interface ClientMsgGetAuthorized extends Msg {
+    query: 'getAuthorized';
+    content: null;
+}
+
 interface ClientMsgGetProjectList extends Msg {
     query: 'getProjectList';
     content: null;
@@ -59,6 +64,7 @@ interface ClientMsgSaveProjectFiles extends Msg {
 }
 
 type ClientMsg = ClientMsgLogin
+    | ClientMsgGetAuthorized
     | ClientMsgGetProjectList
     | ClientMsgCreateProject
     | ClientMsgDeleteProject
@@ -68,6 +74,7 @@ type ClientMsg = ClientMsgLogin
 
 export type {
     ClientMsgLogin,
+    ClientMsgGetAuthorized,
     ClientMsgGetProjectList,
     ClientMsgCreateProject,
     ClientMsgDeleteProject,
