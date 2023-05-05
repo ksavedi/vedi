@@ -20,7 +20,7 @@ import type { ClientMsg } from './interface/clientMsg'
 
 //가온누리 api로 check
 const checkValid = (user: Auth) => {
-    alert(JSON.stringify(user))
+    console.log(JSON.stringify(user))
     return true
 }
 
@@ -28,11 +28,12 @@ const login = (user: Auth, auth: Auth): ServerMsg => {
     if (checkValid(auth)) {
         user.id = auth.id
         user.pw = auth.pw
-        return reply({
-            query: 'getProjectList',
-            content: null,
-            auth: user
-        })
+        return {
+            query: 'authorized',
+            content: {
+                authorized: true
+            }
+        }
     }
     else {
         return {
@@ -46,7 +47,7 @@ const login = (user: Auth, auth: Auth): ServerMsg => {
 
 const isAuthorized = (user: Auth, auth: Auth) => {
     console.log(user, auth)
-    return true
+    return false
     // if (user.id === null) return false
     // return user.id === auth.id && user.pw === auth.pw
 }
