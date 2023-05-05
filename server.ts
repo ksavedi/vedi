@@ -24,27 +24,6 @@ const checkValid = (user: Auth) => {
     return true
 }
 
-const login = (user: Auth, auth: Auth): ServerMsg => {
-    if (checkValid(auth)) {
-        user.id = auth.id
-        user.pw = auth.pw
-        return {
-            query: 'authorized',
-            content: {
-                authorized: true
-            }
-        }
-    }
-    else {
-        return {
-            query: 'error',
-            content: {
-                message: '아이디나 비밀번호가 틀립니다.'
-            }
-        }
-    }
-}
-
 const isAuthorized = (user: Auth, auth: Auth) => {
     console.log(user, auth)
     return false
@@ -64,19 +43,31 @@ server.on('connection', (socket) => {
         pw: null
     }
 
+    const login = (auth: Auth): ServerMsg => {
+        if (checkValid(auth)) {
+            user.id = auth.id
+            user.pw = auth.pw
+            return reply({
+                query: 'getProjectList',
+                content: null,
+                auth
+            })
+        }
+        else {
+            return {
+                query: 'error',
+                content: {
+                    message: '아이디나 비밀번호가 틀립니다.'
+                }
+            }
+        }
+    }
+
     socket.on('message', (data: string) => {
         const clientMsg = JSON.parse(data.toString()) as ClientMsg
         const { query, /* content, */ auth } = clientMsg
         if (query === 'login') {
-            return send(login(user, auth))
-        }
-        if (query === 'getAuthorized') {
-            return send({
-                query: 'authorized',
-                content: {
-                    authorized: isAuthorized(user, auth)
-                }
-            })
+            return send(login(auth))
         }
         if (!isAuthorized(user, auth)) {
             return send({
