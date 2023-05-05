@@ -8,7 +8,7 @@ const getProjectInfoError = (info: ProjectInfo): ServerMsg => {
         return {
             query: 'error',
             content: {
-                message: 'project owner is null'
+                message: '프로젝트 리더가 없습니다.'
             }
         }
     }
@@ -16,7 +16,7 @@ const getProjectInfoError = (info: ProjectInfo): ServerMsg => {
         return {
             query: 'error',
             content: {
-                message: 'project owner is not in members'
+                message: '프로젝트 리더가 멤버에 포함되어있지 않습니다.'
             }
         }
     }
@@ -24,14 +24,14 @@ const getProjectInfoError = (info: ProjectInfo): ServerMsg => {
         return {
             query: 'error',
             content: {
-                message: 'private project does not get requests'
+                message: '비공개 프로젝트는 요청을 받을 수 없습니다.'
             }
         }
     }
     return {
         query: 'alert',
         content: {
-            message: 'there is no error. if you see this, then it is an error. talk to developer'
+            message: '에러가 없습니다.'
         }
     }
 }
@@ -72,7 +72,7 @@ const reply = (clientMsg: ClientMsg): ServerMsg => {
             return {
                 query: 'error',
                 content: {
-                    message: 'The project already exist'
+                    message: '같은 이름을 가진 프로젝트가 이미 존재합니다. 다른 이름을 사용하세요.'
                 }
             }
         }
@@ -83,7 +83,7 @@ const reply = (clientMsg: ClientMsg): ServerMsg => {
             return {
                 query: 'error',
                 content: {
-                    message: 'You are not the owner'
+                    message: '당신이 리더가 아닙니다.'
                 }
             }
         }
@@ -111,7 +111,7 @@ const reply = (clientMsg: ClientMsg): ServerMsg => {
             return {
                 query: 'error',
                 content: {
-                    message: 'project does not exist'
+                    message: '존재하지 않는 프로젝트입니다.'
                 }
             }
         }
@@ -125,7 +125,7 @@ const reply = (clientMsg: ClientMsg): ServerMsg => {
             return {
                 query: 'error',
                 content: {
-                    message: 'You are not the owner'
+                    message: '당신은 팀리더가 아니기 때문에 삭제할 수 없습니다.'
                 }
             }
         }
@@ -139,7 +139,7 @@ const reply = (clientMsg: ClientMsg): ServerMsg => {
             return {
                 query: 'error',
                 content: {
-                    message: 'project does not exist'
+                    message: '프로젝트가 존재하지 않습니다.'
                 }
             }
         }
@@ -149,7 +149,7 @@ const reply = (clientMsg: ClientMsg): ServerMsg => {
             return {
                 query: 'error',
                 content: {
-                    message: 'you do not have permission to open it.'
+                    message: '프로젝트를 열 권한이 없습니다.'
                 }
             }
         }
@@ -169,7 +169,7 @@ const reply = (clientMsg: ClientMsg): ServerMsg => {
             return {
                 query: 'error',
                 content: {
-                    message: 'project does not exist'
+                    message: '프로젝트가 존재하지 않습니다.'
                 }
             }
         }
@@ -182,7 +182,7 @@ const reply = (clientMsg: ClientMsg): ServerMsg => {
             return {
                 query: 'error',
                 content: {
-                    message: 'You are not the owner'
+                    message: '당신이 팀 리더가 아닙니다.'
                 }
             }
         }
@@ -193,7 +193,7 @@ const reply = (clientMsg: ClientMsg): ServerMsg => {
     return {
         query: 'error',
         content: {
-            message: `The query '${query}' does not exist.`
+            message: `clientMsg '${query}' does not exist.`
         }
     }
 
