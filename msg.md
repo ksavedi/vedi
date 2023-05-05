@@ -14,7 +14,7 @@ content: {
 };
 ```
 
--> [token]
+-> [projectList] //만약 성공 시 getProjectList 쿼리를 보낸 것과 동일
 
 # 프로젝트 목록
 
@@ -35,10 +35,7 @@ content: null;
 query: 'createProject';
 content: {
     projectName: string;
-    description: string;
-    members: Id[];
-    requests: Id[];
-    isPublic: boolean;
+    projectInfo: ProjectInfo;
 };
 ```
 
@@ -70,10 +67,7 @@ content: {
 query: 'saveProjectInfo';
 content: {
     projectName: string;
-    description: string;
-    members: Id[];
-    requests: Id[];
-    isPublic: boolean;
+    projectInfo: ProjectInfo;
 };
 ```
 
@@ -126,16 +120,7 @@ content: {
 
 # 로그인
 
-## token
-
-```ts
-query: 'token';
-content: {
-    token: string;
-};
-```
-
--> client auth에 token 저장
+없음
 
 # 프로젝트 목록
 
@@ -167,6 +152,6 @@ content: {
 
 <!--ServerMsg-->
 [error]: #error
-[token]: #token
+[alert]: #alert
 [projectList]: #projectlist
 [project]: #project

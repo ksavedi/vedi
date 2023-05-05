@@ -17,6 +17,7 @@ class Project {
     public members: Id[]
     public requests: Id[]
     public isPublic: boolean
+    public isFinished: boolean
 
     public constructor(name: string, owner: Id, description: string, members: Id[] = [], requests: Id[] = [], isPublic = false) {
         this.name = name
@@ -25,6 +26,7 @@ class Project {
         this.members = members
         this.requests = requests
         this.isPublic = isPublic
+        this.isFinished = false
 
         Project.push(this)
     }
@@ -94,6 +96,24 @@ class Project {
                 && id in this.members
             )
         )
+    }
+
+    public get info(): ProjectInfo {
+        return {
+            owner: this.owner,
+            description: this.description,
+            members: this.members,
+            requests: this.requests,
+            isPublic: this.isPublic
+        }
+    }
+
+    public set info(newInfo: ProjectInfo) {
+        this.owner = newInfo.owner
+        this.description = newInfo.description
+        this.members = newInfo.members
+        this.requests = newInfo.requests
+        this.isPublic = newInfo.isPublic
     }
 }
 

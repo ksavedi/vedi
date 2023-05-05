@@ -1,6 +1,5 @@
 //서버 열기
 import { resolve } from 'path'
-
 import express from 'express'
 
 const app = express()
@@ -12,33 +11,28 @@ app.listen(80, () => {
     console.log('The server started!')
 })
 
-//class
-// import { Project } from './class/project'
-
 //웹소켓 통신
 import { WebSocket } from 'ws'
-import { randomInt } from 'crypto'
 import { reply } from './reply'
 import type { Auth } from './interface/msg'
 import type { ServerMsg } from './interface/serverMsg'
 import type { ClientMsg } from './interface/clientMsg'
 
-const generateToken = () => randomInt(1000000000000).toString()
-
 //가온누리 api로 check
-const checkValid = () => true
+const checkValid = (user: Auth) => {
+    alert(JSON.stringify(user))
+    return true
+}
 
 const login = (user: Auth, auth: Auth): ServerMsg => {
-    if (checkValid()) {
-        user.token = generateToken()
+    if (checkValid(auth)) {
         user.id = auth.id
         user.pw = auth.pw
-        return {
-            query: 'token',
-            content: {
-                token: user.token
-            }
-        }
+        return reply({
+            query: 'getProjectList',
+            content: null,
+            auth: user
+        })
     }
     else {
         return {
@@ -50,14 +44,10 @@ const login = (user: Auth, auth: Auth): ServerMsg => {
     }
 }
 
-// const isAuthorized = (user: Auth, auth: Auth) => {
-//     if (user.token === null || user.token === undefined) return false
-//     return (
-//         user.token === auth.token
-//         && user.id === auth.id
-//         && user.pw === auth.pw
-//     )
-// }
+const isAuthorized = (user: Auth, auth: Auth) => {
+    if (user.id === null) return false
+    return user.id === auth.id && user.pw === auth.pw
+}
 
 const server = new WebSocket.Server({ port: 3000 })
 server.on('connection', (socket) => {
@@ -75,18 +65,16 @@ server.on('connection', (socket) => {
         const clientMsg = JSON.parse(data.toString()) as ClientMsg
         const { query, /* content, */ auth } = clientMsg
         if (query === 'login') {
-            console.log(clientMsg)
             return send(login(user, auth))
         }
-        // use after complete login feature
-        // if (user.id === null || !isAuthorized(user, auth)) {
-        //     return send({
-        //         query: 'error',
-        //         content: {
-        //             message: 'Invalid user.'
-        //         }
-        //     })
-        // }
+        if (!isAuthorized(user, auth)) {
+            return send({
+                query: 'error',
+                content: {
+                    message: 'Invalid user.'
+                }
+            })
+        }
 
         send(reply(clientMsg))
     })

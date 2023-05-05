@@ -14,10 +14,10 @@ interface ServerMsgAlert {
     };
 }
 
-interface ServerMsgToken {
-    query: 'token';
+interface ServerMsgLoginResult {
+    query: 'loginResult';
     content: {
-        'token': string;
+        'result': boolean;
     };
 }
 
@@ -37,14 +37,14 @@ interface ServerMsgProject {
 
 type ServerMsg = ServerMsgError
     | ServerMsgAlert
-    | ServerMsgToken
+    | ServerMsgLoginResult
     | ServerMsgProjectList
     | ServerMsgProject
 
 export type {
     ServerMsgError,
     ServerMsgAlert,
-    ServerMsgToken,
+    ServerMsgLoginResult,
     ServerMsgProjectList,
     ServerMsgProject,
 
