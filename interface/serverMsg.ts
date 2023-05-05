@@ -21,13 +21,6 @@ interface ServerMsgLoginResult {
     };
 }
 
-interface ServerMsgAuthorized {
-    query: 'authorized';
-    content: {
-        authorized: boolean;
-    };
-}
-
 interface ServerMsgProjectList {
     query: 'projectList';
     content: {
@@ -45,7 +38,6 @@ interface ServerMsgProject {
 type ServerMsg = ServerMsgError
     | ServerMsgAlert
     | ServerMsgLoginResult
-    | ServerMsgAuthorized
     | ServerMsgProjectList
     | ServerMsgProject
 
@@ -53,7 +45,6 @@ export type {
     ServerMsgError,
     ServerMsgAlert,
     ServerMsgLoginResult,
-    ServerMsgAuthorized,
     ServerMsgProjectList,
     ServerMsgProject,
 
