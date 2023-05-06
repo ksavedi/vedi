@@ -19,7 +19,7 @@ class Project {
     public isPublic: boolean
     public isFinished: boolean
 
-    public constructor(name: string, owner: Id, description: string, members: Id[] = [], requests: Id[] = [], isPublic = false) {
+    public constructor(name: string, owner: Id, description: string, members: Id[] = [], requests: Id[] = [], isPublic = false, isNew = true) {
         this.name = name
         this.owner = owner
         this.description = description
@@ -28,15 +28,24 @@ class Project {
         this.isPublic = isPublic
         this.isFinished = false
 
-        Project.push(this)
+        if (isNew) Project.push(this)
     }
 
-    public static readonly list: Project[] = JSON.parse(
-        fs.readFileSync(
-            resolve(__dirname, '../data/projectList.json'),
-            'utf-8'
-        )
-    )
+    public static readonly list: Project[] = (JSON.parse(
+            fs.readFileSync(
+                resolve(__dirname, '../data/projectList.json'),
+                'utf-8'
+            )
+        ) as Project[])
+        .map((project) => new Project(
+            project.name,
+            project.owner,
+            project.description,
+            project.members,
+            project.requests,
+            project.isPublic,
+            false
+        ))
 
     private static log(message: string) {
         const now = new Date()
@@ -89,6 +98,7 @@ class Project {
     }
 
     public hasMember(id: Id) {
+        console.log('hi')
         return (
             id === this.owner
             || (
