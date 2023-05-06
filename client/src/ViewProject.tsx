@@ -1,22 +1,21 @@
 import { useEffect, useState } from 'react'
 import { Project } from '../../class/project'
-import { bindQuery, send } from './post'
+import { requestMsg } from './post'
 import { ServerMsgProjectList } from '../../interface/serverMsg'
 import "./ViewProject.css"
 
 const ViewProject = () => {
     const [projectList, setProjectList] = useState<Project[]>([])
 
-    bindQuery.projectList = (content: ServerMsgProjectList['content']) => {
-        setProjectList(content.projectList)
-    }
-
     useEffect(() => {
-        send({
-            query: 'getProjectList',
-            content: null,
-            sessionKey: localStorage['sessionKey']
-        })
+        (async () => {
+            const result = await requestMsg({
+                query: 'getProjectList',
+                content: null,
+                sessionKey: localStorage['sessionKey']
+            }) as ServerMsgProjectList
+            setProjectList(result.content.projectList)
+        })()
     }, [])
 
     return (
