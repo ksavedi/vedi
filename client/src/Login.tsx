@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { bindQuery, send } from './socket'
+import { bindQuery, send } from './post'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons'
 import "./Login.css"

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Project } from '../../class/project'
-import { bindQuery, send } from './socket'
+import { bindQuery, send } from './post'
 import { ServerMsgProjectList } from '../../interface/serverMsg'
 import "./ViewProject.css"
 
