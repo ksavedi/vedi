@@ -4,6 +4,7 @@ import express from 'express'
 
 const app = express()
 app.use(express.static(resolve(__dirname, 'client/build')))
+app.use(express.json())
 app.get('*', (req, res) => {
     res.sendFile(resolve(__dirname, 'client/build/index.html'));
 })
@@ -11,7 +12,7 @@ app.listen(80, () => {
     console.log('The server started!')
 })
 
-//웹소켓 통신
+//통신
 import { reply } from './reply'
 import type { Id, User } from './interface/msg'
 import type { ServerMsg } from './interface/serverMsg'
@@ -57,7 +58,6 @@ const login = (auth: User): ServerMsg => {
     }
 }
 
-app.use(express.json())
 app.post('/api', (req, res) => {
     const send = (serverMsg: ServerMsg) => {
         res.json(serverMsg)
