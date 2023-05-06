@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 const Login = () => {
     const [id, setId] = useState<string>('')
     const [pw, setPw] = useState<string>('')
+    const [remember, setRemember] = useState<boolean>(false)
 
     const navigate = useNavigate()
 
@@ -19,11 +20,12 @@ const Login = () => {
         }
         const res = await requestMsg({
             query: 'login',
-            content: { id: id as Id, pw },
+            content: { id: id as Id, pw, remember },
             sessionKey: localStorage['sessionKey']
         })
         if (res.query === 'loginResult') {
             localStorage['sessionKey'] = res.content.sessionKey
+            localStorage['id'] = id
             navigate('/project', { replace: true })
         }
     }
@@ -62,8 +64,16 @@ const Login = () => {
                 </div>
             </div>
             <div id="login-checkbox-container">
-                <input id="login-checkbox" type="checkbox" />
-                <label id="login-checkbox-label" htmlFor="login-checkbox">
+                <input  
+                    id="login-checkbox"
+                    type="checkbox"
+                    onChange={
+                        (e) => setRemember(e.target.checked)
+                    }/>
+                <label
+                    id="login-checkbox-label"
+                    htmlFor="login-checkbox"
+                >
                     로그인 상태 유지
                 </label>
             </div>
