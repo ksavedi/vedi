@@ -24,6 +24,10 @@ const checkValid = (user: User) => {
     return true
 }
 
+const generateSessionKey = () => {
+    return '임시세션키'
+}
+
 const isAuthorized = (user: User, sessionKey: string) => {
     console.log(user, sessionKey)
     return true
@@ -50,7 +54,8 @@ server.on('connection', (socket) => {
             return {
                 query: 'loginResult',
                 content: {
-                    result: true
+                    result: true,
+                    sessionKey: generateSessionKey()
                 }
             }
         }

@@ -10,14 +10,15 @@ interface ServerMsgError {
 interface ServerMsgAlert {
     query: 'alert';
     content: {
-        'message': string;
+        message: string;
     };
 }
 
 interface ServerMsgLoginResult {
     query: 'loginResult';
     content: {
-        'result': boolean;
+        result: boolean;
+        sessionKey: string;
     };
 }
 
