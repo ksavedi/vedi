@@ -4,6 +4,7 @@ import express from 'express'
 
 const app = express()
 app.use(express.static(resolve(__dirname, 'client/build')))
+app.use(express.json())
 app.get('*', (req, res) => {
     res.sendFile(resolve(__dirname, 'client/build/index.html'));
 })
@@ -32,7 +33,7 @@ const generateSessionKey = () => {
 }
 
 const isAuthorized = (sessionKey: string) => {
-    return sessionKey in session;
+    return sessionKey in session
 }
 
 const login = (auth: User): ServerMsg => {
@@ -65,12 +66,11 @@ app.post('/api', (req, res) => {
 
     const clientMsg = req.body as ClientMsg
     const { query, content, sessionKey } = clientMsg
+    console.log(req.body)
     if (query === 'login') {
-        return send(login({
-            id: content.id,
-            pw: content.pw
-        }))
+        return send(login(content))
     }
+
     if (!isAuthorized(sessionKey)) {
         return send({
             query: 'error',

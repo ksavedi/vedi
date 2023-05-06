@@ -1,23 +1,10 @@
 import { useState } from 'react'
-import { bindQuery, send } from './post'
+import { requestMsg } from './post'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons'
 import "./Login.css"
 import { Id } from '../../interface/msg'
-import { ServerMsgLoginResult } from '../../interface/serverMsg'
 import { useNavigate } from 'react-router-dom';
-
-const requestLogin = (id: string, pw: string) => {
-    if (!/^(19|20|21|22|23|24|25)-\d{3}$/.test(id)) {
-        window.alert('형식에 맞지 않는 학번입니다.')
-        return
-    }
-    send({
-        query: 'login',
-        content: { id: id as Id, pw },
-        sessionKey: localStorage['sessionKey']
-    })
-}
 
 const Login = () => {
     const [id, setId] = useState<string>('')
@@ -25,8 +12,20 @@ const Login = () => {
 
     const navigate = useNavigate()
 
-    bindQuery.loginResult = (content: ServerMsgLoginResult['content']) => {
-        if (content.result) navigate('/project', { replace: true })
+    const requestLogin = async (id: string, pw: string) => {
+        if (!/^(19|20|21|22|23|24|25)-\d{3}$/.test(id)) {
+            window.alert('형식에 맞지 않는 학번입니다.')
+            return
+        }
+        const res = await requestMsg({
+            query: 'login',
+            content: { id: id as Id, pw },
+            sessionKey: localStorage['sessionKey']
+        })
+        if (res.query === 'loginResult') {
+            localStorage['sessionKey'] = res.content.sessionKey
+            navigate('/project', { replace: true })
+        }
     }
 
     return (
