@@ -14,18 +14,18 @@ app.listen(80, () => {
 //웹소켓 통신
 import { WebSocket } from 'ws'
 import { reply } from './reply'
-import type { Auth } from './interface/msg'
+import type { User } from './interface/msg'
 import type { ServerMsg } from './interface/serverMsg'
 import type { ClientMsg } from './interface/clientMsg'
 
 //가온누리 api로 check
-const checkValid = (user: Auth) => {
+const checkValid = (user: User) => {
     console.log(JSON.stringify(user))
     return true
 }
 
-const isAuthorized = (user: Auth, auth: Auth) => {
-    console.log(user, auth)
+const isAuthorized = (user: User, sessionKey: string) => {
+    console.log(user, sessionKey)
     return true
     // if (user.id === null) return false
     // return user.id === auth.id && user.pw === auth.pw
@@ -38,12 +38,12 @@ server.on('connection', (socket) => {
         return true
     }
 
-    const user: Auth = {
+    const user: User = {
         id: null,
         pw: null
     }
 
-    const login = (auth: Auth): ServerMsg => {
+    const login = (auth: User): ServerMsg => {
         if (checkValid(auth)) {
             user.id = auth.id
             user.pw = auth.pw
@@ -66,14 +66,14 @@ server.on('connection', (socket) => {
 
     socket.on('message', (data: string) => {
         const clientMsg = JSON.parse(data.toString()) as ClientMsg
-        const { query, content, auth } = clientMsg
+        const { query, content, sessionKey } = clientMsg
         if (query === 'login') {
             return send(login({
                 id: content.id,
                 pw: content.pw
             }))
         }
-        if (!isAuthorized(user, auth)) {
+        if (!isAuthorized(user, sessionKey)) {
             return send({
                 query: 'error',
                 content: {
@@ -82,6 +82,6 @@ server.on('connection', (socket) => {
             })
         }
 
-        send(reply(clientMsg))
+        send(reply(user, clientMsg))
     })
 })

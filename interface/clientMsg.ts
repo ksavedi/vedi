@@ -1,13 +1,13 @@
 import type { ProjectInfo } from '../class/project';
-import type { Auth, Id } from './msg'
+import type { Id } from './msg'
 
-interface Msg {
+interface TemplateClientMsg {
     query: string;
     content: object | null;
-    auth: Auth;
+    sessionKey: string;
 }
 
-interface ClientMsgLogin extends Msg {
+interface ClientMsgLogin extends TemplateClientMsg {
     query: 'login';
     content: {
         id: Id;
@@ -15,12 +15,12 @@ interface ClientMsgLogin extends Msg {
     };
 }
 
-interface ClientMsgGetProjectList extends Msg {
+interface ClientMsgGetProjectList extends TemplateClientMsg {
     query: 'getProjectList';
     content: null;
 }
 
-interface ClientMsgCreateProject extends Msg {
+interface ClientMsgCreateProject extends TemplateClientMsg {
     query: 'createProject';
     content: {
         projectName: string;
@@ -28,21 +28,21 @@ interface ClientMsgCreateProject extends Msg {
     };
 }
 
-interface ClientMsgDeleteProject extends Msg {
+interface ClientMsgDeleteProject extends TemplateClientMsg {
     query: 'deleteProject';
     content: {
         projectName: string;
     };
 }
 
-interface ClientMsgOpenProject extends Msg {
+interface ClientMsgOpenProject extends TemplateClientMsg {
     query: 'openProject';
     content: {
         projectName: string;
     };
 }
 
-interface ClientMsgSaveProjectInfo extends Msg {
+interface ClientMsgSaveProjectInfo extends TemplateClientMsg {
     query: 'saveProjectInfo';
     content: {
         projectName: string;
@@ -50,7 +50,7 @@ interface ClientMsgSaveProjectInfo extends Msg {
     };
 }
 
-interface ClientMsgSaveProjectFiles extends Msg {
+interface ClientMsgSaveProjectFiles extends TemplateClientMsg {
     query: 'saveProjectFiles';
     content: {
         projectName: string;

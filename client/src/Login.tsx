@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { auth, bindQuery, send } from './socket'
+import { bindQuery, send } from './socket'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons'
 import "./Login.css"
@@ -15,7 +15,7 @@ const requestLogin = (id: string, pw: string) => {
     send({
         query: 'login',
         content: { id: id as Id, pw },
-        auth
+        sessionKey: localStorage['sessionKey']
     })
 }
 

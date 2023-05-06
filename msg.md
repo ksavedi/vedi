@@ -1,6 +1,6 @@
 # ClientMsg client -> server
 
-auth와 error는 생략
+sessionKey와 error는 생략
 
 # 로그인
 

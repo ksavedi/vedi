@@ -1,13 +1,7 @@
-import type { Auth } from '../../interface/msg'
 import type { ClientMsg } from '../../interface/clientMsg'
 import type { ServerMsg, ServerMsgAlert, ServerMsgError, ServerMsgLoginResult, ServerMsgProject, ServerMsgProjectList } from '../../interface/serverMsg'
 
 const socket = new WebSocket('ws://localhost:3000')
-
-const auth: Auth = {
-    id: window.localStorage['id'],
-    pw: window.localStorage['pw']
-}
 
 function send(clientMsg: ClientMsg) {
     socket.send(JSON.stringify(clientMsg))
@@ -38,4 +32,4 @@ socket.onmessage = (event: MessageEvent<string>) => {
     bindQuery[query](content)
 }
 
-export { socket, auth, send, bindQuery }
+export { socket, send, bindQuery }
