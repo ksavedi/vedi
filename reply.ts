@@ -1,6 +1,6 @@
 import { Project, type ProjectInfo } from './class/project'
 import type { ClientMsg } from './interface/clientMsg'
-import type { Auth } from './interface/msg'
+import type { User } from './interface/msg'
 import type { ServerMsg } from './interface/serverMsg'
 
 const getProjectInfoError = (info: ProjectInfo): ServerMsg => {
@@ -41,12 +41,12 @@ const hasProjectInfoError = (info: ProjectInfo) => {
     return true
 }
 
-const isOwner = (user: Auth, info: ProjectInfo) => {
+const isOwner = (user: User, info: ProjectInfo) => {
     return user.id !== null && info.owner === user.id
 }
 
-const reply = (clientMsg: ClientMsg): ServerMsg => {
-    const { query, content, auth: user } = clientMsg
+const reply = (user: User, clientMsg: ClientMsg): ServerMsg => {
+    const { query, content } = clientMsg
 
     if (query === 'getProjectList') {
         const resProjectList = []

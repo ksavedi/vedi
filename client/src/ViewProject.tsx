@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Project } from '../../class/project'
-import { auth, bindQuery, send } from './socket'
+import { bindQuery, send } from './socket'
 import { ServerMsgProjectList } from '../../interface/serverMsg'
 import "./ViewProject.css"
 
@@ -15,7 +15,7 @@ const ViewProject = () => {
         send({
             query: 'getProjectList',
             content: null,
-            auth
+            sessionKey: localStorage['sessionKey']
         })
     }, [])
 

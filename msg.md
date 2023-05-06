@@ -1,6 +1,6 @@
 # ClientMsg client -> server
 
-auth와 error는 생략
+sessionKey와 error는 생략
 
 # 로그인
 
@@ -14,7 +14,7 @@ content: {
 };
 ```
 
--> [projectList] //만약 성공 시 getProjectList 쿼리를 보낸 것과 동일
+-> [loginResult]
 
 # 프로젝트 목록
 
@@ -120,7 +120,15 @@ content: {
 
 # 로그인
 
-없음
+## loginResult
+
+```ts
+query: 'loginResult';
+content: {
+    result: boolean;
+    sessionKey: string;
+};
+```
 
 # 프로젝트 목록
 
@@ -153,5 +161,6 @@ content: {
 <!--ServerMsg-->
 [error]: #error
 [alert]: #alert
+[loginResult]: #loginresult
 [projectList]: #projectlist
 [project]: #project
