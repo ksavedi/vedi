@@ -1,11 +1,11 @@
 import type { ClientMsg } from '../../interface/clientMsg'
 
-function send(clientMsg: ClientMsg) {
-    fetch('./api', {
+const send = async (clientMsg: ClientMsg) => {
+    const response = await fetch('./api', {
         method: 'POST',
         body: JSON.stringify(clientMsg)
-    }).then((res) => res.json())
-    .then((result) => { console.log(result) })
+    })
+    return response.json()
 }
 
 export { send }
