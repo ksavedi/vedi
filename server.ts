@@ -57,6 +57,7 @@ const login = (auth: User): ServerMsg => {
     }
 }
 
+app.use(express.json())
 app.post('/api', (req, res) => {
     const send = (serverMsg: ServerMsg) => {
         res.json(serverMsg)
