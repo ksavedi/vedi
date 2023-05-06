@@ -12,7 +12,7 @@ app.listen(80, () => {
     console.log('The server started!')
 })
 
-//웹소켓 통신
+//통신
 import { reply } from './reply'
 import type { Id, User } from './interface/msg'
 import type { ServerMsg } from './interface/serverMsg'
