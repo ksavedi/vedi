@@ -61,23 +61,24 @@ const login = (auth: User): ServerMsg => {
 app.post('/api', (req, res) => {
     const send = (serverMsg: ServerMsg) => {
         res.json(serverMsg)
-        return true
     }
 
     const clientMsg = req.body as ClientMsg
     const { query, content, sessionKey } = clientMsg
     console.log(req.body)
     if (query === 'login') {
-        return send(login(content))
+        send(login(content))
+        return
     }
 
     if (!isAuthorized(sessionKey)) {
-        return send({
+        send({
             query: 'error',
             content: {
                 message: '아이디나 비밀번호가 틀립니다.'
             }
         })
+        return
     }
 
     send(reply(session[sessionKey], clientMsg))
