@@ -14,6 +14,13 @@ interface ServerMsgAlert {
     };
 }
 
+interface ServerMsgLoginResult {
+    query: 'loginResult';
+    content: {
+        'result': boolean;
+    };
+}
+
 interface ServerMsgProjectList {
     query: 'projectList';
     content: {
@@ -30,12 +37,14 @@ interface ServerMsgProject {
 
 type ServerMsg = ServerMsgError
     | ServerMsgAlert
+    | ServerMsgLoginResult
     | ServerMsgProjectList
     | ServerMsgProject
 
 export type {
     ServerMsgError,
     ServerMsgAlert,
+    ServerMsgLoginResult,
     ServerMsgProjectList,
     ServerMsgProject,
 

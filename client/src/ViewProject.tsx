@@ -6,17 +6,17 @@ import { ServerMsgProjectList } from '../../interface/serverMsg'
 const ViewProject = () => {
     const [projectList, setProjectList] = useState<Project[]>([])
 
-    useEffect(() => {
-        bindQuery.projectList = (content: ServerMsgProjectList['content']) => {
-            setProjectList(content.projectList)
-        }
-    })
+    bindQuery.projectList = (content: ServerMsgProjectList['content']) => {
+        setProjectList(content.projectList)
+    }
 
-    send({
-        query: 'getProjectList',
-        content: null,
-        auth
-    })
+    useEffect(() => {
+        send({
+            query: 'getProjectList',
+            content: null,
+            auth
+        })
+    }, [])
 
     return (
         <>
