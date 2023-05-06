@@ -65,9 +65,12 @@ server.on('connection', (socket) => {
 
     socket.on('message', (data: string) => {
         const clientMsg = JSON.parse(data.toString()) as ClientMsg
-        const { query, /* content, */ auth } = clientMsg
+        const { query, content, auth } = clientMsg
         if (query === 'login') {
-            return send(login(auth))
+            return send(login({
+                id: content.id,
+                pw: content.pw
+            }))
         }
         if (!isAuthorized(user, auth)) {
             return send({
