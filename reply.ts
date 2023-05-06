@@ -1,6 +1,6 @@
 import { Project, type ProjectInfo } from './class/project'
 import type { ClientMsg } from './interface/clientMsg'
-import type { User } from './interface/msg'
+import type { Id } from './interface/msg'
 import type { ServerMsg } from './interface/serverMsg'
 
 const getProjectInfoError = (info: ProjectInfo): ServerMsg => {
@@ -41,18 +41,18 @@ const hasProjectInfoError = (info: ProjectInfo) => {
     return true
 }
 
-const isOwner = (user: User, info: ProjectInfo) => {
-    return user.id !== null && info.owner === user.id
+const isOwner = (id: Id, info: ProjectInfo) => {
+    return id !== null && info.owner === id
 }
 
-const reply = (user: User, clientMsg: ClientMsg): ServerMsg => {
+const reply = (id: Id, clientMsg: ClientMsg): ServerMsg => {
     const { query, content } = clientMsg
 
     if (query === 'getProjectList') {
         const resProjectList = []
 
         for (const project of Project.list) {
-            if (project.isPublic || project.hasMember(user.id)) {
+            if (project.isPublic || project.hasMember(id)) {
                 resProjectList.push(project)
             }
         }
@@ -79,7 +79,7 @@ const reply = (user: User, clientMsg: ClientMsg): ServerMsg => {
         if (hasProjectInfoError(info)) {
             return getProjectInfoError(info)
         }
-        if (!isOwner(user, info)) {
+        if (!isOwner(id, info)) {
             return {
                 query: 'error',
                 content: {
@@ -121,7 +121,7 @@ const reply = (user: User, clientMsg: ClientMsg): ServerMsg => {
         if (hasProjectInfoError(info)) {
             return getProjectInfoError(info)
         }
-        if (!isOwner(user, info)) {
+        if (!isOwner(id, info)) {
             return {
                 query: 'error',
                 content: {
@@ -145,7 +145,7 @@ const reply = (user: User, clientMsg: ClientMsg): ServerMsg => {
         }
 
         const project = Project.get(name)
-        if (!project.hasMember(user.id)) {
+        if (!project.hasMember(id)) {
             return {
                 query: 'error',
                 content: {
@@ -178,7 +178,7 @@ const reply = (user: User, clientMsg: ClientMsg): ServerMsg => {
         }
 
         const project = Project.get(name)
-        if (!isOwner(user, info) || !isOwner(user, project.info)) {
+        if (!isOwner(id, info) || !isOwner(id, project.info)) {
             return {
                 query: 'error',
                 content: {
