@@ -65,7 +65,6 @@ app.post('/api', (req, res) => {
 
     const clientMsg = req.body as ClientMsg
     const { query, content, sessionKey } = clientMsg
-    console.log(req.body)
     if (query === 'login') {
         send(login(content))
         return

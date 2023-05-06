@@ -12,6 +12,7 @@ interface ClientMsgLogin extends TemplateClientMsg {
     content: {
         id: Id;
         pw: string;
+        remember: boolean;
     };
 }
 
