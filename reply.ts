@@ -133,6 +133,37 @@ const reply = (id: Id, clientMsg: ClientMsg): ServerMsg => {
         Project.pop(project)
     }
 
+    if (query === 'requestProject') {
+        const name = content.projectName
+        if (!Project.has(name)) {
+            return {
+                query: 'error',
+                content: {
+                    message: '프로젝트가 존재하지 않습니다.'
+                }
+            }
+        }
+
+        const project = Project.get(name)
+        if (id in project.requests) {
+            return {
+                query: 'alert',
+                content: {
+                    message: '이미 신청했습니다.'
+                }
+            }
+        } else {
+            project.requests.push(id)
+        }
+
+        return {
+            query: 'alert',
+            content: {
+                message: '신청했습니다.'
+            }
+        }
+    }
+
     if (query === 'openProject') {
         const name = content.projectName
         if (!Project.has(name)) {

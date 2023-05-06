@@ -36,6 +36,13 @@ interface ClientMsgDeleteProject extends TemplateClientMsg {
     };
 }
 
+interface ClientMsgRequestProject extends TemplateClientMsg {
+    query: 'requestProject';
+    content: {
+        projectName: string;
+    };
+}
+
 interface ClientMsgOpenProject extends TemplateClientMsg {
     query: 'openProject';
     content: {
@@ -63,6 +70,7 @@ type ClientMsg = ClientMsgLogin
     | ClientMsgGetProjectList
     | ClientMsgCreateProject
     | ClientMsgDeleteProject
+    | ClientMsgRequestProject
     | ClientMsgOpenProject
     | ClientMsgSaveProjectInfo
     | ClientMsgSaveProjectFiles
@@ -72,6 +80,7 @@ export type {
     ClientMsgGetProjectList,
     ClientMsgCreateProject,
     ClientMsgDeleteProject,
+    ClientMsgRequestProject,
     ClientMsgOpenProject,
     ClientMsgSaveProjectInfo,
     ClientMsgSaveProjectFiles,

@@ -50,6 +50,15 @@ content: {
 };
 ```
 
+## requestProject
+
+```ts
+query: 'requestProject';
+content: {
+    projectName: string;
+};
+```
+
 ## openProject
 
 ```ts
