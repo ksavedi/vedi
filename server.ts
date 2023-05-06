@@ -57,7 +57,7 @@ const login = (auth: User): ServerMsg => {
     }
 }
 
-app.post('/msg', (req, res) => {
+app.post('/api', (req, res) => {
     const send = (serverMsg: ServerMsg) => {
         res.json(serverMsg)
         return true
