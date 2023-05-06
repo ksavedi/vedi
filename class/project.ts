@@ -98,7 +98,6 @@ class Project {
     }
 
     public hasMember(id: Id) {
-        console.log('hi')
         return (
             id === this.owner
             || (
