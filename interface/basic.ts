@@ -7,4 +7,6 @@ interface User {
     pw: null | string;
 }
 
-export type { Id, User }
+const directory = /\\(ㄱ-ㅎㅏ-ㅣ가-힣\w\s\.+\\)*(ㄱ-ㅎㅏ-ㅣ가-힣\w\s\.*\.)+(?ㄱ-ㅎㅏ-ㅣ가-힣\w\s\.*)$/gi
+
+export { type Id, type User, directory }

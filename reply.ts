@@ -1,6 +1,6 @@
 import { Project, type ProjectInfo } from './class/project'
 import type { ClientRes } from './interface/clientRes'
-import type { Id } from './interface/res'
+import type { Id } from './interface/basic'
 import type { ServerRes } from './interface/serverRes'
 
 const getProjectInfoError = (info: ProjectInfo): ServerRes => {
@@ -93,6 +93,7 @@ const reply = (id: Id, clientRes: ClientRes): ServerRes => {
             info.owner,
             info.description,
             info.members,
+            info.files,
             info.requests,
             info.isPublic
         )

@@ -1,11 +1,12 @@
 import fs from 'fs'
 import { resolve } from 'path'
-import type { Id } from '../interface/res';
+import { type Id, directory } from '../interface/basic';
 
 interface ProjectInfo {
     owner: Id;
     description: string;
     members: Id[];
+    files: Record<string, string>;
     requests: Id[];
     isPublic: boolean;
 }
@@ -15,15 +16,21 @@ class Project {
     public owner: Id
     public description: string
     public members: Id[]
+    public files: Record<string, string>
     public requests: Id[]
     public isPublic: boolean
     public isFinished: boolean
 
-    public constructor(name: string, owner: Id, description: string, members: Id[] = [], requests: Id[] = [], isPublic = false, isNew = true) {
+    public constructor(name: string, owner: Id, description: string, members: Id[] = [], files: Record<string, string> = {}, requests: Id[] = [], isPublic = false, isNew = true) {
+        for (const file in files) {
+            if (!file.match(directory)) throw new Error('project files invalid directory')
+        }
+        
         this.name = name
         this.owner = owner
         this.description = description
         this.members = members
+        this.files = files
         this.requests = requests
         this.isPublic = isPublic
         this.isFinished = false
@@ -42,6 +49,7 @@ class Project {
             project.owner,
             project.description,
             project.members,
+            project.files,
             project.requests,
             project.isPublic,
             false
@@ -112,15 +120,20 @@ class Project {
             owner: this.owner,
             description: this.description,
             members: this.members,
+            files: this.files,
             requests: this.requests,
             isPublic: this.isPublic
         }
     }
 
     public set info(newInfo: ProjectInfo) {
+        for (const file in newInfo.files) {
+            if (!file.match(directory)) throw new Error('project files invalid directory')
+        }
         this.owner = newInfo.owner
         this.description = newInfo.description
         this.members = newInfo.members
+        this.files = newInfo.files
         this.requests = newInfo.requests
         this.isPublic = newInfo.isPublic
     }

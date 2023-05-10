@@ -17,7 +17,7 @@ app.listen(80, () => {
 
 //통신
 import { reply } from './reply'
-import type { Id, User } from './interface/res'
+import type { Id, User } from './interface/basic'
 import type { ServerRes } from './interface/serverRes'
 import type { ClientRes } from './interface/clientRes'
 

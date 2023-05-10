@@ -1,5 +1,5 @@
 import type { ProjectInfo } from '../class/project';
-import type { Id } from './res'
+import type { Id } from './basic'
 
 interface TemplateClientRes {
     query: string;
