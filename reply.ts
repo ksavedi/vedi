@@ -1,6 +1,6 @@
 import { Project, type ProjectInfo } from './class/project'
 import type { ClientRes } from './interface/clientRes'
-import type { Id } from './interface/basic'
+import { type Id, directory } from './interface/basic'
 import type { ServerRes } from './interface/serverRes'
 
 const getProjectInfoError = (info: ProjectInfo): ServerRes => {
@@ -132,6 +132,13 @@ const reply = (id: Id, clientRes: ClientRes): ServerRes => {
         }
 
         Project.pop(project)
+
+        return {
+            query: 'alert',
+            content: {
+                message: `${name}이 삭제되었습니다.`
+            }
+        }
     }
 
     if (query === 'requestProject') {
@@ -214,12 +221,64 @@ const reply = (id: Id, clientRes: ClientRes): ServerRes => {
             return {
                 query: 'error',
                 content: {
-                    message: '당신이 팀 리더가 아닙니다.'
+                    message: '팀 리더만 프로젝트 정보를 수정할 수 있습니다.'
                 }
             }
         }
 
+        info.files = project.info.files //files는 수정할 수 없음
         project.info = info
+
+        return {
+            query: 'alert',
+            content: {
+                message: `${name}의 정보가 수정되었습니다.`
+            }
+        }
+    }
+
+    if (query === 'saveProjectFiles') {
+        const name = content.projectName
+        const {changedFiles} = content
+        if (!Project.has(name)) {
+            return {
+                query: 'error',
+                content: {
+                    message: '프로젝트가 존재하지 않습니다.'
+                }
+            }
+        }
+
+        const project = Project.get(name)
+        if (!project.hasMember(id)) {
+            return {
+                query: 'error',
+                content: {
+                    message: '프로젝트 파일을 수정할 권한이 없습니다.'
+                }
+            }
+        }
+        for (const dir in changedFiles) {
+            if (!dir.match(directory)) {
+                return {
+                    query: 'error',
+                    content: {
+                        message: '프로젝트 파일 경로가 형식에 맞지 않습니다.'
+                    }
+                }
+            }
+        }
+
+        for (const dir in changedFiles) {
+            project.files[dir] = changedFiles[dir as keyof typeof changedFiles]
+        }
+
+        return {
+            query: 'alert',
+            content: {
+                message: `${name}의 파일이 저장되었습니다.`
+            }
+        }
     }
 
     return {

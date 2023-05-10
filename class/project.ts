@@ -22,8 +22,8 @@ class Project {
     public isFinished: boolean
 
     public constructor(name: string, owner: Id, description: string, members: Id[] = [], files: Record<string, string> = {}, requests: Id[] = [], isPublic = false, isNew = true) {
-        for (const file in files) {
-            if (!file.match(directory)) throw new Error('project files invalid directory')
+        for (const dir in files) {
+            if (!dir.match(directory)) throw new Error('project files invalid directory')
         }
         
         this.name = name
@@ -86,12 +86,12 @@ class Project {
     }
 
     public static get(name: string) {
-        if (!Project.has(name)) throw new Error('project does not exist')
+        if (!Project.has(name)) throw new Error('project does not exist. prevent it by using Project.has()')
         return Project.list[Project.indexOf(name)]
     }
 
     public static push(project: Project) {
-        if (Project.indexOf(project.name)) throw new Error('project already exists')
+        if (Project.has(project.name)) throw new Error('project already exists')
         Project.list.push(project)
         Project.save()
         Project.log(`generate ${project.name} by ${project.owner}`)
@@ -127,8 +127,8 @@ class Project {
     }
 
     public set info(newInfo: ProjectInfo) {
-        for (const file in newInfo.files) {
-            if (!file.match(directory)) throw new Error('project files invalid directory')
+        for (const dir in newInfo.files) {
+            if (!dir.match(directory)) throw new Error('project files invalid directory')
         }
         this.owner = newInfo.owner
         this.description = newInfo.description
