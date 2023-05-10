@@ -17,9 +17,9 @@ app.listen(80, () => {
 
 //통신
 import { reply } from './reply'
-import type { Id, User } from './interface/msg'
-import type { ServerMsg } from './interface/serverMsg'
-import type { ClientMsg } from './interface/clientMsg'
+import type { Id, User } from './interface/res'
+import type { ServerRes } from './interface/serverRes'
+import type { ClientRes } from './interface/clientRes'
 
 //가온누리 api로 check
 const session: {
@@ -40,11 +40,11 @@ const isAuthorized = (sessionKey: string) => {
 }
 
 app.post('/api', (req, res) => {
-    const send = (serverMsg: ServerMsg) => {
-        res.json(serverMsg)
+    const send = (serverRes: ServerRes) => {
+        res.json(serverRes)
     }
     
-    const login = (auth: User): ServerMsg => {
+    const login = (auth: User): ServerRes => {
         if (checkValid(auth)) {
             const sessionKey = generateSessionKey()
             session[sessionKey] = auth.id
@@ -70,8 +70,8 @@ app.post('/api', (req, res) => {
     }
 
 
-    const clientMsg = req.body as ClientMsg
-    const { query, content, sessionKey } = clientMsg
+    const clientRes = req.body as ClientRes
+    const { query, content, sessionKey } = clientRes
     if (query === 'login') {
         send(login(content))
         return
@@ -87,5 +87,5 @@ app.post('/api', (req, res) => {
         return
     }
 
-    send(reply(session[sessionKey], clientMsg))
+    send(reply(session[sessionKey], clientRes))
 })

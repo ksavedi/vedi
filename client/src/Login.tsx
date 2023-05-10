@@ -3,7 +3,7 @@ import { requestMsg } from './post'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons'
 import "./Login.css"
-import { Id } from '../../interface/msg'
+import { Id } from '../../interface/res'
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {

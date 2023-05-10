@@ -1,4 +1,4 @@
-# ClientMsg client -> server
+# ClientRes client -> server
 
 sessionKey와 error는 생략
 
@@ -101,7 +101,7 @@ content: {
 ---
 ---
 
-# ServerMsg server -> client
+# ServerRes server -> client
 
 # global
 
@@ -167,7 +167,7 @@ content: {
 
 # 설정
 
-<!--ServerMsg-->
+<!--ServerRes-->
 [error]: #error
 [alert]: #alert
 [loginResult]: #loginresult

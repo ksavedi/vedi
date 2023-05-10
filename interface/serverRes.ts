@@ -1,20 +1,20 @@
 import type { Project } from '../class/project'
 
-interface ServerMsgError {
+interface ServerResError {
     query: 'error';
     content: {
         'message': string;
     };
 }
 
-interface ServerMsgAlert {
+interface ServerResAlert {
     query: 'alert';
     content: {
         message: string;
     };
 }
 
-interface ServerMsgLoginResult {
+interface ServerResLoginResult {
     query: 'loginResult';
     content: {
         result: boolean;
@@ -22,32 +22,32 @@ interface ServerMsgLoginResult {
     };
 }
 
-interface ServerMsgProjectList {
+interface ServerResProjectList {
     query: 'projectList';
     content: {
         projectList: Project[];
     };
 }
 
-interface ServerMsgProject {
+interface ServerResProject {
     query: 'project';
     content: {
         project: Project;
     };
 }
 
-type ServerMsg = ServerMsgError
-    | ServerMsgAlert
-    | ServerMsgLoginResult
-    | ServerMsgProjectList
-    | ServerMsgProject
+type ServerRes = ServerResError
+    | ServerResAlert
+    | ServerResLoginResult
+    | ServerResProjectList
+    | ServerResProject
 
 export type {
-    ServerMsgError,
-    ServerMsgAlert,
-    ServerMsgLoginResult,
-    ServerMsgProjectList,
-    ServerMsgProject,
+    ServerResError,
+    ServerResAlert,
+    ServerResLoginResult,
+    ServerResProjectList,
+    ServerResProject,
 
-    ServerMsg
+    ServerRes
 }

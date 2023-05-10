@@ -1,9 +1,9 @@
 import { Project, type ProjectInfo } from './class/project'
-import type { ClientMsg } from './interface/clientMsg'
-import type { Id } from './interface/msg'
-import type { ServerMsg } from './interface/serverMsg'
+import type { ClientRes } from './interface/clientRes'
+import type { Id } from './interface/res'
+import type { ServerRes } from './interface/serverRes'
 
-const getProjectInfoError = (info: ProjectInfo): ServerMsg => {
+const getProjectInfoError = (info: ProjectInfo): ServerRes => {
     if (info.owner === null) {
         return {
             query: 'error',
@@ -45,8 +45,8 @@ const isOwner = (id: Id, info: ProjectInfo) => {
     return id !== null && info.owner === id
 }
 
-const reply = (id: Id, clientMsg: ClientMsg): ServerMsg => {
-    const { query, content } = clientMsg
+const reply = (id: Id, clientRes: ClientRes): ServerRes => {
+    const { query, content } = clientRes
 
     if (query === 'getProjectList') {
         const resProjectList = []
@@ -224,7 +224,7 @@ const reply = (id: Id, clientMsg: ClientMsg): ServerMsg => {
     return {
         query: 'error',
         content: {
-            message: `clientMsg '${query}' does not exist.`
+            message: `clientRes '${query}' does not exist.`
         }
     }
 

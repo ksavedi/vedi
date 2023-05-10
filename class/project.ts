@@ -1,6 +1,6 @@
 import fs from 'fs'
 import { resolve } from 'path'
-import type { Id } from '../interface/msg';
+import type { Id } from '../interface/res';
 
 interface ProjectInfo {
     owner: Id;

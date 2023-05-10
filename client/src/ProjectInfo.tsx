@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from "react-router-dom"
 import { requestMsg } from './post'
-import { ServerMsgProject } from '../../interface/serverMsg'
+import { ServerResProject } from '../../interface/serverRes'
 import { Project } from '../../class/project'
 
 const ProjectInfo = () => {
@@ -17,7 +17,7 @@ const ProjectInfo = () => {
                     projectName: name
                 },
                 sessionKey: localStorage['sessionKey']
-            }) as ServerMsgProject
+            }) as ServerResProject
             setProjectInfo(result.content.project)
         })()
     }, [])

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Project } from '../../class/project'
 import { requestMsg } from './post'
-import { ServerMsgProjectList } from '../../interface/serverMsg'
+import { ServerResProjectList } from '../../interface/serverRes'
 import "./ViewProject.css"
 
 const ViewProject = () => {
@@ -13,7 +13,7 @@ const ViewProject = () => {
                 query: 'getProjectList',
                 content: null,
                 sessionKey: localStorage['sessionKey']
-            }) as ServerMsgProjectList
+            }) as ServerResProjectList
             setProjectList(result.content.projectList)
         })()
     }, [])
