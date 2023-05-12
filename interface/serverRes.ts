@@ -3,7 +3,7 @@ import type { Project } from '../class/project'
 interface ServerResError {
     query: 'error';
     content: {
-        'message': string;
+        message: string;
     };
 }
 
