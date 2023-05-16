@@ -1,4 +1,4 @@
-//서버 열기
+// 서버 열기
 import { resolve } from 'path'
 import express from 'express'
 import cookieParser from 'cookie-parser'
@@ -15,37 +15,65 @@ app.listen(80, () => {
     console.log('The server started!')
 })
 
-//통신
+// dotenv
+import { load } from 'ts-dotenv'
+const env = load({
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    COOKIE_SECRET: String,
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    LOGIN_AKEY: String,
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    PNAME_AKEY: String
+})
+
+// 통신
 import { reply } from './reply'
 import type { Id, User } from './interface/basic'
 import type { ServerRes } from './interface/serverRes'
 import type { ClientRes } from './interface/clientRes'
+import { randomInt } from 'crypto'
+import fetch from 'node-fetch'
 
 //가온누리 api로 check
 const session: {
     [sessionKey in string]: Id;
 } = {}
 
-const checkValid = (user: User) => {
-    console.log(JSON.stringify(user))
-    return true
+const checkValid = async (auth: User): Promise<boolean> => {
+    const response = await fetch(
+        'https://gaonnuri.ksain.net/api/PAuth.php',
+        {
+            method: 'post',
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                id: auth.id,
+                pw: auth.pw,
+                akey: env.LOGIN_AKEY
+            })
+        }
+    )
+    const result = await response.text()
+    console.log(result)
+    if (result === 'SUCCESS') return true
+    else return false
 }
 
 const generateSessionKey = () => {
-    return '임시세션키'
+    return randomInt(100000000).toString()
 }
 
 const isAuthorized = (sessionKey: string) => {
     return sessionKey in session
 }
 
-app.post('/api', (req, res) => {
+app.post('/api', async (req, res) => {
     const send = (serverRes: ServerRes) => {
         res.json(serverRes)
     }
     
-    const login = (auth: User): ServerRes => {
-        if (checkValid(auth)) {
+    const login = async (auth: User): Promise<ServerRes> => {
+        if (await checkValid(auth)) {
             const sessionKey = generateSessionKey()
             session[sessionKey] = auth.id
             res.cookie('sessionKey', sessionKey, {
@@ -73,7 +101,7 @@ app.post('/api', (req, res) => {
     const clientRes = req.body as ClientRes
     const { query, content, sessionKey } = clientRes
     if (query === 'login') {
-        send(login(content))
+        send(await login(content))
         return
     }
 

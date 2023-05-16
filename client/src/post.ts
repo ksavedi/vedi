@@ -9,10 +9,10 @@ const requestMsg = async (clientRes: ClientRes): Promise<ServerRes> => {
         },
         body: JSON.stringify(clientRes)
     })
-    const result = await response.json() as ServerRes
-    if (result.query === 'error') window.alert(`Error: ${result.content.message}`)
-    else if (result.query === 'alert') window.alert(result.content.message)
-    return result
+    const data = await response.json() as ServerRes
+    if (data.query === 'error') window.alert(`Error: ${data.content.message}`)
+    else if (data.query === 'alert') window.alert(data.content.message)
+    return data
 }
 
 export { requestMsg }
