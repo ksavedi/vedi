@@ -1,3 +1,4 @@
+import CreateProject from './CreateProject';
 import Login from './Login';
 import ProjectInfo from './ProjectInfo';
 import ViewProject from './ViewProject';
@@ -9,6 +10,7 @@ const App = () =>
             <Route path="/" element={<Login />} />
             <Route path="/project" element={<ViewProject />} />
             <Route path="/project/:name" element={<ProjectInfo />} />
+            <Route path="/create" element={<CreateProject />} />
         </Routes>
     </BrowserRouter>
 
