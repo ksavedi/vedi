@@ -53,9 +53,8 @@ const checkValid = async (auth: User): Promise<boolean> => {
             })
         }
     )
-    const result = await response.text()
-    console.log(result) // error: INVALD_QUERY
-    if (result === 'SUCCESS') return true
+    const result = await response.json() //invalid api key
+    if (result.body.result === 'SUCCESS') return true
     else return false
 }
 
