@@ -41,7 +41,7 @@ const session: {
 
 const checkValid = async (auth: User): Promise<boolean> => {
     const response = await fetch(
-        'https://gaonnuri.ksain.net/api/PAuth.php',
+        'https://gaonnuri.ksain.net/api/v2/PAuth.php',
         {
             method: 'post',
             // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -54,7 +54,7 @@ const checkValid = async (auth: User): Promise<boolean> => {
         }
     )
     const result = await response.text()
-    console.log(result)
+    console.log(result) // error: INVALD_QUERY
     if (result === 'SUCCESS') return true
     else return false
 }
