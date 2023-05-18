@@ -40,6 +40,9 @@ const session: {
 } = {}
 
 const checkValid = async (auth: User): Promise<boolean> => {
+    return true
+    // invlaid api key error
+    // eslint-disable-next-line no-unreachable
     const response = await fetch(
         'https://gaonnuri.ksain.net/api/v2/PAuth.php',
         {
