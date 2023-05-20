@@ -32,7 +32,9 @@ const ViewProject = () => {
                     <div className="project-list-title">내 프로젝트</div>
                     <div className="project-list-container">
                         {projectList.map((project) =>
-                            <div className="project-info-container">
+                            <div className="project-info-container"
+                                onClick={() => navigate(`./${project.name}`)}
+                            >
                                 <div className="project-name-container">
                                     {project.name}
                                 </div>
@@ -47,7 +49,9 @@ const ViewProject = () => {
                     <div className="project-list-title">공개 프로젝트</div>
                     <div className="project-list-container">
                         {projectList.map((project) =>
-                            <div className="project-info-container">
+                            <div className="project-info-container"
+                                onClick={() => navigate(`./${project.name}`)}
+                            >
                                 <div className="project-name-container">
                                     {project.name}
                                 </div>

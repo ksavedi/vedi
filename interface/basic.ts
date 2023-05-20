@@ -8,6 +8,6 @@ interface User {
 }
 
 // eslint-disable-next-line prefer-named-capture-group
-const directory = /\\([ㄱ-ㅎ|ㅏ-ㅣ|가-힣]\w\s\.+\\)*([ㄱ-ㅎ|ㅏ-ㅣ|가-힣]\w\s\.*\.)+([ㄱ-ㅎ|ㅏ-ㅣ|가-힣]\w\s\.*)$/gim
+const directory = /\/([ㄱ-ㅎㅏ-ㅣ가-힣\w\s.]+\/)*([ㄱ-ㅎㅏ-ㅣ가-힣\w\s.]*\.)+([ㄱ-ㅎㅏ-ㅣ가-힣\w\s.]*)$/gim
 
 export { type Id, type User, directory }

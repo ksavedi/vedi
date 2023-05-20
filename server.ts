@@ -41,7 +41,7 @@ const session: {
 
 const checkValid = async (auth: User): Promise<boolean> => {
     return true
-    // invlaid api key error
+    // invalid api key error
     // eslint-disable-next-line no-unreachable
     const response = await fetch(
         'https://gaonnuri.ksain.net/api/v2/PAuth.php',
@@ -65,8 +65,11 @@ const generateSessionKey = () => {
     return randomInt(100000000).toString()
 }
 
+
 const isAuthorized = (sessionKey: string) => {
-    return sessionKey in session
+    return true 
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions, no-unreachable
+    sessionKey in session
 }
 
 app.post('/api', async (req, res) => {

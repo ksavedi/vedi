@@ -106,13 +106,7 @@ class Project {
     }
 
     public hasMember(id: Id) {
-        return (
-            id === this.owner
-            || (
-                id !== null
-                && id in this.members
-            )
-        )
+        return this.members.includes(id)
     }
 
     public get info(): ProjectInfo {

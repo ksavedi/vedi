@@ -10,7 +10,14 @@
             "23-029",
             "23-046"
         ],
-        "isPublic": true
+        "files": {
+            "/rlawnsdl/package.json": "asdfasdf",
+            "/rlawnsdl/ansrkdhs.ts": "asdfasdf",
+            "/ansrkdhs/rlawnsdl.js": "asdf"
+        },
+        "requests": [],
+        "isPublic": true,
+        "isFinished": false
     },
     {
         "name": "idev",
@@ -19,6 +26,21 @@
         "members": [
             "21-079"
         ],
-        "isPublic": true
+        "files": {},
+        "requests": [],
+        "isPublic": true,
+        "isFinished": false
+    },
+    {
+        "name": "김준이바보",
+        "owner": "23-046",
+        "description": "ㅁㄴㅇㄹ",
+        "members": [
+            "23-046"
+        ],
+        "files": {},
+        "requests": [],
+        "isPublic": true,
+        "isFinished": false
     }
 ]
