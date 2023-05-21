@@ -10,21 +10,31 @@ const CreateProject = () => {
     const [description, setDescription] = useState('')
     const [members, setMembers] = useState<Id[]>([localStorage['id'] as Id])
     const [member, setMember] = useState('')
+    const [requests, setRequests] = useState<Id[]>([])
     const [isPublic, setIsPublic] = useState(false)
 
     const navigate = useNavigate()
 
-    const requestCreateProject = async (projectName: string, description: string, members: Id[], isPublic: boolean) => {
+    const requestDeleteProject = async (projectName: string) => {
+        await requestMsg({
+            query: 'deleteProject',
+            content: { projectName },
+            sessionKey: localStorage['sessionKey']
+        })
+        navigate('../')
+    }
+
+    const requestSaveProjectInfo = async (projectName: string, description: string, members: Id[], requests: Id[], isPublic: boolean) => {
         const projectInfo: ProjectInfo = {
             owner: localStorage['id'] as Id,
             description,
             members,
             files: {},
-            requests: [],
+            requests,
             isPublic
         }
         await requestMsg({
-            query: 'createProject',
+            query: 'saveProjectInfo',
             content: { projectName, projectInfo },
             sessionKey: localStorage['sessionKey']
         })
@@ -66,22 +76,51 @@ const CreateProject = () => {
                 멤버
                 {
                     members.map((mem) => {
-                        if (mem === localStorage['id'] as Id) return null
+                        if (mem === localStorage['id'] as Id) return ''
+                        return <div>{mem}<span onClick={
+                            () => {
+                                setMembers((members) => {
+                                    const copied = [...members]
+                                    copied.splice(copied.indexOf(mem), 1)
+                                    return copied
+                                })
+                            }
+                        } style={{ color: 'red', textDecoration: 'underline' }}>삭제</span></div>
+                    })
+                }
+            </div>
+            {
+                (isPublic)
+                ? <div>
+                신청
+                {
+                    requests.map((mem) => {
                         return <div>
                             {mem}
                             <span onClick={
                                 () => {
-                                    setMembers((members) => {
-                                        const copied = [...members]
+                                    setMembers((members) => [...members, member as Id])
+                                    setRequests((requests) => {
+                                        const copied = [...requests]
                                         copied.splice(copied.indexOf(mem), 1)
                                         return copied
                                     })
                                 }
-                            } style={{ color: 'red', textDecoration: 'underline' }}>삭제</span>
+                            } style={{ color: 'green', textDecoration: 'underline' }}>수락</span>
+                            <span onClick={
+                                () => {
+                                    setRequests((requests) => {
+                                        const copied = [...requests]
+                                        copied.splice(copied.indexOf(mem), 1)
+                                        return copied
+                                    })
+                                }
+                            } style={{ color: 'red', textDecoration: 'underline' }}>거절</span>
                         </div>
                     })
                 }
-            </div>
+                </div> : null
+            }
             <div>
                 멤버 추가
                 <input id="add" value={member} onChange={(e) => setMember(e.target.value)} />
@@ -96,7 +135,8 @@ const CreateProject = () => {
                     }
                 }>추가</button>
             </div>
-            <button onClick={() => requestCreateProject(projectName, description, members, isPublic)}>생성</button>
+            <button onClick={() => requestDeleteProject(projectName)}>삭제</button>
+            <button onClick={() => requestSaveProjectInfo(projectName, description, members, requests, isPublic)}>저장</button>
         </div>
     )
 }

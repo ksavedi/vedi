@@ -12,7 +12,7 @@ const getProjectInfoError = (info: ProjectInfo): ServerRes => {
             }
         }
     }
-    if (!(info.owner in info.members)) {
+    if (!(info.members.includes(info.owner))) {
         return {
             query: 'error',
             content: {
@@ -28,6 +28,18 @@ const getProjectInfoError = (info: ProjectInfo): ServerRes => {
             }
         }
     }
+
+    for (const req of info.requests) {
+        if (info.members.includes(req)) {
+            return {
+                query: 'error',
+                content: {
+                    message: '이미 멤버인 사람은 프로젝트 신청을 보낼 수 없습니다.'
+                }
+            }
+        }
+    }
+
     return {
         query: 'alert',
         content: {
@@ -153,14 +165,23 @@ const reply = (id: Id, clientRes: ClientRes): ServerRes => {
         }
 
         const project = Project.get(name)
-        if (id in project.requests) {
+        if (project.requests.includes(id)) {
             return {
-                query: 'alert',
+                query: 'error',
                 content: {
                     message: '이미 신청했습니다.'
                 }
             }
-        } else {
+        }
+        else if (project.members.includes(id)) {
+            return {
+                query: 'error',
+                content: {
+                    message: '이미 해당 프로젝트의 멤버입니다.'
+                }
+            }
+        }
+        else {
             project.requests.push(id)
         }
 
