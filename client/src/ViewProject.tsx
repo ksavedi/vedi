@@ -4,6 +4,7 @@ import { requestMsg } from './post'
 import { ServerResProjectList } from '../../interface/serverRes'
 import "./ViewProject.css"
 import { useNavigate } from 'react-router-dom'
+import { Id } from '../../interface/basic'
 
 const ViewProject = () => {
     const [projectList, setProjectList] = useState<Project[]>([])
@@ -31,35 +32,41 @@ const ViewProject = () => {
                 <div className="project-container">
                     <div className="project-list-title">내 프로젝트</div>
                     <div className="project-list-container">
-                        {projectList.map((project) =>
-                            <div className="project-info-container"
-                                onClick={() => navigate(`./${project.name}`)}
-                            >
-                                <div className="project-name-container">
-                                    {project.name}
+                        {projectList
+                            .filter((v) => v.members.includes(localStorage["id"] as Id))
+                            .map((project) =>
+                                <div className="project-info-container"
+                                    onClick={() => navigate(`./${project.name}`)}
+                                >
+                                    <div className="project-name-container">
+                                        {project.name}
+                                    </div>
+                                    <div className="project-description-container">
+                                        {project.description}
+                                    </div>
                                 </div>
-                                <div className="project-description-container">
-                                    {project.description}
-                                </div>
-                            </div>
-                        )}
+                            )
+                        }
                     </div>
                 </div>
                 <div className="project-container">
                     <div className="project-list-title">공개 프로젝트</div>
                     <div className="project-list-container">
-                        {projectList.map((project) =>
-                            <div className="project-info-container"
-                                onClick={() => navigate(`./${project.name}`)}
-                            >
-                                <div className="project-name-container">
-                                    {project.name}
+                        {projectList
+                            .filter((v) => v.isPublic)
+                            .map((project) =>
+                                <div className="project-info-container"
+                                    onClick={() => navigate(`./${project.name}`)}
+                                >
+                                    <div className="project-name-container">
+                                        {project.name}
+                                    </div>
+                                    <div className="project-description-container">
+                                        {project.description}
+                                    </div>
                                 </div>
-                                <div className="project-description-container">
-                                    {project.description}
-                                </div>
-                            </div>
-                        )}
+                            )
+                        }
                     </div>
                 </div>
             </div>
