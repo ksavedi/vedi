@@ -2,23 +2,8 @@ import { useState } from 'react'
 import { requestMsg } from './post'
 import type { Id } from '../../interface/basic'
 import { ProjectInfo } from '../../class/project'
+import { useNavigate } from 'react-router-dom'
 
-
-const requestCreateProject = async (projectName: string, description: string, members: Id[], isPublic: boolean) => {
-    const projectInfo: ProjectInfo = {
-        owner: localStorage['id'] as Id,
-        description,
-        members,
-        files: {},
-        requests: [],
-        isPublic
-    }
-    const res = await requestMsg({
-        query: 'createProject',
-        content: { projectName, projectInfo },
-        sessionKey: localStorage['sessionKey']
-    })
-}
 
 const CreateProject = () => {
     const [projectName, setProjectName] = useState('')
@@ -26,6 +11,25 @@ const CreateProject = () => {
     const [members, setMembers] = useState<Id[]>([localStorage['id'] as Id])
     const [member, setMember] = useState('')
     const [isPublic, setIsPublic] = useState(false)
+
+    const navigate = useNavigate()
+
+    const requestCreateProject = async (projectName: string, description: string, members: Id[], isPublic: boolean) => {
+        const projectInfo: ProjectInfo = {
+            owner: localStorage['id'] as Id,
+            description,
+            members,
+            files: {},
+            requests: [],
+            isPublic
+        }
+        await requestMsg({
+            query: 'createProject',
+            content: { projectName, projectInfo },
+            sessionKey: localStorage['sessionKey']
+        })
+        navigate("../")
+    }
 
     return (
         <div>
@@ -66,18 +70,18 @@ const CreateProject = () => {
                         return <div>{mem}<span onClick={
                             () => {
                                 setMembers((members) => {
-                                    const copied = [ ...members ]
+                                    const copied = [...members]
                                     copied.splice(copied.indexOf(mem), 1)
                                     return copied
                                 })
                             }
-                        } style={{color: 'red', textDecoration: 'underline'}}>삭제</span></div>
+                        } style={{ color: 'red', textDecoration: 'underline' }}>삭제</span></div>
                     })
                 }
             </div>
             <div>
                 멤버 추가
-                <input id="add" value={member} onChange={(e) => setMember(e.target.value)}/>
+                <input id="add" value={member} onChange={(e) => setMember(e.target.value)} />
                 <button onClick={
                     () => {
                         if (!/^(19|20|21|22|23|24|25)-\d{3}$/.test(member)) {
