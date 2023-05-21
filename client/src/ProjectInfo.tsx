@@ -1,27 +1,73 @@
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { requestMsg } from './post'
 import { ServerResProject } from '../../interface/serverRes'
 import { Project } from '../../class/project'
 
+import "./ProjectInfo.css"
+import { Editor, useMonaco } from '@monaco-editor/react'
+import { Directory } from './Directory'
+
 interface FileInfo {
-    [key: string]: FileInfo | string;
+    type: "file";
+    name: string;
+    content: string;
+    depth: number;
 }
 
-const buildFileInfo = (curDir: FileInfo, path: string[], value: string, depth = 0) => {
+interface FolderInfo {
+    type: "folder",
+    name: string;
+    child: (FolderInfo | FileInfo)[];
+    depth: number;
+}
+
+const buildFileInfo = (curDir: FolderInfo, path: string[], value: string, depth = 0) => {
     const dirName = path[depth]
     if (dirName.includes(".")) {
-        curDir[dirName] = value
+        curDir.child.push({
+            type: "file",
+            name: dirName,
+            content: value,
+            depth
+        })
         return
     }
-    buildFileInfo((curDir[dirName] ??= {}) as FileInfo, path, value, depth + 1)
+    if (curDir.child.findIndex((v) => v.name === dirName) === -1) {
+        curDir.child.push({
+            type: "folder",
+            name: dirName,
+            child: [],
+            depth
+        })
+    }
+    buildFileInfo(curDir.child.find((v) => v.name === dirName) as FolderInfo, path, value, depth + 1)
 }
 
 const ProjectInfo = () => {
     const name = useParams().name as string
+    const monaco = useMonaco()
 
-    const [ projectInfo, setProjectInfo ] = useState<Project>()
-    const [ fileInfo, setFileInfo ] = useState<FileInfo>({})
+    const [projectInfo, setProjectInfo] = useState<Project>()
+    const [folderInfo, setFolderInfo] = useState<FolderInfo>({
+        type: "folder",
+        name: "root",
+        child: [],
+        depth: -1
+    })
+    const [explorer, setExplorer] = useState<(FolderInfo | FileInfo)[]>([])
+    const [lang, setLang] = useState("typescript")
+    const [text, setText] = useState("")
+
+    const buildExplorer = (curDir: FolderInfo, dirList: (FolderInfo | FileInfo)[]) => {
+        for (const element of curDir.child) {
+            dirList.push(element)
+            if (element.type === "folder") {
+                buildExplorer(element, dirList)
+            }
+        }
+        return dirList
+    }
 
     useEffect(() => {
         (async () => {
@@ -34,24 +80,60 @@ const ProjectInfo = () => {
             }) as ServerResProject
             const { project } = result.content
             setProjectInfo(project)
-            
-            const fileInfoRaw = {}
-            for (const path in project.files) {
-                buildFileInfo(fileInfoRaw, path.slice(1).split("/"), project.files[path])
+
+            const folderInfoRaw: FolderInfo = {
+                type: "folder",
+                name: "root",
+                child: [],
+                depth: -1
             }
-            setFileInfo(fileInfoRaw)
+            for (const path in project.files) {
+                buildFileInfo(folderInfoRaw, path.slice(1).split("/"), project.files[path])
+            }
+            setFolderInfo(folderInfoRaw)
+            setExplorer(buildExplorer(folderInfoRaw, []))
         })()
-    }, [])
+    }, [name])
 
     return (
-        <div>
+        <div id="editor-container">
             <div id="explorer">
-                <div id="project-name-container">
-                    {projectInfo?.name}  
+                <div id="project-name-wrapper">
+                    {projectInfo?.name}
                 </div>
-                <div>
-                    {JSON.stringify(fileInfo, null, 4)} 
+                <div id="directory-container">
+                    {explorer.map((v) => {
+                        if (v.type === "folder") {
+                            return (
+                                <Directory
+                                    name={v.name}
+                                    depth={v.depth}
+                                    action={() => { }}
+                                />
+                            )
+                        }
+                        return (
+                            <Directory
+                                name={v.name}
+                                depth={v.depth}
+                                action={
+                                    () => {
+                                        setText(v.content)
+                                        setLang("typescript" /* v.name */)
+                                    }
+                                }
+                            />
+                        )
+                    })}
                 </div>
+            </div>
+            <div id="editor-wrapper">
+                <Editor
+                    height="100vh"
+                    theme="vs-dark"
+                    language={lang}
+                    value={text}
+                />
             </div>
         </div>
     )

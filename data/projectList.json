@@ -11,9 +11,9 @@
             "23-046"
         ],
         "files": {
-            "/rlawnsdl/package.json": "asdfasdf",
-            "/rlawnsdl/ansrkdhs.ts": "asdfasdf",
-            "/ansrkdhs/rlawnsdl.js": "asdf"
+            "/client/package.json": "{\"name\": \"vedi\"}",
+            "/client/app.tsx": "const App = () => {\n    return <div></div>;\n}\n\nexport { App }",
+            "/server/index.ts": "import { express } from \"express\""
         },
         "requests": [],
         "isPublic": true,
