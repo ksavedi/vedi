@@ -137,7 +137,7 @@ const ProjectFile = () => {
                     theme="vs-dark"
                     language={lang}
                     value={text}
-                    onChange={(v) => {setChangedFileInfo((changedFileInfo) => ({ ...changedFileInfo, path: v ?? "" }))}}
+                    onChange={(v) => {setChangedFileInfo((changedFileInfo) => ({ ...changedFileInfo, [path]: v ?? "" }))}}
                 />
             </div>
             <button id="save-button"
@@ -151,7 +151,8 @@ const ProjectFile = () => {
                         sessionKey: localStorage['sessionKey']
                     })
                 }}
-            >    
+            >
+                파일 저장
             </button>
         </div>
     )
