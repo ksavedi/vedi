@@ -3,16 +3,17 @@ import { useParams } from "react-router-dom"
 import { requestMsg } from './post'
 import { ServerResProject } from '../../interface/serverRes'
 import { Project } from '../../class/project'
-
-import "./ProjectInfo.css"
-import { Editor, useMonaco } from '@monaco-editor/react'
+import { Editor } from '@monaco-editor/react'
 import { Directory } from './Directory'
+
+import "./ProjectFile.css"
 
 interface FileInfo {
     type: "file";
     name: string;
     content: string;
     depth: number;
+    path: string;
 }
 
 interface FolderInfo {
@@ -29,7 +30,8 @@ const buildFileInfo = (curDir: FolderInfo, path: string[], value: string, depth 
             type: "file",
             name: dirName,
             content: value,
-            depth
+            depth,
+            path: "/" + path.join("/")
         })
         return
     }
@@ -44,9 +46,8 @@ const buildFileInfo = (curDir: FolderInfo, path: string[], value: string, depth 
     buildFileInfo(curDir.child.find((v) => v.name === dirName) as FolderInfo, path, value, depth + 1)
 }
 
-const ProjectInfo = () => {
+const ProjectFile = () => {
     const name = useParams().name as string
-    const monaco = useMonaco()
 
     const [projectInfo, setProjectInfo] = useState<Project>()
     const [folderInfo, setFolderInfo] = useState<FolderInfo>({
@@ -56,8 +57,10 @@ const ProjectInfo = () => {
         depth: -1
     })
     const [explorer, setExplorer] = useState<(FolderInfo | FileInfo)[]>([])
+    const [path, setPath] = useState("")
     const [lang, setLang] = useState("typescript")
     const [text, setText] = useState("")
+    const [changedFileInfo, setChangedFileInfo] = useState<Record<string, string>>({})
 
     const buildExplorer = (curDir: FolderInfo, dirList: (FolderInfo | FileInfo)[]) => {
         for (const element of curDir.child) {
@@ -120,6 +123,7 @@ const ProjectInfo = () => {
                                     () => {
                                         setText(v.content)
                                         setLang("typescript" /* v.name */)
+                                        setPath(v.path)
                                     }
                                 }
                             />
@@ -133,10 +137,24 @@ const ProjectInfo = () => {
                     theme="vs-dark"
                     language={lang}
                     value={text}
+                    onChange={(v) => {setChangedFileInfo((changedFileInfo) => ({ ...changedFileInfo, path: v ?? "" }))}}
                 />
             </div>
+            <button id="save-button"
+                onClick={() => {
+                    requestMsg({
+                        query: "saveProjectFiles",
+                        content: {
+                            projectName: name,
+                            changedFiles: changedFileInfo,  
+                        },
+                        sessionKey: localStorage['sessionKey']
+                    })
+                }}
+            >    
+            </button>
         </div>
     )
 }
 
-export default ProjectInfo
+export default ProjectFile

@@ -28,3 +28,10 @@
     padding: 0 10px;
     overflow: scroll;
 }
+
+#save-button {
+    position: fixed;
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+}

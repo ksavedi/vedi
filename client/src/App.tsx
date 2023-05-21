@@ -1,6 +1,6 @@
 import CreateProject from './CreateProject';
 import Login from './Login';
-import ProjectInfo from './ProjectInfo';
+import ProjectFile from './ProjectFile';
 import ViewProject from './ViewProject';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
@@ -9,7 +9,8 @@ const App = () =>
         <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/project" element={<ViewProject />} />
-            <Route path="/project/:name" element={<ProjectInfo />} />
+            <Route path="/project/:name" element={<ProjectFile />} />
+            <Route path="/project/:name/setting" element={<ProjectFile />} />
             <Route path="/create" element={<CreateProject />} />
         </Routes>
     </BrowserRouter>
