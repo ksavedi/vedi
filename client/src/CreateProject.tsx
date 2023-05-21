@@ -54,15 +54,6 @@ const CreateProject = () => {
                 />
             </div>
             <div>
-                공개 여부
-                <input
-                    type="checkbox"
-                    onChange={
-                        (e) => setIsPublic(e.target.checked)
-                    }
-                />
-            </div>
-            <div>
                 멤버
                 {
                     members.map((mem) => {
@@ -95,6 +86,15 @@ const CreateProject = () => {
                         setMember('')
                     }
                 }>추가</button>
+            </div>
+            <div>
+                공개 여부
+                <input
+                    type="checkbox"
+                    onChange={
+                        (e) => setIsPublic(e.target.checked)
+                    }
+                />
             </div>
             <button onClick={() => requestCreateProject(projectName, description, members, isPublic)}>생성</button>
         </div>

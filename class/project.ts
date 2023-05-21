@@ -130,6 +130,8 @@ class Project {
         this.files = newInfo.files
         this.requests = newInfo.requests
         this.isPublic = newInfo.isPublic
+        Project.save()
+        Project.log(`info changed at ${this.name} by ${this.owner}`)
     }
 }
 

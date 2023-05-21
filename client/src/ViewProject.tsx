@@ -44,6 +44,14 @@ const ViewProject = () => {
                                     <div className="project-description-container">
                                         {project.description}
                                     </div>
+                                    <div>
+                                        <span style={{textDecoration: 'underline'}} onClick={
+                                            (event) => {
+                                                event.stopPropagation()
+                                                navigate(`./${project.name}/changeInfo`)
+                                            }
+                                        }>수정</span>
+                                    </div>
                                 </div>
                             )
                         }

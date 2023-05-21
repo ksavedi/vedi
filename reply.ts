@@ -49,8 +49,7 @@ const getProjectInfoError = (info: ProjectInfo): ServerRes => {
 }
 
 const hasProjectInfoError = (info: ProjectInfo) => {
-    if (getProjectInfoError(info).query !== 'alert') return false
-    return true
+    return getProjectInfoError(info).query !== 'alert'
 }
 
 const isOwner = (id: Id, info: ProjectInfo) => {
