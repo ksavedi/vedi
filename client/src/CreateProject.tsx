@@ -2,14 +2,13 @@ import { useState } from 'react'
 import { requestMsg } from './post'
 import type { Id } from '../../interface/basic'
 import { ProjectInfo } from '../../class/project'
-import { useNavigate } from 'react-router-dom'
 
 
-const requestCreateProject = async (projectName: string, description: string, isPublic: boolean) => {
+const requestCreateProject = async (projectName: string, description: string, members: Id[], isPublic: boolean) => {
     const projectInfo: ProjectInfo = {
         owner: localStorage['id'] as Id,
         description,
-        members: [localStorage['id'] as Id],
+        members,
         files: {},
         requests: [],
         isPublic
@@ -22,9 +21,11 @@ const requestCreateProject = async (projectName: string, description: string, is
 }
 
 const CreateProject = () => {
-    const [projectName, setProjectName] = useState("");
-    const [description, setDescription] = useState("");
-    const [isPublic, setIsPublic] = useState(false);
+    const [projectName, setProjectName] = useState('')
+    const [description, setDescription] = useState('')
+    const [members, setMembers] = useState<Id[]>([localStorage['id'] as Id])
+    const [member, setMember] = useState('')
+    const [isPublic, setIsPublic] = useState(false)
 
     return (
         <div>
@@ -57,7 +58,38 @@ const CreateProject = () => {
                     }
                 />
             </div>
-            <button onClick={() => requestCreateProject(projectName, description, isPublic)}>생성</button>
+            <div>
+                멤버
+                {
+                    members.map((mem) => {
+                        if (mem === localStorage['id'] as Id) return ''
+                        return <div>{mem}<span onClick={
+                            () => {
+                                setMembers((members) => {
+                                    const copied = [ ...members ]
+                                    copied.splice(copied.indexOf(mem), 1)
+                                    return copied
+                                })
+                            }
+                        } style={{color: 'red', textDecoration: 'underline'}}>삭제</span></div>
+                    })
+                }
+            </div>
+            <div>
+                멤버 추가
+                <input id="add" value={member} onChange={(e) => setMember(e.target.value)}/>
+                <button onClick={
+                    () => {
+                        if (!/^(19|20|21|22|23|24|25)-\d{3}$/.test(member)) {
+                            window.alert('형식에 맞지 않는 학번입니다.')
+                            return
+                        }
+                        setMembers((members) => [...members, member as Id])
+                        setMember('')
+                    }
+                }>추가</button>
+            </div>
+            <button onClick={() => requestCreateProject(projectName, description, members, isPublic)}>생성</button>
         </div>
     )
 }
