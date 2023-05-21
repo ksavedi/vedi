@@ -6,38 +6,54 @@ import { Project } from '../../class/project'
 import { Editor } from '@monaco-editor/react'
 import { Directory } from './Directory'
 
-import "./ProjectFile.css"
+import './ProjectFile.css'
 
 interface FileInfo {
-    type: "file";
+    type: 'file';
     name: string;
+    language: string;
     content: string;
     depth: number;
     path: string;
 }
 
 interface FolderInfo {
-    type: "folder",
+    type: 'folder',
     name: string;
     child: (FolderInfo | FileInfo)[];
     depth: number;
 }
 
+const language: Record<string, string> = {
+    txt: 'plaintext',
+    js: 'javascript',
+    ts: 'typescript',
+    md: 'markdown',
+    kt: 'kotlin',
+    cs: 'csharp',
+    py: 'python',
+    rs: 'rust',
+    rb: 'ruby',
+    htm: 'html'
+}
+
 const buildFileInfo = (curDir: FolderInfo, path: string[], value: string, depth = 0) => {
     const dirName = path[depth]
+    const extension = dirName.split('.')[dirName.split('.').length - 1]
     if (dirName.includes(".")) {
         curDir.child.push({
-            type: "file",
+            type: 'file',
             name: dirName,
+            language: language[extension] ?? extension,
             content: value,
             depth,
-            path: "/" + path.join("/")
+            path: '/' + path.join('/')
         })
         return
     }
     if (curDir.child.findIndex((v) => v.name === dirName) === -1) {
         curDir.child.push({
-            type: "folder",
+            type: 'folder',
             name: dirName,
             child: [],
             depth
@@ -51,25 +67,42 @@ const ProjectFile = () => {
 
     const [projectInfo, setProjectInfo] = useState<Project>()
     const [folderInfo, setFolderInfo] = useState<FolderInfo>({
-        type: "folder",
-        name: "root",
+        type: 'folder',
+        name: 'root',
         child: [],
         depth: -1
     })
     const [explorer, setExplorer] = useState<(FolderInfo | FileInfo)[]>([])
-    const [path, setPath] = useState("")
-    const [lang, setLang] = useState("typescript")
-    const [text, setText] = useState("")
-    const [changedFileInfo, setChangedFileInfo] = useState<Record<string, string>>({})
+    const [path, setPath] = useState('')
+    const [fileName, setFileName] = useState('')
+    const [lang, setLang] = useState('')
+    const [text, setText] = useState('')
+    const [newDirectory, setNewDirectory] = useState<string | null>(null)
 
     const buildExplorer = (curDir: FolderInfo, dirList: (FolderInfo | FileInfo)[]) => {
         for (const element of curDir.child) {
             dirList.push(element)
-            if (element.type === "folder") {
+            if (element.type === 'folder') {
                 buildExplorer(element, dirList)
             }
         }
         return dirList
+    }
+
+    const loadFile = (project: Project) => {
+        setProjectInfo(project)
+        
+        const folderInfoRaw: FolderInfo = {
+            type: 'folder',
+            name: 'root',
+            child: [],
+            depth: -1
+        }
+        for (const path in project.files) {
+            buildFileInfo(folderInfoRaw, path.slice(1).split('/'), project.files[path])
+        }
+        setFolderInfo(folderInfoRaw)
+        setExplorer(buildExplorer(folderInfoRaw, []))
     }
 
     useEffect(() => {
@@ -81,25 +114,60 @@ const ProjectFile = () => {
                 },
                 sessionKey: localStorage['sessionKey']
             }) as ServerResProject
-            const { project } = result.content
-            setProjectInfo(project)
-
-            const folderInfoRaw: FolderInfo = {
-                type: "folder",
-                name: "root",
-                child: [],
-                depth: -1
-            }
-            for (const path in project.files) {
-                buildFileInfo(folderInfoRaw, path.slice(1).split("/"), project.files[path])
-            }
-            setFolderInfo(folderInfoRaw)
-            setExplorer(buildExplorer(folderInfoRaw, []))
+            const original = result.content.project
+            loadFile(original)
         })()
     }, [name])
 
     return (
         <div id="editor-container">
+            <div id="path-controller">
+                <input id="path-input" value={newDirectory??path}
+                onFocus={() => { setNewDirectory(path) }}
+                onChange={
+                    (e) => {
+                        setNewDirectory(e.target.value)
+                    }
+                }
+                onBlur={
+                    () => {
+                        if (!projectInfo || !newDirectory) return
+                        delete projectInfo.files[path]
+                        projectInfo.files[newDirectory] = text
+                        loadFile(projectInfo)
+
+                        const dirArray = newDirectory.split('/')
+                        setFileName(dirArray[dirArray.length - 1])
+                        const extension = fileName.split('.')[fileName.split('.').length - 1]
+                        setLang(language[extension] ?? extension)
+                        setPath(newDirectory)
+
+                        setNewDirectory(null)
+                    }
+                }/>
+                <button id="new-file" onClick={
+                    () => {
+                        if (!projectInfo) return
+                        projectInfo.files[`/newFile${Object.keys(projectInfo.files).length}.txt`] = ''
+                        loadFile(projectInfo)
+                        setFileName(`newFile${Object.keys(projectInfo.files).length - 1}.txt`)
+                        setText('')
+                        setLang('plaintext')
+                        setPath(`/newFile${Object.keys(projectInfo.files).length - 1}.txt`)
+                    }
+                }>+</button>
+                <button id="delete-file" onClick={
+                    () => {
+                        if (!projectInfo) return
+                        delete projectInfo.files[path]
+                        loadFile(projectInfo)
+                        setFileName('')
+                        setText('')
+                        setLang('')
+                        setPath('')
+                    }
+                }>-</button>
+            </div>
             <div id="explorer">
                 <div id="project-name-wrapper">
                     {projectInfo?.name}
@@ -121,8 +189,9 @@ const ProjectFile = () => {
                                 depth={v.depth}
                                 action={
                                     () => {
+                                        setFileName(v.name)
                                         setText(v.content)
-                                        setLang("typescript" /* v.name */)
+                                        setLang(v.language)
                                         setPath(v.path)
                                     }
                                 }
@@ -137,11 +206,33 @@ const ProjectFile = () => {
                     theme="vs-dark"
                     language={lang}
                     value={text}
-                    onChange={(v) => {setChangedFileInfo((changedFileInfo) => ({ ...changedFileInfo, [path]: v ?? "" }))}}
+                    onChange={(value) => {
+                        if (!value || !projectInfo) return
+                        projectInfo.files[path] = value
+                        setText(value)
+                    }}
                 />
             </div>
             <button id="save-button"
-                onClick={() => {
+                onClick={async () => {
+                    if (!projectInfo) return
+                    const result = await requestMsg({
+                        query: 'openProject',
+                        content: {
+                            projectName: name
+                        },
+                        sessionKey: localStorage['sessionKey']
+                    }) as ServerResProject
+                    const original = result.content.project
+                    const changedFileInfo: Record<string, string | null> = {}
+                    
+                    for (const path in { ...original.files, ...projectInfo.files }) {
+                        console.log(path)
+                        if (original.files[path] !== projectInfo.files[path]) {
+                            changedFileInfo[path] = projectInfo.files[path] ?? null
+                        }
+                    }
+
                     requestMsg({
                         query: "saveProjectFiles",
                         content: {

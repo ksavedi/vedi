@@ -42,5 +42,24 @@
         "requests": [],
         "isPublic": true,
         "isFinished": false
+    },
+    {
+        "name": "리;듬칫듬칫",
+        "owner": "23-031",
+        "description": "2명이 함께 즐기는 협동 및 경쟁형 리듬게임!",
+        "members": [
+            "23-031",
+            "23-016",
+            "23-027"
+        ],
+        "files": {
+            "/README.md": "# 리;듬칫듬칫\r\n\r\n## description\r\n2명이 함께 즐기는 협동 및 경쟁형 리듬게임!\\\r\n정사각형 디스플레이 사용, 오락실용 리듬게임\\\r\nserver.js 실행시킨 뒤 포트 80으로 접속하면 플레이 가능\r\n\r\nCopyright 2023. thmchit All rights reserved.\r\n\r\n## authors\r\n김준이, 김정환, 김래환\r\n\\+ 김정우 (이름을 지어줌)\r\n\r\n---\r\n## specific features\r\n### 메인 화면\r\n게임의 로고가 각 사람에게 보임\r\n\r\n### 레벨 선택 화면\r\n해당 레벨의 원형의 앨범 커버가 돌아감\\\r\n버튼으로 다음 곡 고를 수 있음\r\n\r\n### 게임 화면\r\n노트가 6개의 레인을 따라 이동함\\\r\n노트는 양 방향 이동 가능\r\n\r\n노트의 종류는 \r\n* 일반 노트\r\n* 롱 노트\r\n\r\n가 있음\r\n\r\n레인 중간에 트랜스포머\r\n\r\n* 포탈(노트 다른 레인으로 이동)\r\n* 거울(노트 반대 방향으로 반사)\r\n\r\n가 생기거나 사라지기도 함\r\n\r\n화면 양쪽에\\\r\n정확도\r\n* perfect\r\n* miss\r\n\r\n그리고 콤보가 표시됨\r\n\r\n## dev rules\r\n1. 4 space indent\r\n2. for문 제외하고는 세미콜론 생략\r\n3. require 대신 import 사용\r\n4. nested function은 모두 화살표 함수로, 해당 함수의 가장 위에 위치\r\n5. 나머지는 모두 standard js style 따름\\\r\nhttps://standardjs.com/rules-kokr.html\r\n\r\n## implementation ideas\r\n### 로그인\r\n* 고민중\r\n\r\n### 맵 (레벨)\r\n* 한 박을 bpm / n으로 설정\r\n* 각 레인, 방향 (총 12개) 별 문자열을 만들어\\\r\n한 박 당 노트 1개가 매치되도록 한다.\r\n    * 노트 없음: \\*\r\n    * 일반 노트: s\r\n    * 롱 노트: l\r\n\r\n    ex) '\\*\\*\\*\\*s\\*\\*\\*s\\*\\*\\*llll'\r\n\r\n---\r\n## special thanks to\r\nIDEV, KSA. Korea Science Academy of KAIST",
+            "/server.js": "import path from 'path'\r\nimport { fileURLToPath } from 'url'\r\nconst __filename = fileURLToPath(import.meta.url)\r\nconst __dirname = path.dirname(__filename)\r\n\r\nimport express from 'express'\r\n\r\nconst app = express()\r\napp.use(express.static(__dirname))\r\napp.use(express.static(__dirname + '/client'))\r\napp.use(express.static(__dirname + '/data'))\r\napp.get('/', (request, response) => {\r\n    response.sendFile(__dirname + '/client/main/index.html');\r\n})\r\napp.listen(80, () => {\r\n    console.log('server started!')\r\n})",
+            "/.gitignore": "node_modules/",
+            "/client/common.css": "@import url('https://fonts.googleapis.com/css2?family=Poor+Story&display=swap');\r\n\r\n:root {\r\n    --unit: 1vw;\r\n}\r\n\r\n@media (max-aspect-ratio: 1/1) {\r\n    :root {\r\n        --unit: 1vw;\r\n    }\r\n}\r\n\r\n@media (min-aspect-ratio: 1/1) {\r\n    :root {\r\n        --unit: 1vh;\r\n    }\r\n}\r\n\r\n* {\r\n    margin: 0;\r\n    padding: 0;\r\n    overflow: hidden;\r\n    font-family: 'Poor Story', cursive;\r\n    box-sizing: border-box;\r\n}\r\n*:hover {\r\n    cursor: default;\r\n}\r\n*::selection {\r\n    background-color: transparent;\r\n}\r\n\r\nbody {\r\n    background-color: #eeeeee;\r\n}\r\n\r\n#monitor {\r\n    width: calc(var(--unit) * 100);\r\n    height: calc(var(--unit) * 100);\r\n    background-color: #121212;\r\n\r\n    font-size: calc(var(--unit) * 2.5);\r\n    font-weight: bold;\r\n    color: #eeeeee;\r\n\r\n    position: absolute;\r\n}\r\n@media (max-aspect-ratio: 1/1) {\r\n    #monitor {\r\n        top: calc(50vh - 50vw);\r\n    }\r\n}\r\n@media (min-aspect-ratio: 1/1) {\r\n    #monitor {\r\n        left: calc(50vw - 50vh);\r\n    }\r\n}\r\n\r\n.cover {\r\n    background-color: #eeeeee;\r\n    position: absolute;\r\n\r\n    z-index: 1;\r\n}\r\n@media (max-aspect-ratio: 1/1) {\r\n    .cover {\r\n        width: 100vw;\r\n        height: calc(50vh - 50vw);\r\n    }\r\n    .first {\r\n        top: 0;\r\n    }\r\n    .second {\r\n        bottom: 0;\r\n    }\r\n}\r\n@media (min-aspect-ratio: 1/1) {\r\n    .cover {\r\n        width: calc(50vw - 50vh);\r\n        height: 100vh;\r\n    }\r\n    .first {\r\n        left: 0;\r\n    }\r\n    .second {\r\n        right: 0;\r\n    }\r\n}\r\n\r\n.common-monitor {\r\n    width: 100%;\r\n    height: 50%;\r\n    position: absolute;\r\n    top: 50%;\r\n    z-index: 3;\r\n}\r\n.common-monitor:first-of-type {\r\n    rotate: 180deg;\r\n    top: 0;\r\n}\r\n\r\n.select {\r\n    width: calc(var(--unit) * 15);\r\n\r\n    text-align: center;\r\n    line-height: calc(var(--unit) * 5);\r\n\r\n    position: absolute;\r\n    bottom: 0;\r\n}\r\n.left {\r\n    left: calc(var(--unit) * 5);\r\n}\r\n.right {\r\n    left: calc(var(--unit) * 80);\r\n}"
+        },
+        "requests": [],
+        "isPublic": false,
+        "isFinished": false
     }
 ]

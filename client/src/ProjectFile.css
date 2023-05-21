@@ -1,8 +1,50 @@
+#path-controller {
+    width: 100vw;
+    height: 5vh;
+    background-color: rgb(255, 196, 0);
+
+    position: absolute;
+    top: -5vh;
+}
+
+#path-input {
+    box-sizing: border-box;
+    width: 50vw;
+    height: 5vh;
+    background-color: rgb(21, 21, 21);
+
+    color: white;
+
+    position: relative;
+    left: 25vw;
+}
+
+#new-file {
+    box-sizing: border-box;
+    width: 5vh;
+    height: 5vh;
+
+    position: relative;
+    left: 25vw;
+}
+
+#delete-file {
+    box-sizing: border-box;
+    width: 5vh;
+    height: 5vh;
+
+    position: relative;
+    left: 25vw;
+}
+
 #editor-container {
     width: 100vw;
-    height: 100vh;
+    height: 95vh;
     display: flex;
     flex-direction: row;
+
+    position: absolute;
+    top: 5vh;
 }
 
 #project-name-wrapper {
@@ -10,7 +52,7 @@
     align-items: center;
     justify-content: center;
     height: 30px;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid rgb(21, 21, 21);
 }
 
 #explorer {

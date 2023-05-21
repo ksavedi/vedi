@@ -62,7 +62,7 @@ interface ClientResSaveProjectFiles extends TemplateClientRes {
     query: 'saveProjectFiles';
     content: {
         projectName: string;
-        changedFiles: object;
+        changedFiles: Record<string, string | null>;
     };
 }
 

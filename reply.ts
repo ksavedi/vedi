@@ -290,7 +290,10 @@ const reply = (id: Id, clientRes: ClientRes): ServerRes => {
         }
 
         for (const dir in changedFiles) {
-            project.files[dir] = changedFiles[dir as keyof typeof changedFiles]
+            if (changedFiles[dir] !== null) project.files[dir] = changedFiles[dir]!
+            // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+            else if (dir in project.files) delete project.files[dir]
+            Project.save()
         }
 
         return {
