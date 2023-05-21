@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useParams } from "react-router-dom"
 import { requestMsg } from './post'
+// import { directory } from '../../interface/basic'
 import { ServerResProject } from '../../interface/serverRes'
 import { Project } from '../../class/project'
 import { Editor } from '@monaco-editor/react'
 import { Directory } from './Directory'
 
 import './ProjectFile.css'
+
+// eslint-disable-next-line prefer-named-capture-group
+const directory = /\/([ㄱ-ㅎㅏ-ㅣ가-힣\w\s.]+\/)*([ㄱ-ㅎㅏ-ㅣ가-힣\w\s.]*\.)+([ㄱ-ㅎㅏ-ㅣ가-힣\w\s.]*)$/gim
 
 interface FileInfo {
     type: 'file';
@@ -132,6 +136,11 @@ const ProjectFile = () => {
                 onBlur={
                     () => {
                         if (!projectInfo || !newDirectory) return
+                        if (!directory.test(newDirectory)) {
+                            alert('Error: Invalid directory\ndirectory should start with / and it must include . for file extension')
+                            return
+                        }
+
                         delete projectInfo.files[path]
                         projectInfo.files[newDirectory] = text
                         loadFile(projectInfo)
