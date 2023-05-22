@@ -28,7 +28,7 @@ const CreateProject = () => {
             content: { projectName, projectInfo },
             sessionKey: localStorage['sessionKey']
         })
-        navigate(`../${projectName}`)
+        navigate(`../project/${projectName}`)
     }
 
     return (
