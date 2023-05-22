@@ -43,7 +43,8 @@ const language: Record<string, string> = {
 
 const buildFileInfo = (curDir: FolderInfo, path: string[], value: string, depth = 0) => {
     const dirName = path[depth]
-    const extension = dirName.split('.')[dirName.split('.').length - 1]
+    const extension = dirName.split('.').at(-1)
+    if (extension === undefined) throw new Error('no file extension')
     if (dirName.includes(".")) {
         curDir.child.push({
             type: 'file',
@@ -145,10 +146,9 @@ const ProjectFile = () => {
                         projectInfo.files[newDirectory] = text
                         loadFile(projectInfo)
 
-                        const dirArray = newDirectory.split('/')
-                        setFileName(dirArray[dirArray.length - 1])
-                        const extension = fileName.split('.')[fileName.split('.').length - 1]
-                        setLang(language[extension] ?? extension)
+                        setFileName(newDirectory.split('/').at(-1)!)
+                        const extension = fileName.split('.').at(-1)
+                        setLang(language[extension!] ?? extension)
                         setPath(newDirectory)
 
                         setNewDirectory(null)
