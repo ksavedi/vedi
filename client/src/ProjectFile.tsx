@@ -83,6 +83,7 @@ const ProjectFile = () => {
     const [lang, setLang] = useState('')
     const [text, setText] = useState('')
     const [newDirectory, setNewDirectory] = useState<string | null>(null)
+    const [onFile, setOnFile] = useState<'block' | 'none'>('none')
 
     const buildExplorer = (curDir: FolderInfo, dirList: (FolderInfo | FileInfo)[]) => {
         for (const element of curDir.child) {
@@ -163,6 +164,7 @@ const ProjectFile = () => {
                         setText('')
                         setLang('plaintext')
                         setPath(`/newFile${Object.keys(projectInfo.files).length - 1}.txt`)
+                        setOnFile('block')
                     }
                 }>+</button>
                 <button id="delete-file" onClick={
@@ -174,6 +176,7 @@ const ProjectFile = () => {
                         setText('')
                         setLang('')
                         setPath('')
+                        setOnFile('none')
                     }
                 }>-</button>
             </div>
@@ -202,6 +205,7 @@ const ProjectFile = () => {
                                         setText(v.content)
                                         setLang(v.language)
                                         setPath(v.path)
+                                        setOnFile('block')
                                     }
                                 }
                             />
@@ -209,7 +213,7 @@ const ProjectFile = () => {
                     })}
                 </div>
             </div>
-            <div id="editor-wrapper">
+            <div id="editor-wrapper" style={{ display: onFile }}>
                 <Editor
                     height="100vh"
                     theme="vs-dark"
@@ -221,6 +225,7 @@ const ProjectFile = () => {
                         setText(value)
                     }}
                 />
+                열려 있는 파일이 없습니다.
             </div>
             <button id="save-button"
                 onClick={async () => {

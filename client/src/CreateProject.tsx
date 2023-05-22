@@ -82,6 +82,10 @@ const CreateProject = () => {
                             window.alert('형식에 맞지 않는 학번입니다.')
                             return
                         }
+                        if (members.includes(member as Id)) {
+                            window.alert('이미 해당 멤버가 존재합니다.')
+                            return
+                        }
                         setMembers((members) => [...members, member as Id])
                         setMember('')
                     }

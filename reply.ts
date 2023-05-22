@@ -40,6 +40,17 @@ const getProjectInfoError = (info: ProjectInfo): ServerRes => {
         }
     }
 
+    for (const mem of info.members) {
+        if (info.members.filter(val => val === mem).length > 1) {
+            return {
+                query: 'error',
+                content: {
+                    message: '같은 멤버가 중복해서 있습니다.'
+                }
+            }
+        }
+    }
+
     return {
         query: 'alert',
         content: {
