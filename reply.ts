@@ -70,6 +70,15 @@ const isOwner = (id: Id, info: ProjectInfo) => {
 const reply = (id: Id, clientRes: ClientRes): ServerRes => {
     const { query, content } = clientRes
 
+    if (id === null) {
+        return {
+            query: 'error',
+            content: {
+                message: '올바르지 않은 접근입니다.'
+            }
+        }
+    }
+
     if (query === 'getProjectList') {
         const resProjectList = []
 
@@ -193,6 +202,7 @@ const reply = (id: Id, clientRes: ClientRes): ServerRes => {
         }
         else {
             project.requests.push(id)
+            Project.save()
         }
 
         return {

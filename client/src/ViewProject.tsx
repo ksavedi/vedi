@@ -6,6 +6,14 @@ import "./ViewProject.css"
 import { useNavigate } from 'react-router-dom'
 import { Id } from '../../interface/basic'
 
+const requestRequestProject = async (projectName: string) => {
+    await requestMsg({
+        query: 'requestProject',
+        content: { projectName },
+        sessionKey: localStorage['sessionKey']
+    })
+}
+
 const ViewProject = () => {
     const [projectList, setProjectList] = useState<Project[]>([])
 
@@ -45,7 +53,11 @@ const ViewProject = () => {
                                         {project.description}
                                     </div>
                                     <div>
-                                        <span style={{textDecoration: 'underline'}} onClick={
+                                        <span style={{
+                                            display: localStorage['id'] as Id === project.owner
+                                                ? 'inline' : 'none',
+                                            textDecoration: 'underline'
+                                        }} onClick={
                                             (event) => {
                                                 event.stopPropagation()
                                                 navigate(`./${project.name}/changeInfo`)
@@ -71,6 +83,20 @@ const ViewProject = () => {
                                     </div>
                                     <div className="project-description-container">
                                         {project.description}
+                                    </div>
+                                    <div>
+                                        <span style={{
+                                            display: project.members.includes(localStorage['id'] as Id)
+                                                || project.requests.includes(localStorage['id'] as Id)
+                                                ? 'none' : 'inline',
+                                            textDecoration: 'underline'
+                                        }} onClick={
+                                            (event) => {
+                                                event.stopPropagation()
+                                                requestRequestProject(project.name)
+                                                project.requests.push(localStorage['id'] as Id)
+                                            }
+                                        }>신청</span>
                                     </div>
                                 </div>
                             )
