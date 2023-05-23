@@ -76,7 +76,7 @@ const ViewProject = () => {
                             .filter((v) => v.isPublic)
                             .map((project) =>
                                 <div className="project-info-container"
-                                    onClick={() => navigate(`./${project.name}/info`)}
+                                onClick={() => navigate(`./${project.name}/info`)}
                                 >
                                     <div className="project-name-container">
                                         {project.name}
