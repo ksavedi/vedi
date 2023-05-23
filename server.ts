@@ -47,6 +47,7 @@ const checkValid = async (auth: User): Promise<boolean> => {
         'https://gaonnuri.ksain.net/api/v2/PAuth.php',
         {
             method: 'post',
+            
             // eslint-disable-next-line @typescript-eslint/naming-convention
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

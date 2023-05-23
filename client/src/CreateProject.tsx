@@ -3,6 +3,7 @@ import { requestMsg } from './post'
 import type { Id } from '../../interface/basic'
 import { ProjectInfo } from '../../class/project'
 import { useNavigate } from 'react-router-dom'
+import "./createProject.css"
 
 
 const CreateProject = () => {
@@ -32,11 +33,11 @@ const CreateProject = () => {
     }
 
     return (
-        <div>
-            <div>프로젝트 생성</div>
-            <div>
-                이름
-                <input
+        <div id="container">
+            <div id="maintitle">프로젝트 생성</div>
+            <div id="name" className="divs"><h1 id="nametitle" className="titles">
+                이름</h1>
+                <input className="inputtexts"
                     defaultValue=""
                     onChange={
                         (e) => setProjectName(e.target.value || '')
@@ -44,23 +45,24 @@ const CreateProject = () => {
                     autoFocus={true}
                 />
             </div>
-            <div>
-                설명
-                <textarea
+            <div id="description" className="divs"><h1 id="descriptiontitle" className="titles">
+                설명</h1>
+                <textarea className="inputtexts"
                     defaultValue=""
                     onChange={
                         (e) => setDescription(e.target.value || '')
                     }
                 />
             </div>
-            <div>
-                멤버
+            <div id="members" className="divs"><h1 id="membertitle" className="titles">
+                멤버</h1>
+                <div id="memberlist">
                 {
                     members.map((mem) => {
                         if (mem === localStorage['id'] as Id) return null
-                        return <div>
+                        return <div className="eachmember">
                             {mem}
-                            <span onClick={
+                            <span className="delete" onClick={
                                 () => {
                                     setMembers((members) => {
                                         const copied = [...members]
@@ -71,12 +73,12 @@ const CreateProject = () => {
                             } style={{ color: 'red', textDecoration: 'underline' }}>삭제</span>
                         </div>
                     })
-                }
+                }</div>
             </div>
-            <div>
-                멤버 추가
-                <input id="add" value={member} onChange={(e) => setMember(e.target.value)} />
-                <button onClick={
+            <div id="addmembers" className="divs"><h1 id="addmemberstitle" className="titles">
+                멤버 추가</h1>
+                <input className="inputtexts" id="add" value={member} onChange={(e) => setMember(e.target.value)} />
+                <button id="addmemberbutton" onClick={
                     () => {
                         if (!/^(19|20|21|22|23|24|25)-\d{3}$/.test(member)) {
                             window.alert('형식에 맞지 않는 학번입니다.')
@@ -91,16 +93,18 @@ const CreateProject = () => {
                     }
                 }>추가</button>
             </div>
-            <div>
-                공개 여부
+            <div id="public" className="divs"><h1 id="publictitle" className="titles">
+                공개 여부</h1>
                 <input
+                    id="check"
                     type="checkbox"
                     onChange={
                         (e) => setIsPublic(e.target.checked)
                     }
                 />
+                <label htmlFor="check"></label>
             </div>
-            <button onClick={() => requestCreateProject(projectName, description, members, isPublic)}>생성</button>
+            <button id="createbutton" onClick={() => requestCreateProject(projectName, description, members, isPublic)}>생성</button>
         </div>
     )
 }

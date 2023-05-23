@@ -14,6 +14,7 @@ const Login = () => {
     const navigate = useNavigate()
 
     const requestLogin = async (id: string, pw: string) => {
+
         if (!/^(19|20|21|22|23|24|25)-\d{3}$/.test(id)) {
             window.alert('형식에 맞지 않는 학번입니다.')
             return
@@ -32,7 +33,7 @@ const Login = () => {
 
     return (
         <div id="login-container">
-            <div id="login-header">로그인</div>
+            <div id="login-header">login</div>
             <div id="login-content">
                 <div className="info-container" id="id-container">
                     <div className="icon-container">
@@ -74,12 +75,12 @@ const Login = () => {
                     id="login-checkbox-label"
                     htmlFor="login-checkbox"
                 >
-                    로그인 상태 유지
+                    keep me logged in
                 </label>
             </div>
             <div id="login-button-container">
                 <button id="login-button" onClick={() => requestLogin(id, pw)}>
-                    로그인
+                    login
                 </button>
             </div>
         </div>

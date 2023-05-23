@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600&display=swap');
+
+@keyframes test {
+    0% {
+        filter: hue-rotate(0deg)
+    }
+    50% {
+        filter: hue-rotate(360deg)
+    }
+    100% {
+        filter: hue-rotate(0deg)
+    }
+}
+* {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+}
+
+#container {
+    width: 50vw;
+    margin-top: 10vh;
+}
+
+#name {
+    margin-top: 50px;
+}
+
+
+#createbutton {
+    width: 200px;
+    height: 50px;
+}
+
+.titles {
+    font-weight: 300;
+    width: 5vw;
+    font-size: 20px;
+}
+
+.divs {
+    width: 50vw;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+}
+
+#description {
+    height: 120px;
+}
+
+.inputtexts {
+    width: 38vw;
+    margin-left: 2vw;
+    height: 40px;
+    border: none;
+    border-bottom: 1px solid black;
+}
+#maintitle {
+    font-size: 25px;
+    font-weight: 500;
+}
+
+#createbutton {
+    background-color: #ffffff;
+    border: none;
+    border-bottom: 2px solid black;
+    margin-top: 30px;
+    font-size: 20px;
+}
+
+#createbutton:hover {
+    cursor: pointer;
+    border-bottom: 4px solid blue;
+}
+textarea {
+    height: 120px !important;
+    font-size: 20px;
+}
+
+#addmemberbutton {
+    border: none;
+    border-bottom: 2px solid black;
+    background-color: #ffffff;
+    font-size: 12px;
+}
+
+#addmemberbutton:hover {
+    border-bottom: 4px solid blue;
+    cursor: pointer;
+}
+
+input[id="check"] + label {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border: 2px solid #bcbcbc;
+	cursor: pointer;
+
+    margin-left: 2vw;
+    margin-top: 10px;
+}
+input[id="check"]:checked + label {
+	border: 5px solid blue;
+}
+input[id="check"] {
+	display: none;
+}
+
+input {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+
+}
+
+#memberlist {
+    width: 38vw;
+    margin-left: 2vw;
+    border: none;
+    border-bottom: 1px solid;
+
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+}
+
+.eachmember {
+    width: 8vw;
+    margin-left: 20px;
+}
+
+.delete {
+    margin-left: 10px;
+}
