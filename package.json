@@ -44,7 +44,7 @@
     "scripts": {
         "set": "npm i && cd client && npm i && cd ..",
         "build": "cd client && npm run build && cd ..",
-        "start": "nodemon --exec ts-node -e ts,tsx ./server.ts",
+        "start": "nodemon --exec ts-node -e ts,tsx,css ./server.ts",
         "dev": "npm run build && npm run start"
     }
 }
