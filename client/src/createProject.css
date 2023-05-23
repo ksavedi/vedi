@@ -113,21 +113,21 @@ input {
 
 }
 
-#memberlist {
+.memberlist {
     width: 38vw;
+    height: fit-content;
     margin-left: 2vw;
     border: none;
     border-bottom: 1px solid;
 
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
 
     align-items: center;
 }
 
 .eachmember {
-    width: 8vw;
-    margin-left: 20px;
+    margin: 0.5vw 0 0.5vw 20px;
 }
 
 .delete {
