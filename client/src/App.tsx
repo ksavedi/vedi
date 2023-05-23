@@ -11,6 +11,7 @@ const App = () =>
             <Route path="/" element={<Login />} />
             <Route path="/project" element={<ViewProject />} />
             <Route path="/project/:name" element={<ProjectFile />} />
+            <Route path="/project/:name/info" element={<ManageProject />} />
             <Route path="/project/:name/changeInfo" element={<ManageProject />} />
             <Route path="/create" element={<CreateProject />} />
         </Routes>
