@@ -7,11 +7,11 @@ sessionKey와 error는 생략
 ## login
 
 ```ts
-query: 'login';
+query: "login";
 content: {
-    id: Id;
-    pw: string;
-};
+  id: Id;
+  pw: string;
+}
 ```
 
 -> [loginResult]
@@ -21,22 +21,33 @@ content: {
 ## getProjectList
 
 ```ts
-query: 'getProjectList';
+query: "getProjectList";
 content: null;
 ```
 
 -> [projectList]
+
+## openReadme
+
+```ts
+query: "openReadme";
+content: {
+  projectName: string;
+}
+```
+
+-> [readme]
 
 # 프로젝트 관리
 
 ## createProject
 
 ```ts
-query: 'createProject';
+query: "createProject";
 content: {
-    projectName: string;
-    projectInfo: ProjectInfo;
-};
+  projectName: string;
+  projectInfo: ProjectInfo;
+}
 ```
 
 -> [project]
@@ -44,28 +55,28 @@ content: {
 ## deleteProject
 
 ```ts
-query: 'deleteProject';
+query: "deleteProject";
 content: {
-    projectName: string;
-};
+  projectName: string;
+}
 ```
 
 ## requestProject
 
 ```ts
-query: 'requestProject';
+query: "requestProject";
 content: {
-    projectName: string;
-};
+  projectName: string;
+}
 ```
 
 ## openProject
 
 ```ts
-query: 'openProject';
+query: "openProject";
 content: {
-    projectName: string;
-};
+  projectName: string;
+}
 ```
 
 -> [project]
@@ -73,11 +84,11 @@ content: {
 ## saveProjectInfo
 
 ```ts
-query: 'saveProjectInfo';
+query: "saveProjectInfo";
 content: {
-    projectName: string;
-    projectInfo: ProjectInfo;
-};
+  projectName: string;
+  projectInfo: ProjectInfo;
+}
 ```
 
 -> [project]
@@ -99,6 +110,7 @@ content: {
 # 설정
 
 ---
+
 ---
 
 # ServerRes server -> client
@@ -108,10 +120,10 @@ content: {
 ## error
 
 ```ts
-query: 'error';
+query: "error";
 content: {
-    message: string;
-};
+  message: string;
+}
 ```
 
 -> client alert message
@@ -119,10 +131,10 @@ content: {
 ## alert
 
 ```ts
-query: 'alert';
+query: "alert";
 content: {
-    message: string;
-};
+  message: string;
+}
 ```
 
 -> client alert message
@@ -132,11 +144,11 @@ content: {
 ## loginResult
 
 ```ts
-query: 'loginResult';
+query: "loginResult";
 content: {
-    result: boolean;
-    sessionKey: string;
-};
+  result: boolean;
+  sessionKey: string;
+}
 ```
 
 # 프로젝트 목록
@@ -152,15 +164,26 @@ content: {
 
 -> client project 보는 창에 띄움 (분기별, 공개 프로젝트 등)
 
+## readme
+
+```ts
+query: "readme";
+content: {
+  document: string;
+}
+```
+
+-> 공개 프로젝트를 클릭했을 때 나오는 정보 창에 띄움
+
 # 프로젝트 관리
 
 ## project
 
 ```ts
-query: 'project';
+query: "project";
 content: {
-    project: Project;
-};
+  project: Project;
+}
 ```
 
 -> client 프로젝트 관리 페이지 업데이트
@@ -168,6 +191,7 @@ content: {
 # 설정
 
 <!--ServerRes-->
+
 [error]: #error
 [alert]: #alert
 [loginResult]: #loginresult

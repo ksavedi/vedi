@@ -36,11 +36,19 @@ interface ServerResProject {
     };
 }
 
+interface ServerResReadme {
+    query: 'readme';
+    content: {
+        document: string;
+    };
+}
+
 type ServerRes = ServerResError
     | ServerResAlert
     | ServerResLoginResult
     | ServerResProjectList
     | ServerResProject
+    | ServerResReadme
 
 export type {
     ServerResError,
@@ -48,6 +56,7 @@ export type {
     ServerResLoginResult,
     ServerResProjectList,
     ServerResProject,
+    ServerResReadme,
 
     ServerRes
 }

@@ -149,7 +149,7 @@ const reply = (id: Id, clientRes: ClientRes): ServerRes => {
         }
 
         const project = Project.get(name)
-        const {info} = project
+        const { info } = project
         if (hasProjectInfoError(info)) {
             return getProjectInfoError(info)
         }
@@ -280,7 +280,7 @@ const reply = (id: Id, clientRes: ClientRes): ServerRes => {
 
     if (query === 'saveProjectFiles') {
         const name = content.projectName
-        const {changedFiles} = content
+        const { changedFiles } = content
         if (!Project.has(name)) {
             return {
                 query: 'error',

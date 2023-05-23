@@ -66,6 +66,13 @@ interface ClientResSaveProjectFiles extends TemplateClientRes {
     };
 }
 
+interface ClientResOpenReadme extends TemplateClientRes {
+    query: 'openReadme';
+    content: {
+        projectName: string;
+    };
+}
+
 type ClientRes = ClientResLogin
     | ClientResGetProjectList
     | ClientResCreateProject
@@ -74,6 +81,7 @@ type ClientRes = ClientResLogin
     | ClientResOpenProject
     | ClientResSaveProjectInfo
     | ClientResSaveProjectFiles
+    | ClientResOpenReadme
 
 export type {
     ClientResLogin,
@@ -84,6 +92,7 @@ export type {
     ClientResOpenProject,
     ClientResSaveProjectInfo,
     ClientResSaveProjectFiles,
+    ClientResOpenReadme,
 
     ClientRes
 }

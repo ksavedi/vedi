@@ -40,3 +40,11 @@
     font-size: 15px;
     flex-wrap: wrap;
 }
+
+#create-project-button {
+    position: fixed;
+    font-size: 14px;
+    padding: 6px 13px;
+    color: rgb(21, 21, 21);
+    background: rgb(255, 196, 0);
+}
