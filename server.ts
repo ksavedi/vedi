@@ -1,4 +1,5 @@
 // 서버 열기
+// wow
 import { resolve } from 'path'
 import express from 'express'
 import cookieParser from 'cookie-parser'
