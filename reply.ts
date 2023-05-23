@@ -96,6 +96,52 @@ const reply = (id: Id, clientRes: ClientRes): ServerRes => {
         }
     }
 
+    if (query === 'openReadme') {
+        const name = content.projectName
+        if (!Project.has(name)) {
+            return {
+                query: 'error',
+                content: {
+                    message: '프로젝트가 존재하지 않습니다.'
+                }
+            }
+        }
+
+        const project = Project.get(name)
+        if (Object.keys(project.files).includes('/README.md')) {
+            return {
+                query: 'readme',
+                content: {
+                    document: project.files['/README.md']
+                }
+            }
+        }
+        else if (Object.keys(project.files).includes('/프로젝트 계획서.md')) {
+            return {
+                query: 'readme',
+                content: {
+                    document: project.files['/프로젝트 계획서.md']
+                }
+            }
+        }
+        else if (Object.keys(project.files).includes('/프로젝트 계획서.txt')) {
+            return {
+                query: 'readme',
+                content: {
+                    document: project.files['/프로젝트 계획서.txt']
+                }
+            }
+        }
+        else {
+            return {
+                query: 'error',
+                content: {
+                    message: '프로젝트 내에 README.md 또는 프로젝트 계획서.md가 없습니다.'
+                }
+            }
+        }
+    }
+
     if (query === 'createProject') {
         const name = content.projectName
         const info = content.projectInfo
