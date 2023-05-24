@@ -6,6 +6,7 @@ import { ProjectInfo } from '../../class/project'
 import { useNavigate } from 'react-router-dom'
 import { ServerResProject } from '../../interface/serverRes'
 import "./createProject.css"
+import "./manageProject.css"
 
 const ManageProject = () => {
     const [projectName, setProjectName] = useState(useParams().name as string)
@@ -26,7 +27,8 @@ const ManageProject = () => {
             }) as ServerResProject
             const { project } = result.content
             
-            const { description, members, requests, isPublic } = project
+            const { name, description, members, requests, isPublic } = project
+            setProjectName(name)
             setDescription(description)
             setMembers(members)
             setRequests(requests)
@@ -63,26 +65,28 @@ const ManageProject = () => {
     }
 
     return (
-        <div id="mcontainer">
+        <div id="container">
             <div id="maintitle">프로젝트 수정</div>
-            <div id="name" className="divs"><h1 id="nametitle" className="titles">
-                이름: { projectName }</h1>
+            <div className="divs">
+                <h1 className="titles">이름:</h1>
+                <input className="inputtexts" value={ projectName } readOnly />
             </div>
-            <div id="description" className="divs"><h1 id="descriptiontitle" className="titles">
-                설명</h1>
-                <textarea
+            <div className="divs" style={{height: '120px'}}>
+                <h1 className="titles">설명</h1>
+                <textarea className="inputtexts"
                     defaultValue={description}
                     onChange={
                         (e) => setDescription(e.target.value || '')
                     }
                 />
             </div>
-            <div id="members" className="divs"><h1 id="membertitle" className="titles">
-                멤버</h1>
+            <div className="divs" style={{height: 'fit-content'}}>
+                <h1 className="titles">멤버</h1>
+                <div className="memberlist">
                 {
                     members.map((mem) => {
                         if (mem === localStorage['id'] as Id) return ''
-                        return <div>{mem}<span onClick={
+                        return <div className="eachmember">{mem}<span onClick={
                             () => {
                                 setMembers((members) => {
                                     const copied = [...members]
@@ -90,28 +94,30 @@ const ManageProject = () => {
                                     return copied
                                 })
                             }
-                        } style={{ color: 'red', textDecoration: 'underline' }}>삭제</span></div>
+                        } style={{ color: 'red', marginLeft: '10px',  textDecoration: 'underline' }}>삭제</span></div>
                     })
                 }
+                </div>
             </div>
             {
-                (isPublic)
-                ? <div>
-                신청
+                (isPublic && requests.length > 0)
+                ? <div className="divs" style={{height: 'fit-content'}}>
+                <h1 className="titles">신청</h1>
+                <div className="memberlist">
                 {
                     requests.map((mem) => {
-                        return <div>
+                        return <div className="eachmember">
                             {mem}
                             <span onClick={
                                 () => {
-                                    setMembers((members) => [...members, member as Id])
+                                    setMembers((members) => [...members, mem as Id])
                                     setRequests((requests) => {
                                         const copied = [...requests]
                                         copied.splice(copied.indexOf(mem), 1)
                                         return copied
                                     })
                                 }
-                            } style={{ color: 'green', textDecoration: 'underline' }}>수락</span>
+                            } style={{ color: 'green', marginLeft: '10px', textDecoration: 'underline' }}>수락</span>
                             <span onClick={
                                 () => {
                                     setRequests((requests) => {
@@ -120,16 +126,17 @@ const ManageProject = () => {
                                         return copied
                                     })
                                 }
-                            } style={{ color: 'red', textDecoration: 'underline' }}>거절</span>
+                            } style={{ color: 'red', marginLeft: '10px', textDecoration: 'underline' }}>거절</span>
                         </div>
                     })
                 }
-                </div> : null
+                </div></div> : null
             }
-            <div id="addmembers" className="divs"><h1 id="addmemberstitle" className="titles">
-                멤버 추가</h1>
-                <input className="inputtexts" id="add" value={member} onChange={(e) => setMember(e.target.value)} />
-                <button id="addmemberbutton" onClick={
+            <div className="divs">
+                <h1 className="titles">멤버 추가</h1>
+                <input className="inputtexts" value={member} onChange={(e) => setMember(e.target.value)} />
+                <button id="addmemberbutton"
+                onClick={
                     () => {
                         if (!/^(19|20|21|22|23|24|25)-\d{3}$/.test(member)) {
                             window.alert('형식에 맞지 않는 학번입니다.')
@@ -144,8 +151,8 @@ const ManageProject = () => {
                     }
                 }>추가</button>
             </div>
-            <div id="public" className="divs"><h1 id="publictitle" className="titles">
-                공개 여부</h1>
+            <div className="divs">
+                <h1 className="titles">공개 여부</h1>
                 <input
                     id="check"
                     type="checkbox"
@@ -156,8 +163,8 @@ const ManageProject = () => {
                 />
                 <label htmlFor="check"></label>
             </div>
-            <button id="deleteprojbutton" onClick={() => requestDeleteProject(projectName)}>삭제</button>
-            <button id="saveprojbutton" onClick={() => requestSaveProjectInfo(projectName, description, members, requests, isPublic)}>저장</button>
+            <button className="delete-project button" onClick={() => requestDeleteProject(projectName)}>삭제</button>
+            <button className="button" onClick={() => requestSaveProjectInfo(projectName, description, members, requests, isPublic)}>저장</button>
         </div>
     )
 }

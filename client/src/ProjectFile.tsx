@@ -247,7 +247,6 @@ const ProjectFile = () => {
                     const changedFileInfo: Record<string, string | null> = {}
                     
                     for (const path in { ...original.files, ...projectInfo.files }) {
-                        console.log(path)
                         if (original.files[path] !== projectInfo.files[path]) {
                             changedFileInfo[path] = projectInfo.files[path] ?? null
                         }

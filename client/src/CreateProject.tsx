@@ -58,7 +58,7 @@ const CreateProject = () => {
             </div>
             <div id="members" className="divs"><h1 id="membertitle" className="titles">
                 멤버</h1>
-                <div id="memberlist">
+                <div className="memberlist">
                 {
                     members.map((mem) => {
                         if (mem === localStorage['id'] as Id) return null
