@@ -2,7 +2,7 @@ import type { ClientRes } from '../../interface/clientRes'
 import { ServerRes } from '../../interface/serverRes'
 
 const requestMsg = async (clientRes: ClientRes): Promise<ServerRes> => {
-    const response = await fetch('http://localhost/api', {
+    const response = await fetch('http://localhost/api/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

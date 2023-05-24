@@ -1,22 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600&display=swap');
+
+* {
+    font-family: 'IBM Plex Sans KR', sans-serif !important;
+    color: black;
+}
+
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+
+}
+
 #path-controller {
     width: 100vw;
     height: 5vh;
-    background-color: rgb(255, 196, 0);
+    background-color: #ffffff;
 
     position: absolute;
-    top: -5vh;
+    top: calc(10px - 5vh);
+}
+
+.icon-container-2 {
+    position: relative;
+    left: calc(25vw - 60px);
+    top: calc(5vh - 10px);
 }
 
 #path-input {
     box-sizing: border-box;
     width: 50vw;
     height: 5vh;
-    background-color: rgb(21, 21, 21);
+    background-color: #ffffff;
 
-    color: white;
+    border: none;
+    border-bottom: 1px solid black;
+
+    color: black;
 
     position: relative;
     left: 25vw;
+}
+
+#path-input:focus {
+    border-bottom: 3px solid rgb(255, 196, 0);
 }
 
 #new-file {
@@ -26,6 +53,15 @@
 
     position: relative;
     left: 25vw;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 25px;
+
+    background: #ffffff;
+    border: none;
+}
+
+#new-file:hover {
+    background:rgb(255, 196, 0);
 }
 
 #delete-file {
@@ -35,8 +71,14 @@
 
     position: relative;
     left: 25vw;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-size: 25px;
+    background: #ffffff;
+    border: none;
 }
-
+#delete-file:hover {
+    background:rgb(255, 196, 0);
+}
 #editor-container {
     width: 100vw;
     height: 95vh;
@@ -75,7 +117,19 @@
     position: fixed;
     width: 100px;
     height: 50px;
-    border-radius: 10px;
     bottom: 50px;
     right: 50px;
+
+    border: none;
+    border-bottom: 1px solid black;
+    background: #ffffff;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+#save-button:hover {
+    background-color: rgb(255, 196, 0);
+    border-bottom: none;
+    transition: 0.3s;
+    cursor: pointer;
 }

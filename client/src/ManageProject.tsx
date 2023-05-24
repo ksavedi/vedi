@@ -161,6 +161,7 @@ const ManageProject = () => {
                         (e) => setIsPublic(e.target.checked)
                     }
                 />
+                <label htmlFor="check"></label>
             </div>
             <button className="delete-project button" onClick={() => requestDeleteProject(projectName)}>삭제</button>
             <button className="button" onClick={() => requestSaveProjectInfo(projectName, description, members, requests, isPublic)}>저장</button>
