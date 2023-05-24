@@ -13,6 +13,7 @@ app.get('*', (req, res) => {
 })
 app.listen(80, () => {
     console.log('The server started!')
+    
 })
 
 // dotenv
@@ -110,7 +111,7 @@ app.post('/api', async (req, res) => {
         send(await login(content))
         return
     }
-
+/*
     if (!isAuthorized(sessionKey)) {
         send({
             query: 'error',
@@ -120,6 +121,6 @@ app.post('/api', async (req, res) => {
         })
         return
     }
-
+*/
     send(reply(session[sessionKey], clientRes))
 })

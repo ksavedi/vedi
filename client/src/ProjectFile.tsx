@@ -6,6 +6,8 @@ import { ServerResProject } from '../../interface/serverRes'
 import { Project } from '../../class/project'
 import { Editor } from '@monaco-editor/react'
 import { Directory } from './Directory'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser, faLock, faFolder } from '@fortawesome/free-solid-svg-icons'
 
 import './ProjectFile.css'
 
@@ -128,6 +130,9 @@ const ProjectFile = () => {
     return (
         <div id="editor-container">
             <div id="path-controller">
+                <div className="icon-container-2">
+                        <FontAwesomeIcon icon={faFolder} style={{ color: "#b3b3b3" }} />
+                </div>
                 <input id="path-input" value={newDirectory??path}
                 onFocus={() => { setNewDirectory(path) }}
                 onChange={
@@ -135,6 +140,7 @@ const ProjectFile = () => {
                         setNewDirectory(e.target.value)
                     }
                 }
+                placeholder='directory'
                 onBlur={
                     () => {
                         if (!projectInfo || !newDirectory) return

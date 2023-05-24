@@ -5,7 +5,7 @@ import type { Id } from '../../interface/basic'
 import { ProjectInfo } from '../../class/project'
 import { useNavigate } from 'react-router-dom'
 import { ServerResProject } from '../../interface/serverRes'
-
+import "./createProject.css"
 
 const ManageProject = () => {
     const [projectName, setProjectName] = useState(useParams().name as string)
@@ -63,13 +63,13 @@ const ManageProject = () => {
     }
 
     return (
-        <div>
-            <div>프로젝트 수정</div>
-            <div>
-                이름: { projectName }
+        <div id="mcontainer">
+            <div id="maintitle">프로젝트 수정</div>
+            <div id="name" className="divs"><h1 id="nametitle" className="titles">
+                이름: { projectName }</h1>
             </div>
-            <div>
-                설명
+            <div id="description" className="divs"><h1 id="descriptiontitle" className="titles">
+                설명</h1>
                 <textarea
                     defaultValue={description}
                     onChange={
@@ -77,8 +77,8 @@ const ManageProject = () => {
                     }
                 />
             </div>
-            <div>
-                멤버
+            <div id="members" className="divs"><h1 id="membertitle" className="titles">
+                멤버</h1>
                 {
                     members.map((mem) => {
                         if (mem === localStorage['id'] as Id) return ''
@@ -126,10 +126,10 @@ const ManageProject = () => {
                 }
                 </div> : null
             }
-            <div>
-                멤버 추가
-                <input id="add" value={member} onChange={(e) => setMember(e.target.value)} />
-                <button onClick={
+            <div id="addmembers" className="divs"><h1 id="addmemberstitle" className="titles">
+                멤버 추가</h1>
+                <input className="inputtexts" id="add" value={member} onChange={(e) => setMember(e.target.value)} />
+                <button id="addmemberbutton" onClick={
                     () => {
                         if (!/^(19|20|21|22|23|24|25)-\d{3}$/.test(member)) {
                             window.alert('형식에 맞지 않는 학번입니다.')
@@ -144,18 +144,20 @@ const ManageProject = () => {
                     }
                 }>추가</button>
             </div>
-            <div>
-                공개 여부
+            <div id="public" className="divs"><h1 id="publictitle" className="titles">
+                공개 여부</h1>
                 <input
+                    id="check"
                     type="checkbox"
                     checked={isPublic}
                     onChange={
                         (e) => setIsPublic(e.target.checked)
                     }
                 />
+                <label htmlFor="check"></label>
             </div>
-            <button onClick={() => requestDeleteProject(projectName)}>삭제</button>
-            <button onClick={() => requestSaveProjectInfo(projectName, description, members, requests, isPublic)}>저장</button>
+            <button id="deleteprojbutton" onClick={() => requestDeleteProject(projectName)}>삭제</button>
+            <button id="saveprojbutton" onClick={() => requestSaveProjectInfo(projectName, description, members, requests, isPublic)}>저장</button>
         </div>
     )
 }

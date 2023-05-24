@@ -75,8 +75,8 @@ const Login = () => {
                     id="login-checkbox-label"
                     htmlFor="login-checkbox"
                 >
-                    keep me logged in
                 </label>
+                <p id="login-checkbox-text">로그인 유지하기</p>
             </div>
             <div id="login-button-container">
                 <button id="login-button" onClick={() => requestLogin(id, pw)}>

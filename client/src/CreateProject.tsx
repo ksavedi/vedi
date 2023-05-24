@@ -36,13 +36,14 @@ const CreateProject = () => {
         <div id="container">
             <div id="maintitle">프로젝트 생성</div>
             <div id="name" className="divs"><h1 id="nametitle" className="titles">
-                이름</h1>
+                제목</h1>
                 <input className="inputtexts"
                     defaultValue=""
                     onChange={
                         (e) => setProjectName(e.target.value || '')
                     }
                     autoFocus={true}
+                    placeholder='프로젝트 제목'
                 />
             </div>
             <div id="description" className="divs"><h1 id="descriptiontitle" className="titles">
@@ -52,6 +53,7 @@ const CreateProject = () => {
                     onChange={
                         (e) => setDescription(e.target.value || '')
                     }
+                    placeholder='프로젝트에 대한 설명을 자유롭게 적어주세요!'
                 />
             </div>
             <div id="members" className="divs"><h1 id="membertitle" className="titles">
@@ -77,7 +79,7 @@ const CreateProject = () => {
             </div>
             <div id="addmembers" className="divs"><h1 id="addmemberstitle" className="titles">
                 멤버 추가</h1>
-                <input className="inputtexts" id="add" value={member} onChange={(e) => setMember(e.target.value)} />
+                <input className="inputtexts" id="add" value={member} onChange={(e) => setMember(e.target.value)} placeholder='새 멤버의 학번 (예시 : 23-031)' />
                 <button id="addmemberbutton" onClick={
                     () => {
                         if (!/^(19|20|21|22|23|24|25)-\d{3}$/.test(member)) {

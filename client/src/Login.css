@@ -8,11 +8,9 @@
 #login-container {
     display: flex;
     flex-direction: column;
-    width: 300px;
-    border: 1px solid rgb(238, 238, 238);
+    width: 20vw;
     background: 1px solid rgb(254, 254, 254);
     padding: 30px;
-    box-shadow: rgb(238, 238, 238) 0px 0px 3px 0px;
 }
 
 #login-header {
@@ -21,13 +19,13 @@
     font-weight: 700;
     font-size: 30px;
     color: rgb(88, 95, 105);
-    border-bottom: 1px solid rgb(238, 238, 238);
     padding-bottom: 15px;
 }
 
 #login-content {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .info-container {
@@ -47,24 +45,25 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid rgb(204, 204, 204);
+    border: none;
+    border-left: 1px solid rgb(203, 203, 203);
     box-sizing: border-box;
-    width: 35px;
+    width: 2vw;
     padding: 5px;
+    padding-left: 20px;
 }
 
 .info-input {
     font-family: 'Noto Sans KR', sans-serif;
     height: 35px;
-    border: 1px solid rgb(204, 204, 204);
-    border-left: none;
+    border: none;
+    border-bottom: 1px solid black;
+    margin-left: 20px;
     font-size: 14px;
     padding: 6px 12px;
     flex-grow: 1;
     line-height: 35px;
     box-sizing: border-box;
-    box-shadow: none;
-    color: #555555;
 }
 
 .info-input:focus {
@@ -88,9 +87,36 @@
     cursor: pointer;
 }
 
+
+input[id="login-checkbox"] + label {
+	display: inline-block;
+	width: 17px;
+	height: 17px;
+	border: 2px solid #bcbcbc;
+	cursor: pointer;
+
+    margin-left: 2vw;
+    margin-top: 10px;
+}
+input[id="login-checkbox"]:checked + label {
+	border: 2px solid rgb(255, 196, 0);
+}
+input[id="login-checkbox"] {
+	display: none;
+}
+
+input:focus {
+    border-bottom: 3px solid rgb(255, 196, 0);
+    transition: 1.5s;
+}
+
+#login-checkbox-text {
+    margin-left: 10px;
+}
+
 #login-button-container {
-    display: flex;
-    justify-content: flex-end;
+    display:flex;
+    justify-content: center;
 }
 
 #login-button {
@@ -98,9 +124,19 @@
     padding: 6px 13px;
     font-size: 14px;
     color: rgb(21, 21, 21);
-    background: rgb(48, 47, 47);
+    background: none;
     border: none;
+    border-bottom: 2px solid black;
     margin-top: 30px;
     display: flex;
     cursor: pointer;
+    transition: 0.3s;
 }
+
+#login-button:hover {
+    background-color: rgb(255, 196, 0);
+    border-bottom: none;
+    padding-bottom: 7px;
+    transition: 0.3s;
+}
+
