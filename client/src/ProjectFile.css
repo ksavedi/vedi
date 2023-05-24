@@ -9,7 +9,7 @@
 body {
     margin: 0 !important;
     padding: 0 !important;
-
+    overflow: hidden;
 }
 
 #path-controller {
@@ -18,13 +18,14 @@ body {
     background-color: #ffffff;
 
     position: absolute;
-    top: calc(10px - 5vh);
+    top: calc(-10px - 5vh);
+    z-index: 1;
 }
 
 .icon-container-2 {
     position: relative;
     left: calc(25vw - 60px);
-    top: calc(5vh - 10px);
+    display: inline;
 }
 
 #path-input {
@@ -82,10 +83,11 @@ body {
 #editor-container {
     width: 100vw;
     height: 95vh;
+    border-top: 1px solid rgb(21, 21, 21);
     display: flex;
     flex-direction: row;
 
-    position: absolute;
+    position: relative;
     top: 5vh;
 }
 
