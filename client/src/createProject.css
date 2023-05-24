@@ -9,13 +9,13 @@
 #container {
     width: 50vw;
     height: 100vh;
-    display: contents; 
+    display: contents;
     align-items: center;
 }
 
 #mcontainer {
     width: 50vw;
-    display: flex; 
+    display: flex;
     flex-direction: column;
     transform: translate(50%, 0%);
     /*-webkit-transform: translateY(100%);*/
@@ -65,6 +65,7 @@
     border: none;
     border-bottom: 1px solid black;
 }
+
 #maintitle {
     font-size: 25px;
     font-weight: 500;
@@ -86,6 +87,7 @@
     padding-bottom: 7px;
     transition: 0.3s;
 }
+
 textarea {
     width: 38vw;
     margin-left: 2vw;
@@ -93,6 +95,7 @@ textarea {
     border-bottom: 1px solid black;
     height: 120px !important;
     font-size: 20px;
+    resize: none;
 }
 
 #addmemberbutton {
@@ -112,23 +115,25 @@ textarea {
     transition: 0.3s;
 }
 
-input[id="check"] + label {
-	display: inline-block;
-	width: 20px;
-	height: 20px;
-	border: 2px solid #bcbcbc;
-	cursor: pointer;
+input[id="check"]+label {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #bcbcbc;
+    cursor: pointer;
 
     margin-left: 2vw;
     margin-top: 10px;
 }
-input[id="check"]:checked + label {
-	border: 5px solid rgb(255, 196, 0);
+
+input[id="check"]:checked+label {
+    border: 5px solid rgb(255, 196, 0);
     width: 17px;
     height: 17px;
 }
+
 input[id="check"] {
-	display: none;
+    display: none;
 }
 
 input {
